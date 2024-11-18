@@ -1,6 +1,9 @@
 <main>
-    <h1>P_Web2</h1>
+    <h1>Passion Lecture</h1>
     <p>
-        Hello world 
+        Description de l'application
     </p>
-</main>
+    <p>
+        Liste des dernières oeuvres
+    </p>
+    </main>

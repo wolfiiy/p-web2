@@ -1,6 +1,5 @@
 <?php
 
-
 // Set to true to report all errors
 $debug = true;
 
@@ -12,6 +11,7 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once '../controllers/Controller.php';
 include_once '../controllers/HomeController.php';
+include_once '../controllers/BookController.php';
 
 
 
@@ -41,6 +41,9 @@ class MainController {
     protected function menuSelected ($controller) {
 
         switch($controller){
+            case "book":
+                $link = new BookController();
+                break;
             default:
                 $link = new HomeController();
                 break;

@@ -1,9 +1,9 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Controler pour gérer les pages classiques
+ * Auteur : Valentin Pignat
+ * Date: 18.11.2024
+ * Controler pour les pages liées aux utilisateurs
  */
 
 class UserController extends Controller {
@@ -25,7 +25,7 @@ class UserController extends Controller {
      *
      * @return string
      */
-    private function detailAction($id) {
+    private function detailAction() {
 
         $view = file_get_contents('../views/detailUser.php');
 

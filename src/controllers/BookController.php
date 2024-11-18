@@ -1,12 +1,12 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Controler pour gérer les pages classiques
+ * Auteur : Valentin Pignat
+ * Date: 18.11.2024
+ * Controler pour les pages liées aux livres
  */
 
-class HomeController extends Controller {
+class BookController extends Controller {
 
     /**
      * Dispatch current action
@@ -41,9 +41,20 @@ class HomeController extends Controller {
      *
      * @return string
      */
-    private function detailAction($id) {
+    private function detailAction() {
 
         $view = file_get_contents('../views/detailBook.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    private function addAction(){
+
+        $view = file_get_contents('../views/addBook.php');
 
         ob_start();
         eval('?>' . $view);

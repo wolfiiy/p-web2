@@ -1,0 +1,30 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    
+}
+#footer-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#footer-content ul{
+    text-align: center;
+}
+ul.no-bullets {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#bookForm{
+    display: flex;
+    flex-direction: column;
+    width : 40%;
+}
+
+.label-input{
+    display: flex;
+    justify-content: space-between;
+}
+

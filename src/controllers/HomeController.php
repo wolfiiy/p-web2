@@ -3,7 +3,7 @@
  * ETML
  * Auteur : Cindy Hardegger
  * Date: 22.01.2019
- * Controler pour gérer les pages classiques
+ * Controler pour la page d'acceuil
  */
 
 class HomeController extends Controller {

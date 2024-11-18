@@ -1,25 +1,20 @@
 <header>
-    <nav>
-        <div class="nav-container">
-            <span class="brand">
-                <a href="index.php">P_Web2</a>
-            </span>
-    
-            <ul>
-                <li>
-                    <a href="index.php">Home</a>
-                </li>
-                <li>
-                    <a href="add.php">Add</a>
-                </li>
-                <li>
-                    <a href="search.php">Search</a>
-                </li>
-            </ul>
-        </div>
 
-        <button>
-            Login
-        </button>
+    <nav>
+
+        <a href="index.php">Logo du site à ajouter</a>
+
+        <a href="index.php">Liste des oeuvres</a>
+        
+        <a href="index.php?controller=book&action=add">Ajouter une oeuvre</a>
+
+        <form>
+            <label for="username">Nom d'utilisateur: </label>
+            <input type="text" name="username" id="username" required>
+            <label for="password">Mot de passe: </label>
+            <input type="password" name="password" id="password" required>
+            <input type ="submit" value="Connexion"/>       
+        </form>
     </nav>
+    <hr>
 </header>
