@@ -33,7 +33,7 @@ class Database {
     public function __construct() {
         try {
             // Attempt to read the config file
-            $configFile = file_get_contents('../../config.json');
+            $configFile = file_get_contents('../../secrets.json');
             $conf = json_decode($configFile, true);
 
             // Create the DSN
