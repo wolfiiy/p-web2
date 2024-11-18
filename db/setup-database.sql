@@ -41,10 +41,10 @@ CREATE TABLE if not exists t_book(
    publisher_id INT NOT NULL,
    author_id INT NOT NULL,
    PRIMARY KEY(book_id),
-   FOREIGN KEY(user_id) REFERENCES t_user(user_id),
-   FOREIGN KEY(category_id) REFERENCES t_category(category_id),
-   FOREIGN KEY(publisher_id) REFERENCES t_publisher(publisher_id),
-   FOREIGN KEY(author_id) REFERENCES t_author(author_id)
+   FOREIGN KEY(user_fk) REFERENCES t_user(user_id),
+   FOREIGN KEY(category_fk) REFERENCES t_category(category_id),
+   FOREIGN KEY(publisher_fk) REFERENCES t_publisher(publisher_id),
+   FOREIGN KEY(author_fk) REFERENCES t_author(author_id)
 );
 
 CREATE TABLE if not exists review(
@@ -52,6 +52,6 @@ CREATE TABLE if not exists review(
    user_id INT,
    grade TINYINT,
    PRIMARY KEY(book_id, user_id),
-   FOREIGN KEY(book_id) REFERENCES t_book(book_id),
-   FOREIGN KEY(user_id) REFERENCES t_user(user_id)
+   FOREIGN KEY(book_fk) REFERENCES t_book(book_id),
+   FOREIGN KEY(user_fk) REFERENCES t_user(user_id)
 );
