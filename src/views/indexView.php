@@ -5,5 +5,11 @@
     </p>
     <p>
         Liste des dernières oeuvres
+        <pre>
+<?php
+
+    var_dump($allBooks)
+?>
+</pre>
     </p>
     </main>

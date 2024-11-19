@@ -27,6 +27,11 @@ class HomeController extends Controller {
      */
     private function indexAction() {
 
+        
+        include_once('../models/BookModel.php');
+        $bookModel = new BookModel();
+        $allBooks = $bookModel->getAllBooks();
+
         $view = file_get_contents('../views/indexView.php');
 
         ob_start();
