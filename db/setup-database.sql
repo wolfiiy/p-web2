@@ -1,26 +1,32 @@
 drop database db_passion_lecture;
-create database if not exists db_passion_lecture;
+create database if not exists db_passion_lecture
+CHARACTER SET utf8
+COLLATE utf8_general_ci;
+
 use db_passion_lecture;
+SET NAMES 'utf8';
+
 
 CREATE TABLE if not exists t_category(
    category_id INT AUTO_INCREMENT,
    name VARCHAR(50) NOT NULL,
    PRIMARY KEY(category_id),
    UNIQUE(name)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE if not exists t_author(
    author_id INT AUTO_INCREMENT,
    first_name VARCHAR(128) NOT NULL,
    last_name VARCHAR(128) NOT NULL,
    PRIMARY KEY(author_id)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE if not exists t_publisher(
    publisher_id INT AUTO_INCREMENT,
    name VARCHAR(50) NOT NULL,
    PRIMARY KEY(publisher_id)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 
 CREATE TABLE if not exists t_user(
    user_id INT AUTO_INCREMENT,
@@ -28,7 +34,7 @@ CREATE TABLE if not exists t_user(
    sign_up_date DATE NOT NULL,
    is_admin BOOLEAN NOT NULL,
    PRIMARY KEY(user_id)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE if not exists t_book(
    book_id INT AUTO_INCREMENT,
@@ -47,7 +53,7 @@ CREATE TABLE if not exists t_book(
    FOREIGN KEY(category_fk) REFERENCES t_category(category_id),
    FOREIGN KEY(publisher_fk) REFERENCES t_publisher(publisher_id),
    FOREIGN KEY(author_fk) REFERENCES t_author(author_id)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE if not exists review(
    book_fk INT,
@@ -56,7 +62,7 @@ CREATE TABLE if not exists review(
    PRIMARY KEY(book_fk, user_fk),
    FOREIGN KEY(book_fk) REFERENCES t_book(book_id),
    FOREIGN KEY(user_fk) REFERENCES t_user(user_id)
-);
+)CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Data
 INSERT INTO t_category (name) VALUES 
@@ -92,7 +98,7 @@ INSERT INTO t_user (username, sign_up_date, is_admin) VALUES
 -- Ajout de 6 livres
 INSERT INTO t_book (title, excerpt, summary, release_date, cover_image, number_of_pages, user_fk, category_fk, publisher_fk, author_fk) VALUES
 -- Les Misérables par Victor Hugo, publié par Folio
-("Les Misérables", "Un chef-d'œuvre de la littérature française", "Un roman qui explore la nature humaine et la justice sociale.", "1862-04-03", "les_miserables.jpg", 1463, 1, 1, 5, 1),
+("Les Misérables", "Un chef-d'oeuvre de la littérature française", "Un roman qui explore la nature humaine et la justice sociale.", "1862-04-03", "les_miserables.jpg", 1463, 1, 1, 5, 1),
 
 -- Germinal par Émile Zola, publié par Le Livre de Poche
 ("Germinal", "Un portrait saisissant des luttes ouvrières", "Le récit poignant de la vie dans les mines du nord de la France.", "1885-03-25", "germinal.jpg", 592, 2, 1, 6, 2),
