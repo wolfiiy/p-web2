@@ -1,4 +1,5 @@
-create database if not exists db_passion-lecture
+create database if not exists db_passion_lecture;
+use db_passion_lecture;
 
 CREATE TABLE if not exists t_category(
    category_id INT AUTO_INCREMENT,
@@ -36,10 +37,10 @@ CREATE TABLE if not exists t_book(
    release_date DATE NOT NULL,
    cover_image VARCHAR(128) NOT NULL,
    number_of_pages SMALLINT NOT NULL,
-   user_id INT NOT NULL,
-   category_id INT NOT NULL,
-   publisher_id INT NOT NULL,
-   author_id INT NOT NULL,
+   user_fk INT NOT NULL,
+   category_fk INT NOT NULL,
+   publisher_fk INT NOT NULL,
+   author_fk INT NOT NULL,
    PRIMARY KEY(book_id),
    FOREIGN KEY(user_fk) REFERENCES t_user(user_id),
    FOREIGN KEY(category_fk) REFERENCES t_category(category_id),
@@ -48,10 +49,10 @@ CREATE TABLE if not exists t_book(
 );
 
 CREATE TABLE if not exists review(
-   book_id INT,
-   user_id INT,
+   book_fk INT,
+   user_fk INT,
    grade TINYINT,
-   PRIMARY KEY(book_id, user_id),
+   PRIMARY KEY(book_fk, user_fk),
    FOREIGN KEY(book_fk) REFERENCES t_book(book_id),
    FOREIGN KEY(user_fk) REFERENCES t_user(user_id)
 );
