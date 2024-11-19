@@ -70,7 +70,7 @@ class DatabaseModel {
      * @return PDOStatement|false An associative array containing the result 
      * of the query if successful, or `false` otherwise.
      */
-    private function querySimpleExecute(string $query) {
+    protected function querySimpleExecute(string $query) {
         try {
             // Directly execute the query
             return $this -> connector -> query($query);
@@ -95,7 +95,7 @@ class DatabaseModel {
      * @return PDOStatement|false an associative array containing the result
      * of the query if it succeeded, false otherwise.
      */
-    private function queryPrepareExecute(string $query, $binds) {
+    protected function queryPrepareExecute(string $query, $binds) {
         try {
             // Prepare the SQL query string by protecting it against SQL
             // injections and binding values
@@ -124,7 +124,7 @@ class DatabaseModel {
      * @return array An associative array containing the data returned by the 
      * statement.
      */
-    private function formatData(PDOStatement $req) {
+    protected function formatData(PDOStatement $req) {
         return $req -> fetchAll(PDO::FETCH_ASSOC);
     }
 }
