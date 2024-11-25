@@ -12,7 +12,7 @@ class BookModel extends DatabaseModel
     {
         $query = "SELECT * from t_book";
         $req = $this->querySimpleExecute($query);
-        $result = $this->formatData($req);
-        return $result;
+        if ($req) return $this -> formatData($req);
+        else return false;
     }
 }
