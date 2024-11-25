@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Author: Sébastien Tille
+ * Date: November 25th, 2024
+ */
+
+include('DatabaseModel.php');
+
+/**
+ * This class holds database querries relative to publishers.
+ */
+class PublisherModel extends DatabaseModel {
+
+    /**
+     * Given an ID, will attempt to get the corresponding publisher from the 
+     * database. This method is safe to use with user-provided inputs.
+     * @param int $id Unique identifier of the publisher. Used as a foreign key
+     * in the t_book table.
+     * @return array|null An array that contains information about the 
+     * publisher (name) if it has been found and false otherwise.
+     */
+    public function getPublisherById(int $id) {
+        $sql = "select * from t_publisher where publisher_id = :publisher_id";
+        $binds = array(':publisher_id' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+        
+        return $this->formatData($query);
+    }
+}
