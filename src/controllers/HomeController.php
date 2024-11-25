@@ -41,7 +41,6 @@ class HomeController extends Controller {
                 $ratings[$book["book_id"]] = $bookRating;
             }
             else {
-                error_log("aaa");
                 $ratings[$book["book_id"]] = "no rating";
             }
 
