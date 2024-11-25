@@ -101,7 +101,7 @@ class DatabaseModel {
             // injections and binding values
             $req = $this -> connector -> prepare($query);
             foreach ($binds as $name => $value) {
-                $req -> bindValue($name, $value, PDO::PARAM_STR);
+                $req -> bindValue($name, $value, PDO::PARAM_INT);
             }
 
             // Return the request only if successful

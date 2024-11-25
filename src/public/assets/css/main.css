@@ -28,3 +28,14 @@ ul.no-bullets {
     justify-content: space-between;
 }
 
+.book-preview{
+    margin-bottom: 5px;
+    border: 1px solid black;
+    padding: 5px;;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+}
+
+.book-preview img{
+    height: 60px;
+}
