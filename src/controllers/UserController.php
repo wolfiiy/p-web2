@@ -6,7 +6,11 @@
  * Controler pour les pages liées aux utilisateurs
  */
 
+
+
 class UserController extends Controller {
+
+    
 
     /**
      * Dispatch current action
@@ -27,7 +31,13 @@ class UserController extends Controller {
      */
     private function detailAction() {
 
+        include_once('../models/UserModel.php');
+        $usermodel = new UserModel();
+        // Values
+        $valUser = $usermodel->getDetailUser(1);
+
         $view = file_get_contents('../views/detailUser.php');
+
 
         ob_start();
         eval('?>' . $view);
