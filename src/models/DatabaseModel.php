@@ -125,7 +125,7 @@ class DatabaseModel {
      * statement.
      */
     protected function formatData(PDOStatement $req) {
-        return $req -> fetchAll(PDO::FETCH_ASSOC);
+        return $req -> fetchAll(PDO::FETCH_ASSOC)[0];
     }
 }
 ?>
