@@ -12,6 +12,7 @@ date_default_timezone_set('Europe/Zurich');
 include_once '../controllers/Controller.php';
 include_once '../controllers/HomeController.php';
 include_once '../controllers/BookController.php';
+include_once '../controllers/UserController.php';
 
 
 
@@ -43,6 +44,9 @@ class MainController {
         switch($controller){
             case "book":
                 $link = new BookController();
+                break;
+            case "user":
+                $link = new UserController();
                 break;
             default:
                 $link = new HomeController();
