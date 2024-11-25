@@ -2,11 +2,12 @@
 
     <nav>
 
-        <a href="index.php">Logo du site à ajouter</a>
+        <a href="index.php"><img src="assets\img\Logo.png" width="90" height="90" alt="Logo of site"></a>
 
-        <a href="index.php">Liste des oeuvres</a>
-        
-        <a href="index.php?controller=book&action=add">Ajouter une oeuvre</a>
+        <button onclick="location.href='index.php?controller=book&action=list';" style="cursor: pointer;">List des oeuvres</button>
+
+        <button onclick="location.href='index.php?controller=book&action=add';" style="cursor: pointer;">Ajouter une oeuvre</button>
+    
 
         <form>
             <label for="username">Nom d'utilisateur: </label>
