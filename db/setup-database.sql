@@ -115,3 +115,14 @@ INSERT INTO t_book (title, excerpt, summary, release_date, cover_image, number_o
 
 -- La Mare au Diable par George Sand, publié par Albin Michel
 ("La Mare au Diable", "Un roman pastoral", "Un conte touchant sur l'amour et la vie rurale.", "1846-03-02", "mare_au_diable.jpg", 184, 3, 1, 4, 6);
+
+-- Ajout de review
+
+INSERT INTO review VALUES (6, 1, 3);
+
+INSERT INTO review VALUES (6, 2, 2);
+
+INSERT INTO review VALUES (3, 1, 4);
+
+INSERT INTO review VALUES (4, 2, 5);
+
