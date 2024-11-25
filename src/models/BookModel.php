@@ -1,6 +1,6 @@
 <?php
 
-include('DatabaseModel.php');
+include_once('DatabaseModel.php');
 
 class BookModel extends DatabaseModel
 {
@@ -26,32 +26,7 @@ class BookModel extends DatabaseModel
     public function getBookById(int $id) {
         $sql = "select * from t_book where book_id = $id";
         $req = $this->querySimpleExecute($sql);
-        if ($req) return $this -> formatData($req)[0];
+        if ($req) return $this -> formatData($req);
         else return false;
-    }
-
-    /**
-     * Given an ID, gets the corresponding author or returns false if it could
-     * not be found.
-     * @param int $id Unique ID of the author.
-     * @return array|null An array that contains the author's details if found,
-     * false otherwise.
-     */
-    public function getAuthorById(int $id) {
-        $sql = <<< SQL
-            select
-                *
-            from
-                t_author
-            where
-                author_id = :author_id;
-        SQL;
-
-        $binds = array(
-            ':author_id' => $id
-        );
-
-        $req = $this->queryPrepareExecute($sql, $binds);
-        return $this->formatData($req)[0];
     }
 }
