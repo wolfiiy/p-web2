@@ -57,6 +57,10 @@
     <label for="bookSummary">Résumé: </label>
     <textarea name="bookSummary" id="bookSummary"></textarea>
 </div>
+<div>
+    <input type = "submit" value="Ajouter">
+    <button type = "button" onclick="document.getElementById('bookForm').reset();">Effacer</button>
+</div>
 
     
 </form>
