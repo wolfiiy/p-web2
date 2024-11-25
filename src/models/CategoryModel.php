@@ -1,6 +1,6 @@
 <?php
 
-include('DatabaseModel.php');
+include_once('DatabaseModel.php');
 
 class CategoryModel extends DatabaseModel
 {

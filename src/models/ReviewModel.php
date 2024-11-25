@@ -14,7 +14,8 @@ class ReviewModel extends DatabaseModel {
         $query = "SELECT AVG(grade) AS averageGrade from review where book_fk = :varBookId";
         $binds = array("varBookId" => $bookId);
         $req = $this->queryPrepareExecute($query, $binds);
-        if ($req) return $this -> formatData($req)[0]["averageGrade"];
+        // var_dump($this->formatData($req));
+        if ($req) return $this -> formatData($req)["averageGrade"];
         else return false;
     }
 }
