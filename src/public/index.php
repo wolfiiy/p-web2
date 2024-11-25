@@ -64,10 +64,15 @@ class MainController {
     protected function viewBuild($currentPage) {
 
             $content = $currentPage->display();
-            include(dirname(__FILE__, 2) . '../views/partials/head.php');
-            include(dirname(__FILE__, 2) . '../views/partials/nav.php');
+            include __DIR__ . '/../views/partials/head.php';
+            include __DIR__ . '/../views/partials/nav.php';
             echo $content;
-            include(dirname(__FILE__, 2) . '../views/partials/footer.php');
+            include __DIR__ . '/../views/partials/footer.php';
+
+            // Old code
+            // include(dirname(__FILE__, 3) . '/views/partials/head.php');
+            // include(dirname(__FILE__, 3) . '/views/partials/nav.php');
+            // include(dirname(__FILE__, 3) . '/views/partials/footer.php');
     }
 }
 
