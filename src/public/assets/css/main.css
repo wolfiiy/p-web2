@@ -1,8 +1,79 @@
+/*
+ * Generic
+ */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+main {
+    margin: auto;
+    width: 100ch;
+}
+
+h1 {
+    text-align: center;
+}
+
+.wrap {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/*
+ * Book details
+ */
+.cover {
+    padding: auto;
+}
+
+.overview {
+}
+
+.data .type {
+    font-size: 0.72em;
+}
+
+.description {
+}
+
+#details-content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 2ch;
+}
+
+
+
+
+ .overview-wrap {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.details-wrap {
+    display: flex;
+}
+
+/* TODO improve */
+@media only screen and (max-width: 1000px) {
+    main {
+        max-width: 98vw;
+    }
+}
+
 nav{
     display: flex;
     justify-content: space-between;
     
 }
+
 #footer-content{
     display: flex;
     justify-content: space-between;

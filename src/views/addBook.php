@@ -1,3 +1,4 @@
+<main>
 <h1>Ajout d'un livre</h1>
 <form enctype = "multipart/form-data" action="index.php?controller=book&action=insert" method="post" id="bookForm">
 
@@ -64,3 +65,4 @@
 
     
 </form>
+</main>
