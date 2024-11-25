@@ -59,6 +59,9 @@ class BookController extends Controller
 
     private function addAction()
     {
+        include_once("../models/CategoryModel.php");
+        $categoryModel = new CategoryModel();
+        $genres = $categoryModel->getAllCategory();
 
         $view = file_get_contents('../views/addBook.php');
 
