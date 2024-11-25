@@ -5,7 +5,7 @@
  * Date: November 25th, 2024
  */
 
-include('DatabaseModel.php');
+include_once('DatabaseModel.php');
 
 /**
  * This class holds database querries relative to publishers.
@@ -24,7 +24,7 @@ class PublisherModel extends DatabaseModel {
         $sql = "select * from t_publisher where publisher_id = :publisher_id";
         $binds = array(':publisher_id' => $id);
         $query = $this->queryPrepareExecute($sql, $binds);
-        
+
         return $this->formatData($query);
     }
 }
