@@ -1,4 +1,6 @@
 <main>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
     <h1>Détails de l'oeuvre</h1>
     <div id="details-content-wrap" class="content-wrap">
         <div class="cover wrap">
@@ -82,6 +84,20 @@
     
                 <p class="value">
                     <a href="<?=$book['excerpt']?>">Lien externe</a>
+                </p>
+            </div>
+
+            <div class="data-set">
+                <p class="type">
+                    Editer cette page
+                </p>
+
+                <p class="value">
+                    <a href="" class="button accent">Modifier</a>
+                </p>
+                
+                <p>
+                    <a href="" class="button red">Supprimer</a>
                 </p>
             </div>
         </div>

@@ -1,3 +1,9 @@
+:root {
+    /* Logo colors */
+    --accent: #66dfd0;
+    --complement: #fc5f4c
+}
+
 /*
  * Generic
  */
@@ -24,6 +30,22 @@ h1 {
 .wrap {
     display: flex;
     flex-flow: column nowrap;
+}
+
+.button {
+    display: inline-block;
+    padding: 1ch 2ch;
+    width: fit-content;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.button.accent {
+    background-color: var(--accent);
+}
+
+.button.red {
+    background-color: var(--complement);
 }
 
 /*
