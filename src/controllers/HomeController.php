@@ -30,8 +30,23 @@ class HomeController extends Controller {
         
         include_once('../models/BookModel.php');
         $bookModel = new BookModel();
-        $allBooks = $bookModel->getAllBooks();
+        include_once('../models/ReviewModel.php');
+        $reviewModel = new ReviewModel();
+        
+        $latestBooks = $bookModel->getLatestBooks(5);
+        $ratings;
+        foreach ($latestBooks as $book){
+            $bookRating = $reviewModel->getAverageRating($book["book_id"]);
+            if (!is_null($bookRating)){
+                $ratings[$book["book_id"]] = $bookRating;
+            }
+            else {
+                error_log("aaa");
+                $ratings[$book["book_id"]] = "no rating";
+            }
 
+        }
+        
         $view = file_get_contents('../views/indexView.php');
 
         ob_start();

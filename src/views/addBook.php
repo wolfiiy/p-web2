@@ -1,5 +1,5 @@
 <h1>Ajout d'un livre</h1>
-<form action="index.php?controller=book&action=insert" method="post" id="bookForm">
+<form enctype = "multipart/form-data" action="index.php?controller=book&action=insert" method="post" id="bookForm">
 
 <div class="label-input">    
     <label for="authorFirstName">Nom de l'auteur: </label>
@@ -56,6 +56,10 @@
 <div class="label-input">
     <label for="bookSummary">Résumé: </label>
     <textarea name="bookSummary" id="bookSummary"></textarea>
+</div>
+<div>
+    <input type = "submit" value="Ajouter">
+    <button type = "button" onclick="document.getElementById('bookForm').reset();">Effacer</button>
 </div>
 
     
