@@ -1,1 +1,97 @@
-Détails du livre
+<main>
+    <h1>Détails de l'oeuvre</h1>
+    <div class="overview-wrap">
+        <img src="assets/img/placeholders/cover-placeholder.png" 
+             alt="Image de couverture">
+    
+        <div class="overview">
+            <h2>
+                <?=$book['title']?>
+            </h2>
+            
+            <p>
+                Auteur:
+                <?=$author['first_name']?>
+                <?=$author['last_name']?>
+            </p>
+        
+            <p>
+                Date de sortie:
+                <?=$book['release_date']?>
+            </p>
+        
+            <p>
+                Editeur:
+                <?=$publisher['name']?>
+            </p>
+
+            <p>
+                Votre note:
+                TODO
+                <button type="button">Valider</button>
+            </p>
+        </div>
+    </div>
+
+    <div class="data-wrap">
+        <div class="data-set">
+            <p class="type">
+                Moyenne
+            </p>
+
+            <p class="value">
+                TODO
+            </p>
+        </div>
+
+        <div class="data-set">
+            <p class="type">
+                Genre
+            </p>
+
+            <p class="value">
+                TODO
+            </p>
+        </div>
+
+        <div class="data-set">
+            <p class="type">
+                Nombre de pages
+            </p>
+
+            <p class="value">
+                <?=$book['number_of_pages']?>
+            </p>
+        </div>
+
+        <div class="data-set">
+            <p class="type">
+                Ajouté par
+            </p>
+
+            <p class="value">
+                <?=$user['username']?>
+            </p>
+        </div>
+
+        <div class="data-set">
+            <p class="type">
+                Lire un extrait
+            </p>
+
+            <p class="value">
+                <a href="<?=$book['excerpt']?>">TODO</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="description-wrap">
+        <p>
+            Résumé
+        </p>
+
+        <p class="description">
+            <?=$book['summary']?>
+        </p>
+    </div>
+</main>

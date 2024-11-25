@@ -8,6 +8,8 @@
         
         <a href="index.php?controller=book&action=add">Ajouter une oeuvre</a>
 
+        <a href="index.php?controller=book&action=detail&id=1">DETAILS DEBUG</a>
+
         <form>
             <label for="username">Nom d'utilisateur: </label>
             <input type="text" name="username" id="username" required>
