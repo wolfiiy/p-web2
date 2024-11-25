@@ -31,6 +31,7 @@ CREATE TABLE if not exists t_publisher(
 CREATE TABLE if not exists t_user(
    user_id INT AUTO_INCREMENT,
    username VARCHAR(50) NOT NULL,
+   pass VARCHAR(50) NOT NULL,
    sign_up_date DATE NOT NULL,
    is_admin BOOLEAN NOT NULL,
    PRIMARY KEY(user_id)
@@ -90,10 +91,10 @@ INSERT INTO t_author (first_name, last_name) VALUES
 ("George", "Sand");
 
 -- Ajout de 3 utilisateurs
-INSERT INTO t_user (username, sign_up_date, is_admin) VALUES
-("booklover123", "2022-01-15", false),
-("admin_guy", "2021-12-05", true),
-("reading_queen", "2023-03-22", false);
+INSERT INTO t_user (username, pass, sign_up_date, is_admin) VALUES
+("booklover123", "123", "2022-01-15", false),
+("admin_guy", "123", "2021-12-05", true),
+("reading_queen", "123", "2023-03-22", false);
 
 -- Ajout de 6 livres
 INSERT INTO t_book (title, excerpt, summary, release_date, cover_image, number_of_pages, user_fk, category_fk, publisher_fk, author_fk) VALUES
