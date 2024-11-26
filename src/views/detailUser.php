@@ -1,10 +1,12 @@
+<pre>
 <?php var_dump($valUser); ?>
+</pre>
 Détail user
 <p>
-    Profil de <?= $valUser['username'] ?>
+    Profil de <?= $valUser["username"] ?>
 </p>
 <p>
-    Memebre depuis le (date)
+    Membre depuis le <?= $valUser["sign_up_date"] ?>
 </p>
 <p>
     (nbLivres) ajoutés à la base de données

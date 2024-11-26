@@ -34,7 +34,7 @@ class UserController extends Controller {
         include_once('../models/UserModel.php');
         $usermodel = new UserModel();
         // Values
-        $valUser = $usermodel->getDetailUser(1);
+        $valUser = $usermodel->getUserById(1);
 
         $view = file_get_contents('../views/detailUser.php');
 
@@ -44,5 +44,32 @@ class UserController extends Controller {
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    /**
+     * Login page user
+     *
+     * @return string
+     */
+    private function loginAction($userAttemp, $passAttemp) {
+
+        include_once('../models/UserModel.php');
+        $usermodel = new UserModel();
+        // Values
+        $userCredentials = $usermodel->checkUser($userAttemp);
+
+        if($userCredentials != "")
+        {
+            foreach($userCredentials as $credentials)
+            {
+                if($credentials['username'] === $userAttemp && $credentials['pass'] === $passAttemp)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false; // If false, user dont exists
+
     }
 }

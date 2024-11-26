@@ -29,10 +29,37 @@ Class UserModel extends DatabaseModel {
         return $this->formatData($query)[0];
     }
 
-    public function getDetailUser($id)
-    {    
-        $req = $this->querySimpleExecute("SELECT * FROM t_user WHERE user_id = $id");
-        $detail = $this->formatData($req);
-        return $detail;
+    /**
+     * Request to the database to get all existing users
+     * @return array|null returns the data of all existing users.
+     * if it does not exist, returns null
+     */
+    public function getAllUsers(){
+
+        $sql = "select * from t_user;";
+        $query = $this->querySimpleExecute($sql);
+
+        return $this->formatData($query);
+    }
+
+    /**
+     * Verification of data if the user exists.
+     * @param string It is used to check if the user exists with its user
+     * @return array|null Returns information about the existing user, such as the user and password.
+     * if not found it returns false
+     */
+    public function checkUser($userAttemp) {
+        $users = $this->getAllUsers();
+        foreach($users as $user)
+        {
+            if($user['username'] === $userAttemp)
+            {
+                return $user['username'] && $user['pass'];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

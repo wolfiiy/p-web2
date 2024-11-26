@@ -19,6 +19,7 @@
             <input type="password" name="password" id="password" required>
             <input type ="submit" style="cursor: pointer;" value="Connexion"/>       
         </form>
+        <button onclick="location.href='login.php?controller=user&action=login';">Connexion</button>
     </nav>
     <hr>
 </header>
