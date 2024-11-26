@@ -1,12 +1,20 @@
 <?php
 
+/** 
+ * Authors: Abigaël Périsset, Sébasten Tille, Valentin Pignat
+ * Date: November 19th, 2024
+ */
+
 include_once('DatabaseModel.php');
 
+/**
+ * This class holds database queries relative to books.
+ */
 class BookModel extends DatabaseModel
 {
     /**
      * Get all books 
-     * @return array
+     * @return array Array containing every book
      */
     public function getAllBooks()
     {
@@ -24,8 +32,10 @@ class BookModel extends DatabaseModel
      * false otherwise.
      */
     public function getBookById(int $id) {
-        $sql = "select * from t_book where book_id = $id";
-        $req = $this->querySimpleExecute($sql);
+        $sql = "select * from t_book where book_id = :book_id";
+        $binds = array(':book_id' => $id);
+        $req = $this->queryPrepareExecute($sql, $binds);
+
         if ($req) return $this -> formatData($req)[0];
         else return false;
     }
@@ -33,7 +43,7 @@ class BookModel extends DatabaseModel
     /**
      * Get x latest books
      * @param int $count Number of books to get
-     * @return array
+     * @return array Array containing the x latest books
      */
     public function getLatestBooks(int $count)
     {

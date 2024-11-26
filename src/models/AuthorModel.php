@@ -23,9 +23,10 @@ Class AuthorModel extends DatabaseModel {
     public function getAuthorById(int $id) {
         $sql = "select * from t_author where author_id = :author_id";
         $binds = array(':author_id' => $id);
-        $query = $this->queryPrepareExecute($sql, $binds);
+        $req = $this->queryPrepareExecute($sql, $binds);
 
-        return $this->formatData($query)[0];
+        if ($req) return $this->formatData($req)[0];
+        else return false;
     }
 
     /**
