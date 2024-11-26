@@ -7,7 +7,7 @@
  * Description: Controller used for pages dedicated to books.
  */
 
-include('../helpers/FormatUtils.php');
+include('../helpers/FormatHelper.php');
 include('../models/AuthorModel.php');
 include('../models/BookModel.php');
 include('../models/PublisherModel.php');
