@@ -8,7 +8,7 @@
 /**
  * Helper class used for data formatting operations.
  */
-class FormatUtils {
+class FormatHelper {
 
     /**
      * Date format to use throughout eh application.
