@@ -96,7 +96,7 @@
                     <a href="" class="button accent">Modifier</a>
                 </p>
                 
-                <p>
+                <p class="value">
                     <a href="" class="button red">Supprimer</a>
                 </p>
             </div>

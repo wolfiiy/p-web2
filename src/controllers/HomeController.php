@@ -30,21 +30,10 @@ class HomeController extends Controller {
         
         include_once('../models/BookModel.php');
         $bookModel = new BookModel();
-        include_once('../models/ReviewModel.php');
-        $reviewModel = new ReviewModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);
-        $ratings;
-        foreach ($latestBooks as $book){
-            $bookRating = $reviewModel->getAverageRating($book["book_id"]);
-            if (!is_null($bookRating)){
-                $ratings[$book["book_id"]] = $bookRating;
-            }
-            else {
-                $ratings[$book["book_id"]] = "no rating";
-            }
 
-        }
+        $latestBooks = $this->BookPreview($latestBooks);
         
         $view = file_get_contents('../views/indexView.php');
 
@@ -53,5 +42,45 @@ class HomeController extends Controller {
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    protected function BookPreview($books){
+        include_once('../models/ReviewModel.php');
+        $reviewModel = new ReviewModel();
+        include_once('../models/AuthorModel.php');
+        $authorModel = new AuthorModel();
+        include_once('../models/CategoryModel.php');
+        $categoryModel = new CategoryModel();
+        include_once('../models/UserModel.php');
+        $userModel = new UserModel();
+
+        foreach ($books as &$book){
+
+            // Get average rating
+            $bookRating = $reviewModel->getAverageRating($book["book_id"]);
+            if (!is_null($bookRating)){
+                $book["average_rating"] = $bookRating;
+            }
+            else {
+                $book["average_rating"] = "no rating";
+            }
+
+            // Get author full name
+            $author = $authorModel->getAuthorById($book["author_fk"]);
+            $book["author_name"] = $author['first_name'] . " " . $author['last_name'];
+
+            // Get category name
+            $category = $categoryModel->getCateoryById($book["category_fk"]);
+            $book["category_name"] = $category["name"];
+
+            // Get user who added the book
+            $user = $userModel->getUserById($book["user_fk"]);
+            $book["username_name"] = $user["username"];
+
+            
+        }
+
+        return $books;
+
     }
 }

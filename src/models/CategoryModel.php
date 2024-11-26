@@ -12,4 +12,12 @@ class CategoryModel extends DatabaseModel
         if ($req) return $this -> formatData($req);
         else return false;
     }
+
+    public function getCateoryById(int $id){
+        $sql = "select * from t_category where category_id = :category_id";
+        $binds = array(':category_id' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query)[0];
+    }
 }
