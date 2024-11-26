@@ -21,7 +21,7 @@
         
             <p>
                 Date de sortie:
-                <?=$book['release_date']?>
+                <?=FormatUtils::getFullDate($book['release_date']);?>
             </p>
         
             <p>

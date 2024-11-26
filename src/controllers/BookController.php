@@ -7,6 +7,7 @@
  * Description: Controller used for pages dedicated to books.
  */
 
+include('../helpers/FormatUtils.php');
 include('../models/AuthorModel.php');
 include('../models/BookModel.php');
 include('../models/PublisherModel.php');
@@ -69,6 +70,7 @@ class BookController extends Controller {
         $publisher = $publisherModel->getPublisherById($book['publisher_fk']);
         $author = $authorModel->getAuthorById($book['author_fk']);
         $user = $userModel->getUserById($book['user_fk']);
+
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);
 
         ob_start();

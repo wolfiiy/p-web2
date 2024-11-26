@@ -13,7 +13,7 @@ class FormatUtils {
     /**
      * Date format to use throughout eh application.
      */
-    const DATE_FORMAT = 'd MMMM yyyy';
+    const DATE_FORMAT = 'j F Y';
 
     /**
      * Gets a string that contains the date in the "26 novembre 2024" format.
