@@ -32,10 +32,24 @@ class HomeController extends Controller {
         $bookModel = new BookModel();
         include_once('../models/ReviewModel.php');
         $reviewModel = new ReviewModel();
+        include_once('../models/AuthorModel.php');
+        $authorModel = new AuthorModel();
+        include_once('../models/CategoryModel.php');
+        $categoryModel = new CategoryModel();
+        include_once('../models/UserModel.php');
+        $userModel = new UserModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);
+
+        
         $ratings;
+        $authors;
+        $categories;
+        $users;
+
         foreach ($latestBooks as $book){
+
+            // Get average rating
             $bookRating = $reviewModel->getAverageRating($book["book_id"]);
             if (!is_null($bookRating)){
                 $ratings[$book["book_id"]] = $bookRating;
@@ -44,6 +58,17 @@ class HomeController extends Controller {
                 $ratings[$book["book_id"]] = "no rating";
             }
 
+            // Get author full name
+            $author = $authorModel->getAuthorById($book["author_fk"]);
+            $authors[$book["book_id"]] = $author['first_name'] . " " . $author['last_name'];
+
+            // Get category name
+            $category = $categoryModel->getCateoryById($book["category_fk"]);
+            $categories[$book["book_id"]] = $category["name"];
+
+            // Get user who added the book
+            $user = $userModel->getUserById($book["user_fk"]);
+            $users[$book["book_id"]] = $user["username"];
         }
         
         $view = file_get_contents('../views/indexView.php');

@@ -10,8 +10,8 @@
     foreach($latestBooks as $book){
         echo "<div class = 'book-preview'>";
         echo "<img src='https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'>";
-        echo "<div>". $book["title"] . '<br>'. $book['author_fk']. "<br>". $book['category_fk']."</div>";
-        echo "<div>". $ratings[$book["book_id"]] . '<br>'. $book['user_fk']. "<br>". $book['category_fk']."</div>";
+        echo "<div>". $book["title"] . '<br>'. $authors[$book["book_id"]]. "<br>". $categories[$book["book_id"]]."</div>";
+        echo "<div>". $ratings[$book["book_id"]] . '<br>'. $users[$book["book_id"]]. "<br>". "<a href = 'index.php?controller=book&action=detail&id=". $book["book_id"] ."'>Détails</a>"."</div>";
 
         echo "</div>";
     }
