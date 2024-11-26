@@ -1,39 +1,37 @@
 <?php
 /**
  * ETML
- * Auteur : Cindy Hardegger
- * Date: 22.01.2019
- * Controler pour la page d'acceuil
+ * Authors : Cindy Hardegger, Valentin Pignat, Sébastien Tille
+ * Date: January 22nd, 2019
  */
 
+include_once('../models/ConstantsModel.php');
+
+/**
+ * Home page controller.
+ */
 class HomeController extends Controller {
 
     /**
-     * Dispatch current action
-     *
-     * @return mixed
+     * Dispatch current action.
+     * @return mixed A callback to a function.
      */
     public function display() {
-
         $action = $_GET['action'] . "Action";
-
         return call_user_func(array($this, $action));
     }
 
     /**
-     * Display Index Action
-     *
-     * @return string
+     * Prints the home page view.
+     * @return string A strong that contains all the content of the home page.
      */
     private function indexAction() {
-
-        
+        include_once('../helpers/DataHelper.php');
         include_once('../models/BookModel.php');
         $bookModel = new BookModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);
-
-        $latestBooks = $this->BookPreview($latestBooks);
+        $latestBooks = DataHelper::BookPreview($latestBooks);
         
         $view = file_get_contents('../views/indexView.php');
 
@@ -42,45 +40,5 @@ class HomeController extends Controller {
         $content = ob_get_clean();
 
         return $content;
-    }
-
-    protected function BookPreview($books){
-        include_once('../models/ReviewModel.php');
-        $reviewModel = new ReviewModel();
-        include_once('../models/AuthorModel.php');
-        $authorModel = new AuthorModel();
-        include_once('../models/CategoryModel.php');
-        $categoryModel = new CategoryModel();
-        include_once('../models/UserModel.php');
-        $userModel = new UserModel();
-
-        foreach ($books as &$book){
-
-            // Get average rating
-            $bookRating = $reviewModel->getAverageRating($book["book_id"]);
-            if (!is_null($bookRating)){
-                $book["average_rating"] = $bookRating;
-            }
-            else {
-                $book["average_rating"] = "Aucune évaluation";
-            }
-
-            // Get author full name
-            $author = $authorModel->getAuthorById($book["author_fk"]);
-            $book["author_name"] = $author['first_name'] . " " . $author['last_name'];
-
-            // Get category name
-            $category = $categoryModel->getCateoryById($book["category_fk"]);
-            $book["category_name"] = $category["name"];
-
-            // Get user who added the book
-            $user = $userModel->getUserById($book["user_fk"]);
-            $book["username_name"] = $user["username"];
-
-            
-        }
-
-        return $books;
-
     }
 }
