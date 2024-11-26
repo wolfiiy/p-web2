@@ -44,5 +44,34 @@ class BookModel extends DatabaseModel
         else return false;
     }
 
+     /**
+     * Insert a new book in the database
+     * @param string $title Book's title
+     * @param string $exerpt Book's exerpt, link to a PDF
+     * @param string $summary Book's summary
+     * @param string $releaseDate Book's release date
+     * @param string $coverImage Book's cover, link to the local ressource
+     * @param int $userFk Id of the user who added this book
+     * @param int $categoryFk Id of the category the book belongs to
+     * @param int $publisherFk Id of the book's publisher
+     * @param int $authorFk Id of the book's author
+     */
+    public function insertBook(string $title, string $exerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
+        $sql = "insert into t_book (title, excerpt, summary, release_date, cover_image, number_of_pages, user_fk, category_fk, publisher_fk, author_fk) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+        $binds = array(
+            ':title'=> $title,
+            ':exerpt' => $exerpt,
+            ':summary' => $summary,
+            ':release_date' => $releaseDate,
+            ':cover_image' => $coverImage,
+            ':number_of_pages' => $numberOfPages,
+            ':user_fk' => $userFk,
+            ':category_fk' => $categoryFk, 
+            ':publisher_fk' => $publisherFk, 
+            ':author_fk' => $authorFk,
+        );
+        $query = $this->queryPrepareExecute($sql, $binds);
 
+        return;
+    }
 }

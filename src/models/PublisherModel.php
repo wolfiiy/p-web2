@@ -27,4 +27,16 @@ class PublisherModel extends DatabaseModel {
 
         return $this->formatData($query)[0];
     }
+
+    /**
+     * Insert a new publisher in the database
+     * @param string $name Publisher's name
+     */
+    public function insertAuthor(string $name){
+        $sql = "insert into t_publisher (name) VALUES (:name)";
+        $binds = array(':name'=> $name);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return;
+    }
 }

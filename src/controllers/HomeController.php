@@ -62,7 +62,7 @@ class HomeController extends Controller {
                 $book["average_rating"] = $bookRating;
             }
             else {
-                $book["average_rating"] = "no rating";
+                $book["average_rating"] = "Aucune évaluation";
             }
 
             // Get author full name
