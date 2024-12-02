@@ -97,6 +97,24 @@ class BookController extends Controller {
 
         return $content;
     }
+    private function addInsert(){
+        include_once("../models/BookModel.php");
+        include_once("../models/PublisherModel.php");
+
+        $addBook = new BookModel();
+        $addPublisher = new PublisherModel();
+
+        // Controler si l'éditeur existe déja 
+        $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
+
+        //Créer un éditeur s'il n'existe pas
+        if($id = 0)
+        {
+            $publisher = $addPublisher->insertAuthor($_POST["bookEditor"]);
+            $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
+        }
+        //$addBook ->insertBook();
+    }
 
     private function textController($info)
     {
