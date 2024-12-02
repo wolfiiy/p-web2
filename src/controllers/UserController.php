@@ -76,7 +76,8 @@ class UserController extends Controller {
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['user_id'] = $userCredentials['user_id'];
                     $_SESSION['pass'] = $userCredentials['pass'];
-                    $_SESSION['sign_up_date'] = $userCredentials['is_admin']; // soit on utilise la value sur helpers/utils.php
+                    $_SESSION['sign_up_date'] = $userCredentials['sign_up_date']; 
+                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // soit on utilise la value sur helpers/utils.php
                     // A partir d'ici on peut considérer notre user connecté à l'app
                     header('Location: index.php?controller=user&action=detail');
                     return true;
