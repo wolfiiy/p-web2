@@ -1,13 +1,21 @@
 <?php
 
+/**
+ * Author: Valentin Pignat, Sébastien Tille
+ * Date: Date: November 25th, 2024
+ */
+
 include_once('DatabaseModel.php');
 
+/**
+ * This class holds database queries relative to reviews.
+ */
 class ReviewModel extends DatabaseModel {
     
     /**
-     * Get x latest books
-     * @param int $count Number of books to get
-     * @return int
+     * Get the average rating for a book
+     * @param int $count Id of the rated book
+     * @return int Average rating for the book
      */
     public function getAverageRating(int $bookId)
     {
