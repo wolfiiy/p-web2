@@ -16,6 +16,10 @@ include_once('../models/UserModel.php');
  */
 class DataHelper {
     
+    /**
+     * Gets all details regarding a specific book.
+     * @param mixed $book The book to get details from.
+     */
     static function getOneBookDetails($book) {
         $reviewModel = new ReviewModel();
         $authorModel = new AuthorModel();
