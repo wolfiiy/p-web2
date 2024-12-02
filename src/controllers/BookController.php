@@ -61,7 +61,14 @@ class BookController extends Controller {
         // TODO error page if ID is not set.
         if (isset($_GET['id'])) $id = $_GET['id'];
         else $id = 0;
-        
+
+        // Clear post to allow refreshes
+        if (isset($_POST['rate'])) {
+            // TODO
+            // Handle rating server-side
+            header('Location: '.$_SERVER['HTTP_REFERER']);
+        }
+
         $bookModel = new BookModel();
         $userModel = new UserModel();
 
@@ -72,7 +79,12 @@ class BookController extends Controller {
 
         $userRating = isset($_SESSION['username']) 
             ? $userModel->getBookRating($id, $_SESSION['id'])
-            : 0;
+            : '-';
+
+        // Debug
+        $userRating = 3;
+
+        $dropdown = DataHelper::createRatingDropdown($userRating);
 
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);
 

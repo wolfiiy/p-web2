@@ -59,7 +59,17 @@ h1 {
     padding: auto;
 }
 
-.overview {
+.overview .rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1ch;
+}
+
+.overview form {
+    padding: 0;
+    margin: 0;
+    height: fit-content;
 }
 
 .data.wrap {
@@ -92,10 +102,7 @@ h1 {
     gap: 2ch;
 }
 
-
-
-
- .overview-wrap {
+.overview-wrap {
     display: flex;
     flex-flow: row nowrap;
 }

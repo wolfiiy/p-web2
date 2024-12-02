@@ -26,11 +26,16 @@
                 <?=$book['publisher']?>
             </p>
 
-            <p>
-                Votre note:
-                <?=$userRating?>
-                <button type="button">Valider</button>
-            </p>
+            <div class="rating">
+                <p>
+                    Votre note:
+                </p>
+    
+                <form method="post">
+                    <?=$dropdown?>
+                    <button type="submit" name="rate">Valider</button>
+                </form>
+            </div>
         </div>
 
         <div class="data wrap">

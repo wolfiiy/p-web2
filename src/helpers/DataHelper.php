@@ -15,6 +15,8 @@ include_once('../models/UserModel.php');
  * Helper class used to complete and format data.
  */
 class DataHelper {
+
+    private const RATINGS = array(0, 1, 2, 3, 4, 5, '-');
     
     /**
      * Gets all details regarding a specific book.
@@ -55,6 +57,28 @@ class DataHelper {
         }
 
         return $books;
+    }
+
+
+    /**
+     * Dynamically generates a dropdown that can be used to rate, re-rate or 
+     * un-rate a book.
+     * @param mixed $rating The rating to be selected.
+     */
+    static function createRatingDropdown(mixed $rating) {
+        $dropdown = '<select name="rating" id="rating"';
+
+        foreach (self::RATINGS as $r) {
+            if ($r == $rating) $selected = 'selected';
+            else $selected = null;
+
+            $dropdown .= '<option value="' . $r . '" ' . $selected . '>';
+            $dropdown .= "$r</option>";
+        }
+
+        $dropdown .= "</select>";
+
+        return $dropdown;
     }
 
     /**
