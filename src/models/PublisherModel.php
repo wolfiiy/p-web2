@@ -46,7 +46,7 @@ class PublisherModel extends DatabaseModel {
         $query = $this->queryPrepareExecute($sql, $binds);
 
         if(empty($query)){
-            return 0;
+            return $query = 0;
         }
         else{
         return $this->formatData($query)[0];
