@@ -62,18 +62,26 @@ class BookController extends Controller {
         if (isset($_GET['id'])) $id = $_GET['id'];
         else $id = 0;
 
-        // Clear post to allow refreshes
-        if (isset($_POST['rate'])) {
-            // TODO
-            // Handle rating server-side
-            header('Location: '.$_SERVER['HTTP_REFERER']);
-        }
-
         $bookModel = new BookModel();
         $userModel = new UserModel();
 
         $book = $bookModel->getBookById($id);
         $book = DataHelper::getOneBookDetails($book);
+
+        // Handle ratings
+        if (isset($_POST['rate'])) {
+            // Add rating to database
+            if (isset($_SESSION['id'])) {
+                $userModel->setBookRating(
+                    $id, 
+                    (int)$_SESSION['id'], 
+                    $_POST['rating']
+                );
+            }
+
+            // Clear post to allow refreshes
+            header('Location: '.$_SERVER['HTTP_REFERER']);
+        }
 
         $user = $userModel->getUserById($book['user_fk']);
 

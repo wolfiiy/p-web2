@@ -43,6 +43,27 @@ Class UserModel extends DatabaseModel {
     }
 
     /**
+     * Sets the user rating of a specific book.
+     * @param int $bookId Unique ID of the book.
+     * @param int $userId Unique ID of the user.
+     * @param int $rating Rating given by the user.
+     */
+    public function setBookRating(int $bookId, int $userId, int $rating) {
+        $sql = "
+            insert into review (book_fk, user_fk, grade)
+            values (:book_fk, :user_fk, :rating)
+        ";
+
+        $binds = array(
+            ':book_fk' => $bookId,
+            ':user_fk' => $userId,
+            ':rating' => $rating
+        );
+
+        $this->queryPrepareExecute($sql, $binds);
+    }
+
+    /**
      * Gets the rating submitted by the user on a specific book.
      * @param int $bookId Unique ID of the book.
      * @param int $userId Unique ID of the user.
