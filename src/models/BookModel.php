@@ -41,7 +41,7 @@ class BookModel extends DatabaseModel
     }
 
     /**
-     * Get x latest books
+     * Get latest books, with pagination and category filter
      * @param int $count Number of books to get
      * @param int $result Pagination offset
      * @param int $genre Category of books filter
@@ -49,7 +49,6 @@ class BookModel extends DatabaseModel
      */
     public function getLatestBooks(int $count, int $page = 1, int $genre = 0)
     {
-        error_log($genre);
         if ($genre != 0){
             $query = "SELECT * from t_book WHERE category_fk = :varCategory ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
             $binds = array(
@@ -63,6 +62,24 @@ class BookModel extends DatabaseModel
             $binds = array(
                 "varCount" => $count,
                 "varPage" => ($page-1)*$count,
+            );
+        }
+        
+        $req = $this->queryPrepareExecute($query, $binds);
+        if ($req) return $this -> formatData($req);
+        else return false;
+    }
+
+    public function resultCount (int $genre = 0){
+        if ($genre != 0){
+            $query = "SELECT COUNT(*) from t_book WHERE category_fk = :varCategory ORDER BY book_id";
+            $binds = array(
+                "varCategory" => $genre,
+            );
+        }
+        else{
+            $query = "SELECT COUNT(*) from t_book ORDER BY book_id";
+            $binds = array(
             );
         }
         

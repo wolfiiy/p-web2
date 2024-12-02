@@ -1,9 +1,7 @@
 <main>
-    <h1>Passion Lecture</h1>
-    <p>
-        Liste des oeuvres
-        </p>
-        <div class="label-input">
+    <h1>Liste des oeuvres</h1>
+
+
 
     <form id="genreForm" action="index.php">
     <input type="hidden" name="controller" value="book">
@@ -25,9 +23,11 @@
     </select>
     </form>
     
-</div>
-<?php
 
+<?php
+    if (count($books) == 0){
+        echo "<p>Aucun résultat</p>";
+    }
     foreach($books as $book){
         echo "<div class = 'book-preview'>";
         echo "<img src='https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'>";
@@ -39,7 +39,7 @@
 ?>
 <form action=""></form>
 <button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) echo "&page=" . $page-1?>"'><</button>
-<?php echo $page?> 
+<?php echo $page . " / " . $maxPage?> 
 <button onclick='window.location.href="index.php?controller=book&action=list<?php echo "&page=" . $page+1?>"'>></button>
 
 

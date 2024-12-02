@@ -35,13 +35,17 @@ class BookController extends Controller {
     }
 
     /**
-     * Display Index Action
+     * Display page with a list of most recent books with pagination
      *
      * @return string
      */
     private function listAction()
     {
         session_start();
+
+        define("RESULT_PER_PAGE", 10);
+
+        // Get categories for filter select
         include_once("../models/CategoryModel.php");
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
@@ -49,6 +53,7 @@ class BookController extends Controller {
         include_once('../models/BookModel.php');
         $bookModel = new BookModel();
         
+        // By default page 1
         if(!isset($_GET["page"])){
             $page = 1;
         }
@@ -56,6 +61,7 @@ class BookController extends Controller {
             $page = $_GET["page"];
         }
         
+        // If book category filter changed, change session variable
         if(isset($_GET["bookGenre"])){
             if ($_GET["bookGenre"] == 0){
                 unset($_SESSION["genreFilter"]);
@@ -65,16 +71,23 @@ class BookController extends Controller {
             }
         }
 
+        // Get latest book with category filter
         if (!isset($_SESSION["genreFilter"])){
-            $books = $bookModel->getLatestBooks(10, $page);
+            $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page);
+            $nbResult = $bookModel->resultCount()[0]["COUNT(*)"];
         }
         else{
-            $books = $bookModel->getLatestBooks(10, $page, $_SESSION["genreFilter"]);
+            $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page, $_SESSION["genreFilter"]);
+            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"])[0]["COUNT(*)"];
         }
+
+        // Get the total number of result and pages
+        error_log($nbResult);
+        $maxPage = round($nbResult/RESULT_PER_PAGE);
+        error_log($maxPage);
 
         $books = DataHelper::BookPreview($books);
         
-
         $view = file_get_contents('../views/listView.php');
 
 
