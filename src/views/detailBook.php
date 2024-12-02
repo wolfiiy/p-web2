@@ -15,8 +15,7 @@
             
             <p>
                 Auteur:
-                <?=$author['first_name']?>
-                <?=$author['last_name']?>
+                <?=$book['author_name']?>
             </p>
         
             <p>
@@ -26,7 +25,7 @@
         
             <p>
                 Editeur:
-                <?=$publisher['name']?>
+                <?=$book['publisher']?>
             </p>
 
             <p>
@@ -43,7 +42,7 @@
                 </p>
     
                 <p class="value">
-                    TODO
+                    <?=$book['average_rating']?>
                 </p>
             </div>
     
@@ -53,7 +52,7 @@
                 </p>
     
                 <p class="value">
-                    TODO
+                    <?=$book['category_name']?>
                 </p>
             </div>
     

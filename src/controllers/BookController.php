@@ -63,15 +63,11 @@ class BookController extends Controller {
         else $id = 0;
         
         $bookModel = new BookModel();
-        $publisherModel = new PublisherModel();
         $userModel = new UserModel();
-        $authorModel = new AuthorModel();
 
         $book = $bookModel->getBookById($id);
-        //$book = DataHelper::BookPreview($book);
+        $book = DataHelper::getOneBookDetails($book);
 
-        $publisher = $publisherModel->getPublisherById($book['publisher_fk']);
-        $author = $authorModel->getAuthorById($book['author_fk']);
         $user = $userModel->getUserById($book['user_fk']);
 
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);

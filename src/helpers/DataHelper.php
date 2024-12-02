@@ -25,9 +25,11 @@ class DataHelper {
         $authorModel = new AuthorModel();
         $categoryModel = new CategoryModel();
         $userModel = new UserModel();
+        $publisherModel = new PublisherModel();
 
         $book = self::fillDetails(
-            $book, $authorModel, $categoryModel, $reviewModel, $userModel
+            $book, $authorModel, $categoryModel, $publisherModel, 
+            $reviewModel, $userModel
         );
 
         return $book;
@@ -43,10 +45,12 @@ class DataHelper {
         $authorModel = new AuthorModel();
         $categoryModel = new CategoryModel();
         $userModel = new UserModel();
+        $publisherModel = new PublisherModel();
 
         foreach ($books as &$book){
             $book = self::fillDetails(
-                $book, $authorModel, $categoryModel, $reviewModel, $userModel
+                $book, $authorModel, $categoryModel, $publisherModel, 
+                $reviewModel, $userModel
             );
         }
 
@@ -67,8 +71,8 @@ class DataHelper {
      * @return TODO The book filled with its details.
      */
     private static function fillDetails($book, AuthorModel $authorModel, 
-        CategoryModel $categoryModel, ReviewModel $reviewModel,
-        UserModel $userModel) {
+        CategoryModel $categoryModel, PublisherModel $publisherModel, 
+        ReviewModel $reviewModel, UserModel $userModel) {
         // Get the average rating or use a placeholder text
         $bookRating = $reviewModel->getAverageRating($book["book_id"]);
                     
@@ -80,13 +84,17 @@ class DataHelper {
         // Convert date to printable format
         $book['release_date'] = FormatHelper::getFullDate($book['release_date']);
 
+        // TODO separate fields
         // Get the author's full name
         $author = $authorModel->getAuthorById($book["author_fk"]);
         $book["author_name"] = $author['first_name'] . " " . $author['last_name'];
 
+        $publisher = $publisherModel->getPublisherById($book['publisher_fk']);
+        $book['publisher'] = $publisher['name'];
+
         // Get category name
         $category = $categoryModel->getCateoryById($book["category_fk"]);
-        $book["category_name"] = $category["name"];
+        $book["category_name"] = ucfirst($category["name"]);
 
         // Get user who added the book
         $user = $userModel->getUserById($book["user_fk"]);
