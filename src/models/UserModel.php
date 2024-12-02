@@ -43,6 +43,33 @@ Class UserModel extends DatabaseModel {
     }
 
     /**
+     * Gets the rating submitted by the user on a specific book.
+     * @param int $bookId Unique ID of the book.
+     * @param int $userId Unique ID of the user.
+     * @return int The rating the user gave to the book.
+     */
+    public function getBookRating(int $bookId, int $userId) {
+        $sql = "
+            select * 
+            from review 
+            where book_fk = :book_fk
+            and user_fk = :user_dk
+        ";
+
+        $binds = array(
+            ':book_fk' => $bookId,
+            ':user_fk' => $userId
+        );
+
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        if ($query) 
+            return $this->formatData($query)[0];
+        else
+            return 0;
+    }
+
+    /**
      * Verification of data if the user exists.
      * @param string It is used to check if the user exists with its user
      * @return array|null Returns information about the existing user, such as the user and password.

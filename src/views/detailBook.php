@@ -1,6 +1,4 @@
 <main>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
     <h1>Détails de l'oeuvre</h1>
     <div id="details-content-wrap" class="content-wrap">
         <div class="cover wrap">
@@ -30,7 +28,7 @@
 
             <p>
                 Votre note:
-                TODO
+                <?=$userRating?>
                 <button type="button">Valider</button>
             </p>
         </div>

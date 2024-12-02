@@ -70,6 +70,10 @@ class BookController extends Controller {
 
         $user = $userModel->getUserById($book['user_fk']);
 
+        $userRating = isset($_SESSION['username']) 
+            ? $userModel->getBookRating($id, $_SESSION['id'])
+            : 0;
+
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);
 
         ob_start();
