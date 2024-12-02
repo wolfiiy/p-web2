@@ -120,7 +120,7 @@ class BookController extends Controller {
             if (isset($_SESSION['id'])) {
                 $userModel->setBookRating(
                     $id, 
-                    (int)$_SESSION['id'], 
+                    (int)$_SESSION['user_id'], 
                     $_POST['rating']
                 );
             }
@@ -132,7 +132,7 @@ class BookController extends Controller {
         $user = $userModel->getUserById($book['user_fk']);
 
         $userRating = isset($_SESSION['username']) 
-            ? $userModel->getBookRating($id, $_SESSION['id'])
+            ? $userModel->getBookRating($id, $_SESSION['user_id'])
             : '-';
 
         $dropdown = DataHelper::createRatingDropdown($userRating);
