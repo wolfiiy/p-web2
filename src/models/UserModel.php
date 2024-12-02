@@ -28,11 +28,4 @@ Class UserModel extends DatabaseModel {
 
         return $this->formatData($query)[0];
     }
-
-    public function getDetailUser($id)
-    {    
-        $req = $this->querySimpleExecute("SELECT * FROM t_user WHERE user_id = $id");
-        $detail = $this->formatData($req);
-        return $detail;
-    }
 }
