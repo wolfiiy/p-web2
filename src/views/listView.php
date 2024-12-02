@@ -4,16 +4,27 @@
         Liste des oeuvres
         </p>
         <div class="label-input">
+
+    <form id="genreForm" action="index.php">
+    <input type="hidden" name="controller" value="book">
+    <input type="hidden" name="action" value="list">
     <label for="bookGenre">Genre: </label>
-<!-- $genres sont récupéré dans le bookController et passé à cette vue -->
-    <select name="bookGenre" id="bookGenre">
-        <option value="all">Tous</option>
+    <!-- $genres sont récupéré dans le bookController et passé à cette vue -->
+    <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
+        <option value="0">Tous</option>
         <?php
-        foreach($genres as $genre){
-            echo "<option value='".$genre["category_id"]."'>" . $genre["name"] ."</option>";
+
+        foreach($genres as $genre){           
+            echo "<option value='".$genre["category_id"] . "' "; 
+            if (isset($_SESSION["genreFilter"])){
+                if ($genre["category_id"] == $_SESSION["genreFilter"]) {echo "selected";}
+            }
+            echo ">" . $genre["name"] ."</option>";
         }
         ?>
     </select>
+    </form>
+    
 </div>
 <?php
 
@@ -26,5 +37,11 @@
         echo "</div>";
     }
 ?>
+<form action=""></form>
+<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) echo "&page=" . $page-1?>"'><</button>
+<?php echo $page?> 
+<button onclick='window.location.href="index.php?controller=book&action=list<?php echo "&page=" . $page+1?>"'>></button>
+
+
 
     </main>

@@ -45,4 +45,31 @@ class UserController extends Controller {
 
         return $content;
     }
+
+    /**
+     * Login page user
+     *
+     * @return string
+     */
+    private function loginAction($userAttemp, $passAttemp) {
+
+        include_once('../models/UserModel.php');
+        $usermodel = new UserModel();
+        // Values
+        $userCredentials = $usermodel->checkUser($userAttemp);
+
+        if($userCredentials != "")
+        {
+            foreach($userCredentials as $credentials)
+            {
+                if($credentials['username'] === $userAttemp && $credentials['pass'] === $passAttemp)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false; // If false, user dont exists
+
+    }
 }

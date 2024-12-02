@@ -19,7 +19,7 @@ body {
 }
 
 main {
-    margin: auto;
+    margin: 2em auto;
     width: 100ch;
 }
 
@@ -35,9 +35,13 @@ h1 {
 .button {
     display: inline-block;
     padding: 1ch 2ch;
-    width: fit-content;
+    box-sizing: border-box;
+    width: 100%;
     border-radius: 3px;
+    
     text-decoration: none;
+    color: black;
+    text-align: center;
 }
 
 .button.accent {
@@ -58,8 +62,25 @@ h1 {
 .overview {
 }
 
+.data.wrap {
+    gap: 1em;
+}
+
+.data-set {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 0.2em;
+}
+
 .data .type {
+    margin: 0;
     font-size: 0.72em;
+}
+
+.data .value {
+    margin: 0;
+    width: 100%;
 }
 
 .description {

@@ -7,10 +7,12 @@
  * Description: Controller used for pages dedicated to books.
  */
 
-include('../models/AuthorModel.php');
-include('../models/BookModel.php');
-include('../models/PublisherModel.php');
-include('../models/UserModel.php');
+include_once('../helpers/DataHelper.php');
+include_once('../helpers/FormatHelper.php');
+include_once('../models/AuthorModel.php');
+include_once('../models/BookModel.php');
+include_once('../models/PublisherModel.php');
+include_once('../models/UserModel.php');
 
 class BookController extends Controller {
 
@@ -39,14 +41,39 @@ class BookController extends Controller {
      */
     private function listAction()
     {
+        session_start();
         include_once("../models/CategoryModel.php");
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
 
         include_once('../models/BookModel.php');
-        $bookModel = new BookModel();       
-        $books = $bookModel->getLatestBooks(5);
-        $books = $this->BookPreview($latestBooks);
+        $bookModel = new BookModel();
+        
+        if(!isset($_GET["page"])){
+            $page = 1;
+        }
+        else{
+            $page = $_GET["page"];
+        }
+        
+        if(isset($_GET["bookGenre"])){
+            if ($_GET["bookGenre"] == 0){
+                unset($_SESSION["genreFilter"]);
+            }
+            else{
+                $_SESSION["genreFilter"] = $_GET["bookGenre"];
+            }
+        }
+
+        if (!isset($_SESSION["genreFilter"])){
+            $books = $bookModel->getLatestBooks(10, $page);
+        }
+        else{
+            $books = $bookModel->getLatestBooks(10, $page, $_SESSION["genreFilter"]);
+        }
+
+        $books = DataHelper::BookPreview($books);
+        
 
         $view = file_get_contents('../views/listView.php');
 
@@ -70,14 +97,13 @@ class BookController extends Controller {
         else $id = 0;
         
         $bookModel = new BookModel();
-        $publisherModel = new PublisherModel();
         $userModel = new UserModel();
-        $authorModel = new AuthorModel();
 
         $book = $bookModel->getBookById($id);
-        $publisher = $publisherModel->getPublisherById($book['publisher_fk']);
-        $author = $authorModel->getAuthorById($book['author_fk']);
+        $book = DataHelper::getOneBookDetails($book);
+
         $user = $userModel->getUserById($book['user_fk']);
+
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);
 
         ob_start();

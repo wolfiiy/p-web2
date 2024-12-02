@@ -15,18 +15,17 @@
             
             <p>
                 Auteur:
-                <?=$author['first_name']?>
-                <?=$author['last_name']?>
+                <?=$book['author_name']?>
             </p>
         
             <p>
                 Date de sortie:
-                <?=$book['release_date']?>
+                <?=$book['release_date'];?>
             </p>
         
             <p>
                 Editeur:
-                <?=$publisher['name']?>
+                <?=$book['publisher']?>
             </p>
 
             <p>
@@ -43,7 +42,7 @@
                 </p>
     
                 <p class="value">
-                    TODO
+                    <?=$book['average_rating']?>
                 </p>
             </div>
     
@@ -53,7 +52,7 @@
                 </p>
     
                 <p class="value">
-                    TODO
+                    <?=$book['category_name']?>
                 </p>
             </div>
     
@@ -96,7 +95,7 @@
                     <a href="" class="button accent">Modifier</a>
                 </p>
                 
-                <p>
+                <p class="value">
                     <a href="" class="button red">Supprimer</a>
                 </p>
             </div>
