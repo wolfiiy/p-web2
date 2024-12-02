@@ -74,11 +74,11 @@ class BookController extends Controller {
         // Get latest book with category filter
         if (!isset($_SESSION["genreFilter"])){
             $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page);
-            $nbResult = $bookModel->resultCount()[0]["COUNT(*)"];
+            $nbResult = $bookModel->resultCount();
         }
         else{
             $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page, $_SESSION["genreFilter"]);
-            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"])[0]["COUNT(*)"];
+            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"]);
         }
 
         // Get the total number of result and pages

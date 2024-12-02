@@ -70,6 +70,12 @@ class BookModel extends DatabaseModel
         else return false;
     }
 
+
+    /**
+     * Get the total number of books in total or in category
+     * @param int $genre Category of books filter
+     * @return int Number of book
+     */
     public function resultCount (int $genre = 0){
         if ($genre != 0){
             $query = "SELECT COUNT(*) from t_book WHERE category_fk = :varCategory ORDER BY book_id";
@@ -84,7 +90,7 @@ class BookModel extends DatabaseModel
         }
         
         $req = $this->queryPrepareExecute($query, $binds);
-        if ($req) return $this -> formatData($req);
+        if ($req) return $this -> formatData($req)[0]["COUNT(*)"];
         else return false;
     }
 
