@@ -15,8 +15,8 @@ class HomeController extends Controller {
      */
     public function display() {
 
+        include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
-
         return call_user_func(array($this, $action));
     }
 
@@ -29,6 +29,9 @@ class HomeController extends Controller {
 
         
         include_once('../models/BookModel.php');
+
+        var_dump(isUserConnected());
+
         $bookModel = new BookModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);

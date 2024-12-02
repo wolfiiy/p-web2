@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Auteur : Cindy Hardegger
  * Date: 18.11.2024
@@ -15,7 +16,6 @@ abstract class Controller {
     public function display() {
 
         $page = $_GET['action'] . "Display";
-
         $this->$page();
     }
 }

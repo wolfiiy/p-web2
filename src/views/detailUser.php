@@ -1,9 +1,7 @@
-<pre>
-<?php var_dump($valUser); ?>
-</pre>
+<main>
 Détail user
 <p>
-    Profil de <?= $valUser["username"] ?>
+    Profil de <?= $_SESSION['username'] ?>
 </p>
 <p>
     Membre depuis le <?= $valUser["sign_up_date"] ?>
@@ -14,4 +12,5 @@ Détail user
 <p>
     A donné son avis sur (nbFeedback) livres
 </p>
+</main>
 
