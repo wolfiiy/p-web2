@@ -8,18 +8,13 @@
 
         <button onclick="location.href='index.php?controller=book&action=add';" style="cursor: pointer;" >Ajouter une oeuvre</button>
 
+        <?php 
+        if (isUserConnected()) {?>
         <button onclick="location.href='index.php?controller=user&action=detail';" style="cursor: pointer;" >UserDetail Test</button>
-    
-        <a href="index.php?controller=book&action=detail&id=1">DETAILS DEBUG</a>
-
-        <form>
-            <label for="username">Nom d'utilisateur: </label>
-            <input type="text" name="username" id="username" required>
-            <label for="password">Mot de passe: </label>
-            <input type="password" name="password" id="password" required>
-            <input type ="submit" style="cursor: pointer;" value="Connexion"/>       
-        </form>
-        <button onclick="location.href='login.php?controller=user&action=login';">Connexion</button>
+        <button onclick="location.href='index.php?controller=user&action=logout';" style="cursor: pointer;" >Deconnexion</button>
+        <?php }else{ ?>
+        <button onclick="location.href='index.php?controller=user&action=login';" style="cursor: pointer;" >Connexion</button>
+        <?php }?>
     </nav>
     <hr>
 </header>

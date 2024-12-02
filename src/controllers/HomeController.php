@@ -17,6 +17,7 @@ class HomeController extends Controller {
      * @return mixed A callback to a function.
      */
     public function display() {
+        include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
         return call_user_func(array($this, $action));
     }
@@ -28,6 +29,9 @@ class HomeController extends Controller {
     private function indexAction() {
         include_once('../helpers/DataHelper.php');
         include_once('../models/BookModel.php');
+
+        var_dump(isUserConnected());
+
         $bookModel = new BookModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);

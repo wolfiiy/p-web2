@@ -92,9 +92,9 @@ Class UserModel extends DatabaseModel {
 
     /**
      * Verification of data if the user exists.
-     * @param string It is used to check if the user exists with its user
+     * @param string $userAttemp used to find the requested user
      * @return array|null Returns information about the existing user, such as the user and password.
-     * if not found it returns false
+     * if not found it returns null
      */
     public function checkUser($userAttemp) {
         $users = $this->getAllUsers();
@@ -102,12 +102,13 @@ Class UserModel extends DatabaseModel {
         {
             if($user['username'] === $userAttemp)
             {
-                return $user['username'] && $user['pass'];
-            }
-            else
-            {
-                return null;
+                $credentials['user_id'] = $user['user_id'];
+                $credentials['username'] = $user['username'];
+                $credentials['pass'] = $user['pass'];
+                $credentials['sign_up_date'] = $user['is_admin'];
+                return $credentials;
             }
         }
+        return null;
     }
 }
