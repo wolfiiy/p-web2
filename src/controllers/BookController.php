@@ -100,20 +100,33 @@ class BookController extends Controller {
     private function addInsert(){
         include_once("../models/BookModel.php");
         include_once("../models/PublisherModel.php");
+        include_once("../models/AuthorModel.php");
 
         $addBook = new BookModel();
         $addPublisher = new PublisherModel();
+        $addAuthor = new AuthorModel();
 
         // Controler si l'éditeur existe déja 
         $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
         //Créer un éditeur s'il n'existe pas
-        if($id = 0)
+        if($idPublisher = 0)
         {
             $publisher = $addPublisher->insertAuthor($_POST["bookEditor"]);
             $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
         }
+
+        //Controler si l'auteur exite déjà
+        $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstname"], $_POST["authorLastName"]);
+
+        //Créer l'autheur s'il n'existe pas
+        if ($idAuthor = 0){
+            $author = $addAuthor->insertAuthor($_POST["authorFirstname"], $_POST["authorLastName"]);
+            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstname"], $_POST["authorLastName"]);
+        }
+        
         //$addBook ->insertBook();
+    
     }
 
     private function textController($info)

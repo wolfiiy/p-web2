@@ -44,4 +44,20 @@ Class AuthorModel extends DatabaseModel {
 
         return;
     }
+
+    public function getAuthorByNameAndFirstname(string $firstname, string $lastname){
+        $sql = "SELECT author_id FROM t_author WHERE first_name = :fistname AND last_name = :lastname";
+        $binds = array(
+            ":fistname" => $firstname,
+            ":lastname" => $lastname
+        );
+        $query = $this->queryPrepareExecute($sql,$binds);
+
+        if (empty($query)){
+            return $query = 0;
+        }
+        else{
+            return $this->formatData($query)[0];
+        }
+    }
 }
