@@ -39,8 +39,17 @@ class BookController extends Controller {
      */
     private function listAction()
     {
+        include_once("../models/CategoryModel.php");
+        $categoryModel = new CategoryModel();
+        $genres = $categoryModel->getAllCategory();
 
-        $view = file_get_contents('../views/indexView.php');
+        include_once('../models/BookModel.php');
+        $bookModel = new BookModel();       
+        $books = $bookModel->getLatestBooks(5);
+        $books = $this->BookPreview($latestBooks);
+
+        $view = file_get_contents('../views/listView.php');
+
 
         ob_start();
         eval('?>' . $view);
