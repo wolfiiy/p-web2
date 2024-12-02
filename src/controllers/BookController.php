@@ -125,6 +125,12 @@ class BookController extends Controller {
             $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstname"], $_POST["authorLastName"]);
         }
         
+        //téléchargement et traitement des images
+        $source = $_FILES["coverImage"]["tmp_name"];
+        $destination = "../public/img/cover/".$_FILES["coverImage"]["name"];
+        move_uploaded_file($source,$destination);
+        
+
         //$addBook ->insertBook();
     
     }
