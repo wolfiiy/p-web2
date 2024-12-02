@@ -89,9 +89,6 @@ class BookController extends Controller {
             ? $userModel->getBookRating($id, $_SESSION['id'])
             : '-';
 
-        // Debug
-        $userRating = 3;
-
         $dropdown = DataHelper::createRatingDropdown($userRating);
 
         $view = file_get_contents(self::PATH_TO_BOOK_DETAILS);

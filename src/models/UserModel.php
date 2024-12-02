@@ -46,9 +46,9 @@ Class UserModel extends DatabaseModel {
      * Sets the user rating of a specific book.
      * @param int $bookId Unique ID of the book.
      * @param int $userId Unique ID of the user.
-     * @param int $rating Rating given by the user.
+     * @param mixed $rating Rating given by the user.
      */
-    public function setBookRating(int $bookId, int $userId, int $rating) {
+    public function setBookRating(int $bookId, int $userId, mixed $rating) {
         $sql = "
             insert into review (book_fk, user_fk, grade)
             values (:book_fk, :user_fk, :rating)
