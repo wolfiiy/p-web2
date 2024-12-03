@@ -32,24 +32,26 @@ class PublisherModel extends DatabaseModel {
      * Insert a new publisher in the database
      * @param string $name Publisher's name
      */
-    public function insertAuthor(string $name){
-        $sql = "insert into t_publisher (name) VALUES (:name)";
+    public function insertPublisher(string $name){
+        $sql = "insert into t_publisher (`name`) VALUES (:name)";
         $binds = array('name'=> $name);
         $query = $this->queryPrepareExecute($sql, $binds);
-
-        return;
     }
 
     public function getPublisherByName(string $namePublisher){
-        $sql = "SELECT publisher_id FROM t_publisher WHERE  name = :name";
+        $sql = "SELECT publisher_id FROM t_publisher WHERE name = :name";
         $binds = array("name" => $namePublisher);
+
+        // $query = $this->querySimpleExecute($sql);
         $query = $this->queryPrepareExecute($sql, $binds);
 
-        if(empty($query)){
-            return $query = 0;
+        $publisher = $this->formatData($query);
+
+        if(empty($publisher)){
+            return 0;
         }
-        else{
-        return $this->formatData($query)[0];
+        else {
+            return (int) $publisher[0]["publisher_id"];
         }
     }
 

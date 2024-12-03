@@ -35,7 +35,7 @@ Class AuthorModel extends DatabaseModel {
      * @param string $lastName Author's last name
      */
     public function insertAuthor(string $firstName, string $lastName){
-        $sql = "INSERT into t_author (first_name, last_name) VALUES (:first_name, :last_name)";
+        $sql = "INSERT into t_author (`first_name`, `last_name`) VALUES (:first_name, :last_name)";
         $binds = array(
             'first_name'=> $firstName,
             'last_name' => $lastName,
@@ -51,13 +51,16 @@ Class AuthorModel extends DatabaseModel {
             "fistname" => $firstname,
             "lastname" => $lastname
         );
+
         $query = $this->queryPrepareExecute($sql,$binds);
 
-        if (empty($query)){
-            return $query = 0;
+        $author = $this->formatData($query);
+
+        if (empty($author)){
+            return 0;
         }
         else{
-            return $this->formatData($query)[0];
+            return (int)$author[0]["author_id"];
         }
     }
 }

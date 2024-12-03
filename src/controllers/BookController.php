@@ -108,24 +108,23 @@ class BookController extends Controller
         $addBook = new BookModel();
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") 
-        {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Controler si l'éditeur existe déja 
             $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
             //Créer un éditeur s'il n'existe pas
-            if ($idPublisher = 0) {
-                $publisher = $addPublisher->insertAuthor($_POST["bookEditor"]);
-                $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
+            if ($idPublisher === 0) {
+                $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
+                $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
             }
 
             //Controler si l'auteur exite déjà
             $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
 
             //Créer l'autheur s'il n'existe pas
-            if ($idAuthor = 0) {
+            if ($idAuthor === 0) {
                 $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
-                $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
             }
 
             //téléchargement et traitement des images
@@ -137,9 +136,9 @@ class BookController extends Controller
             $user_fk = 1;
 
             //ajout d'un livre
-             $addBook ->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
-            
-             header('Location: index.php?controller=book&action=add');
+            $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
+
+            header('Location: index.php?controller=book&action=add');
         }
     }
 

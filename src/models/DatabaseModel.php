@@ -96,17 +96,19 @@ class DatabaseModel {
      * of the query if it succeeded, false otherwise.
      */
     protected function queryPrepareExecute(string $query, $binds) {
+
         try {
             // Prepare the SQL query string by protecting it against SQL
             // injections and binding values
             $req = $this -> connector -> prepare($query);
             foreach ($binds as $name => $value) {
-                $req -> bindValue($name, $value, PDO::PARAM_INT);
+                $req -> bindValue($name, $value, PDO::PARAM_STR);
             }
 
             // Return the request only if successful
-            if ($req -> execute()) return $req;
-            else return false;
+            $req -> execute(); 
+            return $req;
+            // else return false;
         } catch (PDOException $e) {
             // Log any PDO-related exceptions
             error_log(

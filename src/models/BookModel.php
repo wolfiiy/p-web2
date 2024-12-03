@@ -67,7 +67,10 @@ class BookModel extends DatabaseModel
      * @param int $authorFk Id of the book's author
      */
     public function insertBook(string $title, string $exerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
-        $sql = "INSERT INTO t_book (title, excerpt, summary, release_date, cover_image, number_of_pages, user_fk, category_fk, publisher_fk, author_fk) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+
+    
+        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+
         $binds = array(
             'title'=> $title,
             'exerpt' => $exerpt,
