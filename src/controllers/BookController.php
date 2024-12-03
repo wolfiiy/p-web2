@@ -64,14 +64,9 @@ class BookController extends Controller {
             $page = $_GET["page"];
         }
         
-        // If book category filter changed, change session variable
-        if(isset($_GET["bookGenre"])){
-            if ($_GET["bookGenre"] == 0){
-                unset($_SESSION["genreFilter"]);
-            }
-            else{
-                $_SESSION["genreFilter"] = $_GET["bookGenre"];
-            }
+        // By default all types of book and no title string search
+        if (!isset($_GET["bookGenre"])){
+            $_GET["bookGenre"] = 0;
         }
         if (!isset($_GET["searchName"])){
             $_GET["searchName"] = "";
@@ -79,13 +74,13 @@ class BookController extends Controller {
 
         // Get latest book with category filter and name filter
         // Get total number of result for pagination
-        if (!isset($_SESSION["genreFilter"])){
+        if ($_GET["bookGenre"] == 0){
             $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, keyword:$_GET["searchName"]);
             $nbResult = $bookModel->resultCount(keyword: $_GET["searchName"]);
         }
         else{
-            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, $_SESSION["genreFilter"], keyword:$_GET["searchName"]);
-            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"], keyword: $_GET["searchName"]);
+            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, $_GET["bookGenre"], keyword:$_GET["searchName"]);
+            $nbResult = $bookModel->resultCount($_GET["bookGenre"], keyword: $_GET["searchName"]);
         }
 
         // Get the total number of result and pages
