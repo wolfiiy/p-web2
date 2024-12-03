@@ -7,7 +7,6 @@
     <input type="hidden" name="controller" value="book">
     <input type="hidden" name="action" value="list">
     <label for="bookGenre">Genre: </label>
-    <!-- $genres sont récupéré dans le bookController et passé à cette vue -->
     <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
         <option value="0">Tous</option>
         <?php
@@ -38,9 +37,11 @@
     }
 ?>
 <form action=""></form>
-<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) echo "&page=" . $page-1?>"'><</button>
+<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) {echo "&page=1\"'";} else {echo '\'" disabled ';} ?>><<</button>
+<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) {echo "&page=" . $page-1 . "\"'";} else {echo '\'" disabled ';} ?>><</button>
 <?php echo $page . " / " . $maxPage?> 
-<button onclick='window.location.href="index.php?controller=book&action=list<?php echo "&page=" . $page+1?>"'>></button>
+<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page<$maxPage) {echo "&page=" . $page+1 . "\"'";} else {echo '\'" disabled';} ?>>></button>
+<button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page<$maxPage) {echo "&page=" . $maxPage . "\"'";} else {echo '\'" disabled';} ?>>>></button>
 
 
 

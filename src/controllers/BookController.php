@@ -82,9 +82,10 @@ class BookController extends Controller {
         }
 
         // Get the total number of result and pages
-        error_log($nbResult);
         $maxPage = round($nbResult/RESULT_PER_PAGE);
-        error_log($maxPage);
+
+        // Entre 0 et RESULT_PER_PAGE, une seule page
+        if ($maxPage == 0) $maxPage = 1;
 
         $books = DataHelper::BookPreview($books);
         
