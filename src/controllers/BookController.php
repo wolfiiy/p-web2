@@ -44,6 +44,8 @@ class BookController extends Controller {
 
         define("RESULT_PER_PAGE", 10);
 
+        include_once('../helpers/HtmlWriter.php');
+
         // Get categories for filter select
         include_once("../models/CategoryModel.php");
         $categoryModel = new CategoryModel();

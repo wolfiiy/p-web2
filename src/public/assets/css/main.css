@@ -1,7 +1,9 @@
 :root {
     /* Logo colors */
     --accent: #66dfd0;
-    --complement: #fc5f4c
+    --complement: #fc5f4c;
+    --background: #ffe5d9;
+    --foreground: #ebd5c2;
 }
 
 /*
@@ -10,6 +12,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color: var(--background);
 }
 
 body {
@@ -71,9 +74,10 @@ h1 {
  * Main preview container
  */
 .preview {
-    margin: 1ch 0;
-    border: 1px solid black;
+    margin: 1.5ch 0;
     gap: 2ch;
+
+    background-color: var(--foreground);
 }
 
 .preview img {

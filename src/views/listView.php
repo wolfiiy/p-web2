@@ -28,14 +28,8 @@
     if (count($books) == 0){
         echo "<p>Aucun résultat</p>";
     }
-    foreach($books as $book){
-        echo "<div class = 'book-preview'>";
-        echo "<img src='https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'>";
-        echo "<div>". $book["title"] . '<br>'. $book["author_name"]. "<br>". $book["category_name"]."</div>";
-        echo "<div>". $book["average_rating"] . '<br>'. $book["username_name"]. "<br>". "<a href = 'index.php?controller=book&action=detail&id=". $book["book_id"] ."'>Détails</a>"."</div>";
 
-        echo "</div>";
-    }
+    HtmlWriter::writeBooksPreview($books);
 ?>
 <form action=""></form>
 <button onclick='window.location.href="index.php?controller=book&action=list<?php if ($page>1) echo "&page=" . $page-1?>"'><</button>
