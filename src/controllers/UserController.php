@@ -54,6 +54,7 @@ class UserController extends Controller {
 
         include_once('../models/UserModel.php');
         $usermodel = new UserModel();
+        $bookmodel = new BookModel();
         $view = file_get_contents('../views/login.php'); 
         ob_start();
         eval('?>' . $view);
@@ -63,19 +64,29 @@ class UserController extends Controller {
         {
             // Values
             $userCredentials = $usermodel->checkUser($_POST['userAttemp']); // Real credentials
+            
 
             if($userCredentials)
             {
+                // Values of Books
+                $userPublishedBook = $bookmodel->countUserPublishedBookById($userCredentials['user_id']);
+                $userReviewedBook = $bookmodel->countUserReviewBookById($userCredentials['user_id']);
+
+
+
                 // TODO: hashed passwords must be stored
                 if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
                 {
-                    // Stocke les infos de l'user dans la session
+                    // Stores user info in session
                     $_SESSION['username'] = $userCredentials['username'];
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['user_id'] = $userCredentials['user_id'];
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['sign_up_date'] = $userCredentials['sign_up_date']; 
                     $_SESSION['is_admin'] = $userCredentials['is_admin']; // or use the value on helpers/utils.php
+                    $_SESSION['book_having'] = $userPublishedBook[0]["count(*)"];
+                    $_SESSION['book_review'] = $userReviewedBook[0]["count(*)"];
+
                     // From here, we can consider our user connected to the app
                     header('Location: index.php?controller=user&action=detail');
                     return true;
@@ -98,6 +109,8 @@ class UserController extends Controller {
                 <?php 
             }
         }
+
+
     
         // To display the login page if the form has not been completed correctly
         return $content;
