@@ -17,6 +17,8 @@ include_once('../models/UserModel.php');
 class DataHelper {
 
     private const RATINGS = array(0, 1, 2, 3, 4, 5, '-');
+    private const NB_DECIMALS = 2;
+    private const DECIMAL_SEPARATOR = '.';
     
     /**
      * Gets all details regarding a specific book.
@@ -101,7 +103,10 @@ class DataHelper {
         $bookRating = $reviewModel->getAverageRating($book["book_id"]);
                     
         if (!is_null($bookRating)) 
-            $book["average_rating"] = $bookRating;
+            $book["average_rating"] = number_format(
+                                        $bookRating, 
+                                        self::NB_DECIMALS, 
+                                        self::DECIMAL_SEPARATOR);
         else 
             $book["average_rating"] = Constants::NO_RATING;
 

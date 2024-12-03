@@ -1,7 +1,9 @@
 :root {
     /* Logo colors */
     --accent: #66dfd0;
-    --complement: #fc5f4c
+    --complement: #fc5f4c;
+    --background: #ffe5d9;
+    --foreground: #ebd5c2;
 }
 
 /*
@@ -10,6 +12,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color: var(--background);
 }
 
 body {
@@ -20,16 +23,27 @@ body {
 
 main {
     margin: 2em auto;
-    width: 100ch;
+    width: 90ch;
 }
 
 h1 {
     text-align: center;
 }
 
+/* TODO: coherence (wrap-col) */
 .wrap {
     display: flex;
     flex-flow: column nowrap;
+}
+
+.wrap-col {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.wrap-row {
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .button {
@@ -53,10 +67,48 @@ h1 {
 }
 
 /*
+ * BOOK PREVIEW
+ */
+
+/*
+ * Main preview container
+ */
+.preview {
+    margin: 1.5ch 0;
+    gap: 2ch;
+
+    background-color: var(--foreground);
+}
+
+.preview img {
+    height: 100%;
+}
+
+.preview-content {
+    justify-content: center;
+    height: auto;
+}
+
+/*
+ * Container for title, author name and category.
+ */
+.preview-about {
+    width: 100%;
+}
+
+/*
+ * Container for the average rating, "added by" and details url.
+ */
+.preview-community {
+    height: fit-content;
+    gap: 2ch;
+    width: 100%;
+}
+
+/*
  * Book details
  */
 .cover {
-    padding: auto;
 }
 
 .overview .rating {
@@ -147,16 +199,4 @@ ul.no-bullets {
 .label-input{
     display: flex;
     justify-content: space-between;
-}
-
-.book-preview{
-    margin-bottom: 5px;
-    border: 1px solid black;
-    padding: 5px;;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
-}
-
-.book-preview img{
-    height: 60px;
 }
