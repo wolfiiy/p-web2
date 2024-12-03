@@ -23,7 +23,7 @@ Class UserModel extends DatabaseModel {
      */
     public function getUserById(int $id) {
         $sql = "select * from t_user where user_id = :user_id";
-        $binds = array(':user_id' => $id);
+        $binds = array('user_id' => $id);
         $query = $this->queryPrepareExecute($sql, $binds);
 
         return $this->formatData($query)[0];

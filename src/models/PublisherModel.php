@@ -22,7 +22,7 @@ class PublisherModel extends DatabaseModel {
      */
     public function getPublisherById(int $id) {
         $sql = "select * from t_publisher where publisher_id = :publisher_id";
-        $binds = array(':publisher_id' => $id);
+        $binds = array('publisher_id' => $id);
         $query = $this->queryPrepareExecute($sql, $binds);
 
         return $this->formatData($query)[0];
@@ -34,7 +34,7 @@ class PublisherModel extends DatabaseModel {
      */
     public function insertAuthor(string $name){
         $sql = "insert into t_publisher (name) VALUES (:name)";
-        $binds = array(':name'=> $name);
+        $binds = array('name'=> $name);
         $query = $this->queryPrepareExecute($sql, $binds);
 
         return;
@@ -42,7 +42,7 @@ class PublisherModel extends DatabaseModel {
 
     public function getPublisherByName(string $namePublisher){
         $sql = "SELECT publisher_id FROM t_publisher WHERE  name = :name";
-        $binds = array(":name" => $namePublisher);
+        $binds = array("name" => $namePublisher);
         $query = $this->queryPrepareExecute($sql, $binds);
 
         if(empty($query)){
