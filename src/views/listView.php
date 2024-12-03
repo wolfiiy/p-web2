@@ -13,9 +13,7 @@
         <?php
         foreach($genres as $genre){           
             echo "<option value='".$genre["category_id"] . "' "; 
-            if (isset($_SESSION["genreFilter"])){
-                if ($genre["category_id"] == $_SESSION["genreFilter"]) {echo "selected";}
-            }
+            if ($genre["category_id"] == $_GET["bookGenre"]) {echo "selected";}
             echo ">" . $genre["name"] ."</option>";
         }
         ?>
@@ -54,12 +52,10 @@
 
 <!-- Pagination buttons -->
 <form action=""></form>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"]; if ($page>1) {echo "&page=1\"'";} else {echo '\'" disabled ';} ?>><<</button>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"]; if ($page>1) {echo "&page=" . $page-1 . "\"'";} else {echo '\'" disabled ';} ?>><</button>
+<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=1\"'";} else {echo '\'" disabled ';} ?>><<</button>
+<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=" . $page-1 . "\"'";} else {echo '\'" disabled ';} ?>><</button>
 <?php echo $page . " / " . $maxPage?> 
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"]; if ($page<$maxPage) {echo "&page=" . $page+1 . "\"'";} else {echo '\'" disabled';} ?>>></button>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"]; if ($page<$maxPage) {echo "&page=" . $maxPage . "\"'";} else {echo '\'" disabled';} ?>>>></button>
+<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $page+1 . "\"'";} else {echo '\'" disabled';} ?>>></button>
+<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $maxPage . "\"'";} else {echo '\'" disabled';} ?>>>></button>
 
-
-
-    </main>
+</main>
