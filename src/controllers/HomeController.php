@@ -28,9 +28,10 @@ class HomeController extends Controller {
      */
     private function indexAction() {
         include_once('../helpers/DataHelper.php');
+        include_once('../helpers/HtmlWriter.php');
         include_once('../models/BookModel.php');
 
-        var_dump(isUserConnected());
+        // var_dump(isUserConnected());
 
         $bookModel = new BookModel();
         

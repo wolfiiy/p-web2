@@ -8,9 +8,11 @@
         </p>
 <?php
 
+    HtmlWriter::writeBooksPreview($latestBooks);
+
     foreach($latestBooks as $book){
         echo "<div class = 'book-preview'>";
-        echo "<img src='https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'>";
+        echo "<img src='assets/img/placeholders/cover-placeholder.png'>";
         echo "<div>". $book["title"] . '<br>'. $book["author_name"]. "<br>". $book["category_name"]."</div>";
         echo "<div>". $book["average_rating"] . '<br>'. $book["username_name"]. "<br>". "<a href = 'index.php?controller=book&action=detail&id=". $book["book_id"] ."'>Détails</a>"."</div>";
 
