@@ -128,9 +128,41 @@ class BookController extends Controller
             }
 
             //téléchargement et traitement des images
+            if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
+                die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
+            }
+
+            // Vérifier la taille du fichier (limite : 2 Mo)
+            if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
+                die("Erreur : Le fichier est trop volumineux.");
+            }
+
+            // Vérifier le type MIME du fichier
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
+                die("Erreur : Type de fichier non autorisé.");
+            }
+
+            // Récupérer l'extension du fichier original
+            $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
+
+            // Générer un nom de fichier unique et court
+            $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
+
+            // Définir le chemin de destination
+            $destination = "../public/assets/img/cover/" . $filename;
+
+            // Définir la source du fichier temporaire
             $source = $_FILES["coverImage"]["tmp_name"];
-            $destination = "../public/assets/img/cover/" . $_FILES["coverImage"]["tmp_name"];
-            move_uploaded_file($source, $destination);
+
+            // Déplacer le fichier
+            $result = move_uploaded_file($source, $destination);
+            if (!$result) {
+                die("Erreur : Impossible de déplacer le fichier téléchargé.");
+            }
+
+            // Débogage pour confirmer le chemin final
+            error_log("Fichier téléchargé avec succès : " . $destination);
 
             //TODO: utilisateur défini pour les test
             $user_fk = 1;
