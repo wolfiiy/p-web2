@@ -40,7 +40,6 @@ class BookController extends Controller {
      */
     private function listAction()
     {
-        session_start();
 
         define("RESULT_PER_PAGE", 10);
 

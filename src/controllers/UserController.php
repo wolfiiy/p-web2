@@ -5,8 +5,7 @@
  * Date: 18.11.2024
  * Controler pour les pages liées aux utilisateurs
  */
-
-
+include_once('../helpers/utils.php');
 
 class UserController extends Controller {
 
@@ -18,7 +17,6 @@ class UserController extends Controller {
      * @return mixed
      */
     public function display() {
-
         include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
         return call_user_func(array($this, $action));

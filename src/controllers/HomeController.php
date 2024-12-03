@@ -6,6 +6,7 @@
  */
 
 include_once('../models/ConstantsModel.php');
+include_once('../helpers/utils.php');
 
 /**
  * Home page controller.

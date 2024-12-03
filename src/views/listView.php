@@ -1,8 +1,6 @@
 <main>
     <h1>Liste des oeuvres</h1>
 
-
-
     <form id="genreForm" action="index.php">
     <input type="hidden" name="controller" value="book">
     <input type="hidden" name="action" value="list">
