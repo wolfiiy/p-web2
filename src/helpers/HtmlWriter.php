@@ -11,6 +11,8 @@
  */
 class HtmlWriter {
     
+    // TODO writeCompactBookPreview, to use on the browse page
+
     /**
      * Writes the required HTML to display a book's preview.
      * @param array $book An array containing the book's details.
@@ -18,23 +20,27 @@ class HtmlWriter {
     public static function writeBookPreview(array $book) {
         $html = "";
 
-        $html .= '<div class="book-preview">';
+        $html .= '<div class="preview wrap-row">';
+        $html .= '<div class="cover">';
         $html .= '<img src="assets/img/placeholders/cover-placeholder.png">';
-
-        $html .= '<div class="book-preview-about">';
-        $html .= $book['title'];
-        $html .= $book['author_name'];
-        $html .= $book['category_name'];
         $html .= '</div>';
 
-        $html .= '<div class="book-preview-passion-lecture">';
-        $html .= $book['average_rating'];
-        $html .= $book['username_name'];
-        $html .= '<a href="index.php?controller=book&action=detail&id=';
+        $html .= '<div class="preview-content wrap-col">';
+        $html .= '<div class="preview-about">';
+        $html .= '<h2>' . $book['title'] . '</h2>';
+        $html .= '<p>' . $book['author_name'] . '</p>';
+        $html .= '<p>' . $book['category_name'] . '</p>';
+        $html .= '</div>';
+
+        $html .= '<div class="preview-community wrap-row">';
+        $html .= '<p>' . $book['average_rating'] . '</p>';
+        $html .= '<p>Ajouté par ' . $book['username_name'] . '</p>';
+        $html .= '<p><a href="index.php?controller=book&action=detail&id=';
         $html .= $book['book_id']; 
         $html .= '">';
         $html .= 'Détails';
-        $html .= '</a>';
+        $html .= '</a></p>';
+        $html .= '</div>';
         $html .= '</div>';
 
         $html .= '</div>';
