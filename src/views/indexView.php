@@ -1,13 +1,15 @@
 <main>
     <h1>Passion Lecture</h1>
     <p>
-    Bienvenue sur notre page des lecteurs. Vous pouvez y partager les livres dont vous êtes l'auteur ou ceux que vous aimeriez recommander.
+        Bienvenue sur notre page des lecteurs! Ce site vous permet de partager
+        au reste du monde les livres dont vous êtes l'auteur, ou simplement 
+        ceux que vous souhaitez recommander.
     </p>
-    <p>
-        Liste des dernières oeuvres
-        </p>
-<?php
-    HtmlWriter::writeBooksPreview($latestBooks);
-?>
 
-    </main>
+    <p>
+        Vous trouverez ci-dessous les cinq dernières oeuvres ajoutées par nos utilisateurs.
+    </p>
+    <?php
+        HtmlWriter::writeBooksPreview($latestBooks);
+    ?>
+</main>
