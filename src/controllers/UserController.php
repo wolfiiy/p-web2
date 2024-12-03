@@ -66,7 +66,7 @@ class UserController extends Controller {
 
             if($userCredentials)
             {
-                // TODO : Il faut stocker les mots de passe hashés
+                // TODO: hashed passwords must be stored
                 if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
                 {
                     // Stocke les infos de l'user dans la session
@@ -75,8 +75,8 @@ class UserController extends Controller {
                     $_SESSION['user_id'] = $userCredentials['user_id'];
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['sign_up_date'] = $userCredentials['sign_up_date']; 
-                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // soit on utilise la value sur helpers/utils.php
-                    // A partir d'ici on peut considérer notre user connecté à l'app
+                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // or use the value on helpers/utils.php
+                    // From here, we can consider our user connected to the app
                     header('Location: index.php?controller=user&action=detail');
                     return true;
                 }
@@ -105,14 +105,13 @@ class UserController extends Controller {
 
     }
 
+    /*
+    * Logout Action
+    */
     private function logoutAction()
     {
         session_destroy();
-        $view = file_get_contents('../views/login.php'); 
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
+        // Use of the header method because the commonly used display causes a bug with the information of a session that does not exist but shows as if it did.
+        header('Location: index.php?controller=user&action=login');  // To show login page
     }
 }

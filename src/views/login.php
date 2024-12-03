@@ -1,7 +1,4 @@
 <main>
-    <pre>
-        <?php var_dump($_SESSION)?>
-    </pre>
 <h1>Login Page</h1>
 <form enctype = "multipart/form-data" action="index.php?controller=user&action=login" method="post" id="bookForm">
 

@@ -31,8 +31,6 @@ class HomeController extends Controller {
         include_once('../helpers/DataHelper.php');
         include_once('../models/BookModel.php');
 
-        var_dump(isUserConnected());
-
         $bookModel = new BookModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);
