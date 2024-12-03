@@ -6,6 +6,7 @@
  */
 
 include_once('../models/ConstantsModel.php');
+include_once('../helpers/utils.php');
 
 /**
  * Home page controller.
@@ -29,8 +30,6 @@ class HomeController extends Controller {
     private function indexAction() {
         include_once('../helpers/DataHelper.php');
         include_once('../models/BookModel.php');
-
-        var_dump(isUserConnected());
 
         $bookModel = new BookModel();
         

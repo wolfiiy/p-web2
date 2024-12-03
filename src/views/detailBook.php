@@ -97,10 +97,11 @@
                 <p class="value">
                     <a href="" class="button accent">Modifier</a>
                 </p>
-                
+                <?php if(isAdminConnectedUser()){ ?>
                 <p class="value">
                     <a href="" class="button red">Supprimer</a>
                 </p>
+                <?php }?>
             </div>
         </div>
 

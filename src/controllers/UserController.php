@@ -5,8 +5,7 @@
  * Date: 18.11.2024
  * Controler pour les pages liées aux utilisateurs
  */
-
-
+include_once('../helpers/utils.php');
 
 class UserController extends Controller {
 
@@ -18,7 +17,6 @@ class UserController extends Controller {
      * @return mixed
      */
     public function display() {
-
         include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
         return call_user_func(array($this, $action));
@@ -56,6 +54,7 @@ class UserController extends Controller {
 
         include_once('../models/UserModel.php');
         $usermodel = new UserModel();
+        $bookmodel = new BookModel();
         $view = file_get_contents('../views/login.php'); 
         ob_start();
         eval('?>' . $view);
@@ -65,20 +64,30 @@ class UserController extends Controller {
         {
             // Values
             $userCredentials = $usermodel->checkUser($_POST['userAttemp']); // Real credentials
+            
 
             if($userCredentials)
             {
-                // TODO : Il faut stocker les mots de passe hashés
+                // Values of Books
+                $userPublishedBook = $bookmodel->countUserPublishedBookById($userCredentials['user_id']);
+                $userReviewedBook = $bookmodel->countUserReviewBookById($userCredentials['user_id']);
+
+
+
+                // TODO: hashed passwords must be stored
                 if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
                 {
-                    // Stocke les infos de l'user dans la session
+                    // Stores user info in session
                     $_SESSION['username'] = $userCredentials['username'];
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['user_id'] = $userCredentials['user_id'];
                     $_SESSION['pass'] = $userCredentials['pass'];
                     $_SESSION['sign_up_date'] = $userCredentials['sign_up_date']; 
-                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // soit on utilise la value sur helpers/utils.php
-                    // A partir d'ici on peut considérer notre user connecté à l'app
+                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // or use the value on helpers/utils.php
+                    $_SESSION['book_having'] = $userPublishedBook[0]["count(*)"];
+                    $_SESSION['book_review'] = $userReviewedBook[0]["count(*)"];
+
+                    // From here, we can consider our user connected to the app
                     header('Location: index.php?controller=user&action=detail');
                     return true;
                 }
@@ -100,6 +109,8 @@ class UserController extends Controller {
                 <?php 
             }
         }
+
+
     
         // To display the login page if the form has not been completed correctly
         return $content;
@@ -107,14 +118,13 @@ class UserController extends Controller {
 
     }
 
+    /*
+    * Logout Action
+    */
     private function logoutAction()
     {
         session_destroy();
-        $view = file_get_contents('../views/login.php'); 
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
+        // Use of the header method because the commonly used display causes a bug with the information of a session that does not exist but shows as if it did.
+        header('Location: index.php?controller=user&action=login');  // To show login page
     }
 }

@@ -130,4 +130,32 @@ class BookModel extends DatabaseModel
 
         return;
     }
+
+     /**
+     * Get the total number of books published by a user
+     * @param int $id fk_id of User
+     * @return int Number of book published by user
+     */
+    public function countUserPublishedBookById($id)
+    {
+        $sql = "select count(*) from t_book where user_fk = :user_fk;";
+        $binds = array(':user_fk' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query);
+    }
+
+     /**
+     * Get the total number of books reviewed by a user
+     * @param int $id fk_id of User
+     * @return int Number of book reviewed by user
+     */
+    public function countUserReviewBookById($id)
+    {
+        $sql = "select count(*) from review where user_fk = :user_fk;";
+        $binds = array(':user_fk' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query)    ;
+    }
 }

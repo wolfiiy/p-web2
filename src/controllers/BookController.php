@@ -45,6 +45,9 @@ class BookController extends Controller {
      */
     private function listAction()
     {
+
+        define("RESULT_PER_PAGE", 10);
+
         // Get categories for filter select
         include_once("../models/CategoryModel.php");
         $categoryModel = new CategoryModel();
