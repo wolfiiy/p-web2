@@ -45,27 +45,30 @@ class BookModel extends DatabaseModel
      * @param int $count Number of books to get
      * @param int $result Pagination offset
      * @param int $genre Category of books filter
+     * @param string $keyword Search string, matched with book titles
      * @return array Array containing the x latest books
      */
-    public function getLatestBooks(int $count, int $page = 1, int $genre = 0)
+    public function getLatestBooks(int $count, int $page = 1, int $genre = 0, string $keyword="")
     {
         if ($genre != 0){
-            $query = "SELECT * from t_book WHERE category_fk = :varCategory ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+            $query = "SELECT * from t_book WHERE title LIKE :varKeyword AND category_fk = :varCategory ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
             $binds = array(
                 "varCount" => $count,
                 "varPage" => ($page-1)*$count,
                 "varCategory" => $genre,
+                "varKeyword" => "%" . $keyword . "%"
             );
         }
         else{
-            $query = "SELECT * from t_book ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+            $query = "SELECT * from t_book WHERE title LIKE :varKeyword ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
             $binds = array(
                 "varCount" => $count,
                 "varPage" => ($page-1)*$count,
+                "varKeyword" => "%" . $keyword . "%"
             );
         }
-        
         $req = $this->queryPrepareExecute($query, $binds);
+        
         if ($req) return $this -> formatData($req);
         else return false;
     }
@@ -74,18 +77,21 @@ class BookModel extends DatabaseModel
     /**
      * Get the total number of books in total or in category
      * @param int $genre Category of books filter
+     * @param string $keyword Search string, matched with book titles
      * @return int Number of book
      */
-    public function resultCount (int $genre = 0){
+    public function resultCount (int $genre = 0, string $keyword=""){
         if ($genre != 0){
-            $query = "SELECT COUNT(*) from t_book WHERE category_fk = :varCategory ORDER BY book_id";
+            $query = "SELECT COUNT(*) from t_book WHERE title LIKE :varKeyword AND category_fk = :varCategory ORDER BY book_id";
             $binds = array(
                 "varCategory" => $genre,
+                "varKeyword" => "%" . $keyword . "%"
             );
         }
         else{
-            $query = "SELECT COUNT(*) from t_book ORDER BY book_id";
+            $query = "SELECT COUNT(*) from t_book WHERE title LIKE :varKeyword ORDER BY book_id";
             $binds = array(
+                "varKeyword" => "%" . $keyword . "%"
             );
         }
         

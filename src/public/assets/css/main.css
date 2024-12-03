@@ -160,8 +160,3 @@ ul.no-bullets {
 .book-preview img{
     height: 60px;
 }
-
-.button:disabled {
-    border: 1px solid grey;
-    color: #66dfd0;
-}

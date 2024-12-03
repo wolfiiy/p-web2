@@ -22,6 +22,11 @@ class BookController extends Controller {
     const PATH_TO_BOOK_DETAILS = '../views/detailBook.php';
 
     /**
+     * Number of result per page for pagination
+     */
+    const RESULT_PER_PAGE = 10;
+
+    /**
      * Dispatch current action
      *
      * @return mixed
@@ -42,8 +47,6 @@ class BookController extends Controller {
     private function listAction()
     {
         session_start();
-
-        define("RESULT_PER_PAGE", 10);
 
         // Get categories for filter select
         include_once("../models/CategoryModel.php");
@@ -70,27 +73,30 @@ class BookController extends Controller {
                 $_SESSION["genreFilter"] = $_GET["bookGenre"];
             }
         }
+        if (!isset($_GET["searchName"])){
+            $_GET["searchName"] = "";
+        }
 
-        // Get latest book with category filter
+        // Get latest book with category filter and name filter
+        // Get total number of result for pagination
         if (!isset($_SESSION["genreFilter"])){
-            $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page);
-            $nbResult = $bookModel->resultCount();
+            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, keyword:$_GET["searchName"]);
+            $nbResult = $bookModel->resultCount(keyword: $_GET["searchName"]);
         }
         else{
-            $books = $bookModel->getLatestBooks(RESULT_PER_PAGE, $page, $_SESSION["genreFilter"]);
-            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"]);
+            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, $_SESSION["genreFilter"], keyword:$_GET["searchName"]);
+            $nbResult = $bookModel->resultCount($_SESSION["genreFilter"], keyword: $_GET["searchName"]);
         }
 
         // Get the total number of result and pages
-        $maxPage = round($nbResult/RESULT_PER_PAGE);
+        $maxPage = round($nbResult/self::RESULT_PER_PAGE);
 
-        // Entre 0 et RESULT_PER_PAGE, une seule page
+        // Between 0 and RESULT_PER_PAGE, one page
         if ($maxPage == 0) $maxPage = 1;
 
         $books = DataHelper::BookPreview($books);
         
         $view = file_get_contents('../views/listView.php');
-
 
         ob_start();
         eval('?>' . $view);
