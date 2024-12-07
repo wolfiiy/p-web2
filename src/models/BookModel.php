@@ -32,8 +32,8 @@ class BookModel extends DatabaseModel
      * false otherwise.
      */
     public function getBookById(int $id) {
-        $sql = "select * from t_book where book_id = :book_id";
-        $binds = array(':book_id' => $id);
+        $sql = "SELECT * from t_book where book_id = :book_id";
+        $binds = array('book_id' => $id);
         $req = $this->queryPrepareExecute($sql, $binds);
 
         if ($req) return $this -> formatData($req)[0];
@@ -113,22 +113,23 @@ class BookModel extends DatabaseModel
      * @param int $authorFk Id of the book's author
      */
     public function insertBook(string $title, string $exerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
-        $sql = "insert into t_book (title, excerpt, summary, release_date, cover_image, number_of_pages, user_fk, category_fk, publisher_fk, author_fk) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
-        $binds = array(
-            ':title'=> $title,
-            ':exerpt' => $exerpt,
-            ':summary' => $summary,
-            ':release_date' => $releaseDate,
-            ':cover_image' => $coverImage,
-            ':number_of_pages' => $numberOfPages,
-            ':user_fk' => $userFk,
-            ':category_fk' => $categoryFk, 
-            ':publisher_fk' => $publisherFk, 
-            ':author_fk' => $authorFk,
-        );
-        $query = $this->queryPrepareExecute($sql, $binds);
 
-        return;
+    
+        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+
+        $binds = array(
+            'title'=> $title,
+            'exerpt' => $exerpt,
+            'summary' => $summary,
+            'release_date' => $releaseDate,
+            'cover_image' => $coverImage,
+            'number_of_pages' => $numberOfPages,
+            'user_fk' => $userFk,
+            'category_fk' => $categoryFk, 
+            'publisher_fk' => $publisherFk, 
+            'author_fk' => $authorFk,
+        );
+        $this->queryPrepareExecute($sql, $binds);
     }
 
      /**

@@ -33,8 +33,8 @@ class CategoryModel extends DatabaseModel
      * false otherwise.
      */
     public function getCateoryById(int $id){
-        $sql = "select * from t_category where category_id = :category_id";
-        $binds = array(':category_id' => $id);
+        $sql = "SELECT * from t_category where category_id = :category_id";
+        $binds = array('category_id' => $id);
         $req = $this->queryPrepareExecute($sql, $binds);
 
         if ($req) return $this->formatData($req)[0];

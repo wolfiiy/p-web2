@@ -34,11 +34,11 @@ class ReviewModel extends DatabaseModel {
      * @param int $grade Grade (1-5) given to the book by the user
      */
     public function insertReview(int $bookFk, int $userFk, int $grade){
-        $sql = "insert into reviews (book_fk, user_fk, grade) VALUES (:book_fk, :user_fk, :grade)";
+        $sql = "INSERT into reviews (book_fk, user_fk, grade) VALUES (:book_fk, :user_fk, :grade)";
         $binds = array(
-            ':book_fk'=> $bookFk,
-            ':user_fk' => $userFk,
-            ':grade' => $grade
+            'book_fk'=> $bookFk,
+            'user_fk' => $userFk,
+            'grade' => $grade
         );
         $query = $this->queryPrepareExecute($sql, $binds);
 
