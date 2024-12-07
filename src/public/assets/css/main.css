@@ -2,8 +2,8 @@
     /* Logo colors */
     --accent: #66dfd0;
     --complement: #fc5f4c;
-    --background: #ffe5d9;
-    --foreground: #ebd5c2;
+    --background: #ffffff;
+    --foreground: #fcfbfb;
 }
 
 /*
@@ -13,6 +13,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: var(--background);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
