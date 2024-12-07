@@ -1,9 +1,11 @@
 :root {
     /* Logo colors */
-    --accent: #66dfd0;
+    --accent: #3f8363;
     --complement: #fc5f4c;
     --background: #ffffff;
-    --foreground: #fcfbfb;
+    --foreground: #fffbf3;
+
+    --text: #14110F;
 }
 
 /*
@@ -12,8 +14,10 @@
 html, body {
     margin: 0;
     padding: 0;
+    /* Essaye de changer la couleur! */
     background-color: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
 }
 
 body {
@@ -29,6 +33,28 @@ main {
 
 h1 {
     text-align: center;
+}
+
+main a {
+    text-decoration: none;
+    position: relative;
+    color: var(--accent);
+}
+
+main a::after {
+    content: '';
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    background: var(--accent);
+    transition: 0.2s;
+}
+
+main a:hover::after,
+main a:focus::after {
+    width: 100%;
 }
 
 /* TODO: coherence (wrap-col) */
