@@ -28,25 +28,27 @@ if (isUserConnected()) {
 ?>
 
 <header>
-    <nav>
-        <a href="index.php">
-            <img src="assets/img/logo.png" alt="Logo de Passion Lecture" id="logo-nav">
-        </a>
-
-        <ul class="wrap-row nav-links-wrapper">
-            <li>
-                <a href="index.php?controller=book&action=list">
-                    Liste des oeuvres
-                </a>
-            </li>
-
-            <li>
-                <a href="index.php?controller=book&action=add">
-                    Ajouter une entrée
-                </a>
-            </li>
-
-            <?=$accountNav?>
-        </ul>
+    <nav id="navbar">
+        <div class="nav-wrapper">
+            <a href="index.php">
+                <img src="assets/img/logo.png" alt="Logo de Passion Lecture" id="logo-nav">
+            </a>
+    
+            <ul class="wrap-row nav-links-wrapper">
+                <li>
+                    <a href="index.php?controller=book&action=list">
+                        Liste des oeuvres
+                    </a>
+                </li>
+    
+                <li>
+                    <a href="index.php?controller=book&action=add">
+                        Ajouter une entrée
+                    </a>
+                </li>
+    
+                <?=$accountNav?>
+            </ul>
+        </div>
     </nav>
 </header>

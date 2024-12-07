@@ -6,6 +6,8 @@
     --foreground: #fdf7ea;
     --text: #14110F;
     --shadow: rgba(0, 0, 0, 0.1);
+
+    --nav-height: 8ch;
 }
 
 /*
@@ -14,7 +16,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    /* Essaye de changer la couleur! */
     background-color: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text);
@@ -28,6 +29,7 @@ body {
 
 main {
     margin: 2em auto;
+    padding-top: var(--nav-height);
     width: 90ch;
 }
 
@@ -47,9 +49,29 @@ header {
 }
 
 nav {
-    margin: 0 10ch;
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    text-align: center;
+
+    background-color: var(--foreground);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    
+    display: flex;
     align-items: center;
-    height: 8ch;
+    justify-content: space-between;
+
+    transition: all 0.2s;
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 10ch;
 }
 
 #logo-nav {
