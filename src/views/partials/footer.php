@@ -1,6 +1,6 @@
 <footer>
     <hr>
-    <div id="footer-content">
+    <div id="footer-content" class="wrap-row footer-wrapper">
         <div>
             2024-2025
         </div>
