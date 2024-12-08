@@ -41,7 +41,7 @@
         echo "<p>Aucun résultat</p>";
     }
 
-    HtmlWriter::writeBooksPreview($books);
+    HtmlWriter::writeCompactBooksPreview($books);
 ?>
 
 <!-- Pagination buttons -->
