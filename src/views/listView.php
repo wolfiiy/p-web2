@@ -11,13 +11,7 @@
         <label for="bookGenre">Genre: </label>
         <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
             <option value="0">Tous</option>
-            <?php
-            foreach($genres as $genre){           
-                echo "<option value='".$genre["category_id"] . "' "; 
-                if ($genre["category_id"] == $_GET["bookGenre"]) {echo "selected";}
-                echo ">" . ucfirst($genre["name"]) ."</option>";
-            }
-            ?>
+            <?=$categoryDropdown;?>
         </select>
     </div>
 

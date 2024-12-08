@@ -18,6 +18,21 @@ class BookController extends Controller
 {
 
     /**
+     * Default value of the category filter (i.e. shows everything).
+     */
+    const DEFAULT_CATEGORY_FILTER = 0;
+
+    /**
+     * First page number in the "list all books" page.
+     */
+    const DEFAULT_PAGE_NUMBER = 1;
+
+    /**
+     * Default value of the search filter (i.e. searches nothing).
+     */
+    const DEFAULT_SEARCH_FILTER = "";
+
+    /**
      * Path to the book details view.
      */
     const PATH_TO_BOOK_DETAILS = '../views/detailBook.php';
@@ -46,51 +61,70 @@ class BookController extends Controller
      */
     private function listAction()
     {
-
-        define("RESULT_PER_PAGE", 10);
-
         include_once('../helpers/HtmlWriter.php');
-
-        // Get categories for filter select
         include_once("../models/CategoryModel.php");
-        $categoryModel = new CategoryModel();
-        $genres = $categoryModel->getAllCategory();
-
         include_once('../models/BookModel.php');
+
         $bookModel = new BookModel();
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAllCategory();
+
+        // Create the category filter dropdown
+        $categoryDropdown = '';
+        foreach($categories as $c){   
+            $categoryDropdown .= '<option value="' . $c['category_id'] . '"';        
+            
+            if ($c["category_id"] == $_GET["bookGenre"]) 
+                $categoryDropdown .= "selected";
+
+            $categoryDropdown .= ">" . ucfirst($c['name']) .'</option>';
+        }
+
         
         // By default page 1
-        if(!isset($_GET["page"])){
+        if(!isset($_GET["page"])) 
             $page = 1;
-        }
-        else{
+        else 
             $page = $_GET["page"];
-        }
         
-        // By default all types of book and no title string search
-        if (!isset($_GET["bookGenre"])){
-            $_GET["bookGenre"] = 0;
-        }
-        if (!isset($_GET["searchName"])){
-            $_GET["searchName"] = "";
-        }
+        // Defaults to all all books of all categories (i.e. empty filters)
+        if (!isset($_GET["bookGenre"])) 
+            $_GET["bookGenre"] = self::DEFAULT_CATEGORY_FILTER;
+
+        if (!isset($_GET["searchName"])) 
+            $_GET["searchName"] = self::DEFAULT_SEARCH_FILTER;
 
         // Get latest book with category filter and name filter
         // Get total number of result for pagination
-        if ($_GET["bookGenre"] == 0){
-            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, keyword:$_GET["searchName"]);
-            $nbResult = $bookModel->resultCount(keyword: $_GET["searchName"]);
+        if ($_GET["bookGenre"] == 0) {
+            $books = $bookModel->getLatestBooks(
+                self::RESULT_PER_PAGE, $page, keyword:$_GET["searchName"]
+            );
+            
+            $nbResult = $bookModel->resultCount(
+                keyword: $_GET["searchName"]
+            );
         }
-        else{
-            $books = $bookModel->getLatestBooks(self::RESULT_PER_PAGE, $page, $_GET["bookGenre"], keyword:$_GET["searchName"]);
-            $nbResult = $bookModel->resultCount($_GET["bookGenre"], keyword: $_GET["searchName"]);
+        else {
+            $books = $bookModel->getLatestBooks(
+                self::RESULT_PER_PAGE, 
+                $page, 
+                $_GET["bookGenre"], 
+                keyword:$_GET["searchName"]
+            );
+            
+            $nbResult = $bookModel->resultCount(
+                $_GET["bookGenre"], 
+                keyword: $_GET["searchName"]
+            );
         }
 
         // Get the total number of result and pages
-        $maxPage = round($nbResult/self::RESULT_PER_PAGE);
+        $maxPage = round($nbResult / self::RESULT_PER_PAGE);
 
         // Between 0 and RESULT_PER_PAGE, one page
-        if ($maxPage == 0) $maxPage = 1;
+        if ($maxPage == 0) 
+            $maxPage = self::DEFAULT_PAGE_NUMBER;
 
         $books = DataHelper::BookPreview($books);
         
