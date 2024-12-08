@@ -69,18 +69,6 @@ class BookController extends Controller
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAllCategory();
 
-        // Create the category filter dropdown
-        $categoryDropdown = '';
-        foreach($categories as $c){   
-            $categoryDropdown .= '<option value="' . $c['category_id'] . '"';        
-            
-            if ($c["category_id"] == $_GET["bookGenre"]) 
-                $categoryDropdown .= "selected";
-
-            $categoryDropdown .= ">" . ucfirst($c['name']) .'</option>';
-        }
-
-        
         // By default page 1
         if(!isset($_GET["page"])) 
             $page = 1;
@@ -93,6 +81,17 @@ class BookController extends Controller
 
         if (!isset($_GET["searchName"])) 
             $_GET["searchName"] = self::DEFAULT_SEARCH_FILTER;
+
+        // Create the category filter dropdown
+        $categoryDropdown = '';
+        foreach($categories as $c){   
+            $categoryDropdown .= '<option value="' . $c['category_id'] . '"';        
+            
+            if ($c["category_id"] == $_GET["bookGenre"]) 
+                $categoryDropdown .= "selected";
+
+            $categoryDropdown .= ">" . ucfirst($c['name']) .'</option>';
+        }
 
         // Get latest book with category filter and name filter
         // Get total number of result for pagination
