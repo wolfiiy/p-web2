@@ -41,6 +41,28 @@ h1 {
     text-align: center;
 }
 
+a {
+    text-decoration: none;
+    position: relative;
+    color: var(--accent);
+}
+
+a:not(.clickable-image):after {
+    content: '';
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    background: var(--accent);
+    transition: 0.2s;
+}
+
+a:not(.clickable-image):hover::after,
+a:not(.clickable-image):focus::after {
+    width: 100%;
+}
+
 /*
  * Effects
  */
@@ -107,26 +129,13 @@ nav {
     gap: 5ch;
 }
 
-main a {
-    text-decoration: none;
-    position: relative;
-    color: var(--accent);
+nav a {
+    color: var(--text);
 }
 
-main a::after {
-    content: '';
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    background: var(--accent);
-    transition: 0.2s;
-}
-
-main a:hover::after,
-main a:focus::after {
-    width: 100%;
+nav a:not(.clickable-image)::after,
+nav a:not(.clickable-image):focus::after {
+    background: var(--text) ;
 }
 
 /* TODO: coherence (wrap-col) */

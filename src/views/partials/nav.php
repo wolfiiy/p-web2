@@ -30,7 +30,7 @@ if (isUserConnected()) {
 <header>
     <nav id="navbar">
         <div class="nav-wrapper">
-            <a href="index.php">
+            <a href="index.php" class="clickable-image">
                 <img src="assets/img/logo.png" alt="Logo de Passion Lecture" id="logo-nav">
             </a>
     
