@@ -311,19 +311,27 @@ nav a:not(.clickable-image):focus::after {
     }
 }
 
-nav{
-    display: flex;
-    justify-content: space-between;
-    
+/*
+ * Forms
+ */
+label[for] {
+    pointer-events: none;
 }
 
-#footer-content{
+/*
+ * Search filter
+ */
+.filter {
+    justify-content: space-between;
+}
+
+#footer-content {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
-#footer-content ul{
+#footer-content ul {
     text-align: center;
 }
 
@@ -333,13 +341,13 @@ ul.no-bullets {
     padding: 0;
 }
 
-#bookForm{
+#bookForm {
     display: flex;
     flex-direction: column;
     width : 40%;
 }
 
-.label-input{
+.label-input {
     display: flex;
     justify-content: space-between;
 }

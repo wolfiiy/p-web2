@@ -1,28 +1,35 @@
 <main>
     <h1>Liste des oeuvres</h1>
 
-    <form id="genreForm" action="index.php">
+    <form id="genreForm" class="filter wrap-row" action="index.php">
     
     <input type="hidden" name="controller" value="book">
     <input type="hidden" name="action" value="list">
 
     <!-- Book category select -->
-    <label for="bookGenre">Genre: </label>
-    <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
-        <option value="0">Tous</option>
-        <?php
-        foreach($genres as $genre){           
-            echo "<option value='".$genre["category_id"] . "' "; 
-            if ($genre["category_id"] == $_GET["bookGenre"]) {echo "selected";}
-            echo ">" . $genre["name"] ."</option>";
-        }
-        ?>
-    </select>
+    <div class="filter-category">
+        <label for="bookGenre">Genre: </label>
+        <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
+            <option value="0">Tous</option>
+            <?php
+            foreach($genres as $genre){           
+                echo "<option value='".$genre["category_id"] . "' "; 
+                if ($genre["category_id"] == $_GET["bookGenre"]) {echo "selected";}
+                echo ">" . $genre["name"] ."</option>";
+            }
+            ?>
+        </select>
+    </div>
 
-    <!-- String input for book name --> 
-    <input placeholder="Recherche" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
-    <input type="submit" value="Chercher" id="submitSearch">
+    <!-- String input for book name -->
+    <div class="filter-search">
+        <input placeholder="Chercher un titre" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
+        <button type="submit">
+            <img src="assets/img/icons/search.svg" alt="Rechercher">
+        </button>
+    </div>
     </form>
+
     <script>
         // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
         // Click on the submit button when enter is pressed in the text input
