@@ -24,7 +24,7 @@
     <!-- String input for book name -->
     <div class="filter-search">
         <input placeholder="Chercher un titre" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
-        <button type="submit">
+        <button type="submit" class="small-button">
             <img src="assets/img/icons/search.svg" alt="Rechercher">
         </button>
     </div>
