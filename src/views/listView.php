@@ -15,7 +15,7 @@
             foreach($genres as $genre){           
                 echo "<option value='".$genre["category_id"] . "' "; 
                 if ($genre["category_id"] == $_GET["bookGenre"]) {echo "selected";}
-                echo ">" . $genre["name"] ."</option>";
+                echo ">" . ucfirst($genre["name"]) ."</option>";
             }
             ?>
         </select>
