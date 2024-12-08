@@ -19,8 +19,11 @@ class HtmlWriter {
      */
     public static function writeBookPreview(array $book) {
         $html = "";
+        $detailsUrl = "index.php?controller=book&action=detail&id=" 
+                    . $book['book_id'];
 
-        $html .= '<div class="preview wrap-row shadow">';
+        $html .= '<div class="preview wrap-row shadow"';
+        $html .= 'onclick="window.location.href=\'' . $detailsUrl . '\'">';
         $html .= '<div class="cover">';
         $html .= '<img src="assets/img/placeholders/cover-placeholder.png">';
         $html .= '</div>';
@@ -35,9 +38,7 @@ class HtmlWriter {
         $html .= '<div class="preview-community wrap-row">';
         $html .= '<p>' . $book['average_rating'] . '</p>';
         $html .= '<p>Ajouté par ' . $book['username_name'] . '</p>';
-        $html .= '<p><a href="index.php?controller=book&action=detail&id=';
-        $html .= $book['book_id']; 
-        $html .= '">';
+        $html .= '<p><a href="' . $detailsUrl . '">';
         $html .= 'Détails';
         $html .= '</a></p>';
         $html .= '</div>';

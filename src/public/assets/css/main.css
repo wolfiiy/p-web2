@@ -178,6 +178,7 @@ main a:focus::after {
 
     border-radius: var(--preview-card-radius);
     background-color: var(--foreground);
+    cursor: pointer;
 }
 
 .preview img {
@@ -189,6 +190,12 @@ main a:focus::after {
 .preview-content {
     justify-content: center;
     height: auto;
+}
+
+.preview-wrap-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
 /*
