@@ -20,7 +20,7 @@ class HtmlWriter {
     public static function writeBookPreview(array $book) {
         $html = "";
 
-        $html .= '<div class="preview wrap-row">';
+        $html .= '<div class="preview wrap-row shadow">';
         $html .= '<div class="cover">';
         $html .= '<img src="assets/img/placeholders/cover-placeholder.png">';
         $html .= '</div>';
