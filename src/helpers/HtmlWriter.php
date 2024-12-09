@@ -23,7 +23,7 @@ class HtmlWriter {
         $detailsUrl = "index.php?controller=book&action=detail&id=" 
                     . $book['book_id'];
 
-        $html .= '<div class="preview wrap-row shadow';
+        $html .= '<div class="preview wrap-row shadow shadow-hover';
 
         if ($isCompact)
             $html .= ' compact';

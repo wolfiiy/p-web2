@@ -3,20 +3,26 @@
     --accent: #3f8363;
     --accent-hover: #4fa27c;
     --complement: #fc5f4c;
-    --background: #ffffff;
+    --background: #fdfdfc;
     --foreground: #fdf7ea;
     --text: #14110F;
+    --text-alt: #fdfdfc;
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-faint: rgba(0, 0, 0, 0.1);
     --shadow-strong: rgba(0, 0, 0, 0.2);
 
     --nav-height: 8ch;
 
-    --preview-card-radius: 10px;
+    --large-radius: 10px;
     --preview-compact-height: 8rem;
 
     /* Buttons a few characters wide, dropdowns, input fields, ... */
     --small-radius: 3px;
+}
+
+::selection {
+    color: var(--text-alt);
+    background: var(--accent);
 }
 
 /*
@@ -144,7 +150,7 @@ input {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.shadow:hover {
+.shadow-hover:hover {
     box-shadow: 0 0 2ch var(--shadow-faint), 0 10px 10px var(--shadow-strong);
 }
 
@@ -236,7 +242,7 @@ nav a:not(.clickable-image):focus::after {
     margin: 2ch 0;
     gap: 2ch;
 
-    border-radius: var(--preview-card-radius);
+    border-radius: var(--large-radius);
     background-color: var(--foreground);
     cursor: pointer;
 }
@@ -250,10 +256,14 @@ nav a:not(.clickable-image):focus::after {
     margin: 0;
 }
 
+.preview.compact h2 {
+    font-size: 1rem;
+}
+
 .preview img {
     height: 100%;
-    border-top-left-radius: var(--preview-card-radius);
-    border-bottom-left-radius: var(--preview-card-radius);
+    border-top-left-radius: var(--large-radius);
+    border-bottom-left-radius: var(--large-radius);
 }
 
 .preview.compact img {
@@ -300,6 +310,14 @@ nav a:not(.clickable-image):focus::after {
  * Book details
  */
 .cover {
+    height: 100%;
+}
+
+.cover img {
+    height: 100%;
+    width: auto;
+    border-radius: var(--small-radius);
+    cursor: pointer;
 }
 
 .overview .rating {
@@ -317,6 +335,9 @@ nav a:not(.clickable-image):focus::after {
 
 .data.wrap {
     gap: 1em;
+    padding: 1.5ch 1ch;
+    background: var(--foreground);
+    border-radius: var(--small-radius);
 }
 
 .data-set {
@@ -341,8 +362,17 @@ nav a:not(.clickable-image):focus::after {
 
 #details-content-wrap {
     display: grid;
-    grid-template-columns: 1fr 4fr;
-    gap: 2ch;
+    grid-template-columns: 1fr 3fr;
+    gap: 4ch 2ch;
+}
+
+#details-content-wrap h3{
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+#details-content-wrap .description p {
+    margin: 1rem 0;
 }
 
 .overview-wrap {

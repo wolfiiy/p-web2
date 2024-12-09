@@ -3,7 +3,9 @@
     <div id="details-content-wrap" class="content-wrap">
         <div class="cover wrap">
             <img src="assets/img/placeholders/cover-placeholder.png" 
-                 alt="Image de couverture">
+                 alt="Image de couverture"
+                 class="shadow shadow-hover"
+                 onclick="window.location.href='assets/img/placeholders/cover-placeholder.png'">
         </div>
 
         <div class="overview wrap">
