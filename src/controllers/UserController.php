@@ -24,16 +24,28 @@ class UserController extends Controller {
 
     /**
      * Display user info page
-     *
+     * @param int $id id of the user to display
      * @return string
      */
     private function detailAction() {
 
         include_once('../models/UserModel.php');
+        include_once('../models/BookModel.php');
        
         $usermodel = new UserModel();
+        $bookmodel = new BookModel();
+
+
+
+        if (isset($_GET['id'])) $id = $_GET['id'];
+        else $id = $_SESSION["user_id"];
+
         // Values
-        $valUser = $usermodel->getUserById(1);
+        $user = $usermodel->getUserById($id);
+
+        // Values of Books
+        $userPublishedBook = $bookmodel->countUserPublishedBookById($id)[0]["count(*)"];
+        $userReviewedBook = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
         $view = file_get_contents('../views/detailUser.php');
         
@@ -77,18 +89,12 @@ class UserController extends Controller {
                 // TODO: hashed passwords must be stored
                 if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
                 {
-                    // Stores user info in session
-                    $_SESSION['username'] = $userCredentials['username'];
-                    $_SESSION['pass'] = $userCredentials['pass'];
+                    // Stores user id in session
                     $_SESSION['user_id'] = $userCredentials['user_id'];
-                    $_SESSION['pass'] = $userCredentials['pass'];
-                    $_SESSION['sign_up_date'] = $userCredentials['sign_up_date']; 
-                    $_SESSION['is_admin'] = $userCredentials['is_admin']; // or use the value on helpers/utils.php
-                    $_SESSION['book_having'] = $userPublishedBook[0]["count(*)"];
-                    $_SESSION['book_review'] = $userReviewedBook[0]["count(*)"];
+                    
 
                     // From here, we can consider our user connected to the app
-                    header('Location: index.php?controller=user&action=detail');
+                    header('Location: index.php?controller=user&action=detail&id=' . $_SESSION["user_id"]);
                     return true;
                 }
                 else

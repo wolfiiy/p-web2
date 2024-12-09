@@ -1,11 +1,12 @@
 <?php
 // TODO move this to controller & helper
 $accountNav = "";
+$userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : "";
 
 if (isUserConnected()) {
     $accountNav .= <<< HTML
         <li>
-            <a href="index.php?controller=user&action=detail">
+            <a href="index.php?controller=user&action=detail&id={$userId}">
                 Mon compte
             </a>
         </li>

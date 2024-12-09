@@ -171,7 +171,7 @@ class BookController extends Controller
 
         $user = $userModel->getUserById($book['user_fk']);
 
-        $userRating = isset($_SESSION['username']) 
+        $userRating = isset($_SESSION['user_id']) 
             ? $userModel->getBookRating($id, $_SESSION['user_id'])
             : '-';
 

@@ -43,7 +43,7 @@ class HtmlWriter {
 
         $html .= '<div class="preview-community wrap-row">';
         $html .= '<p>' . $book['average_rating'] . '</p>';
-        $html .= '<p>Ajouté par ' . $book['username_name'] . '</p>';
+        $html .= '<p>Ajouté par <a href="index.php?controller=user&action=detail&id=' . $book['user_fk']. '">' . $book['username_name'] . '<a></p>';
         $html .= '<p><a href="' . $detailsUrl . '">';
         $html .= 'Détails';
         $html .= '</a></p>';
