@@ -16,7 +16,7 @@ include_once('../models/UserModel.php');
  */
 class DataHelper {
 
-    private const RATINGS = array(0, 1, 2, 3, 4, 5, '-');
+    private const RATINGS = array('-', 1, 2, 3, 4, 5);
     private const NB_DECIMALS = 2;
     private const DECIMAL_SEPARATOR = '.';
     
@@ -68,14 +68,16 @@ class DataHelper {
      * @param mixed $rating The rating to be selected.
      */
     static function createRatingDropdown(mixed $rating) {
-        $dropdown = '<select name="rating" id="rating"';
+        $dropdown = '<select name="rating" id="rating">';
 
         foreach (self::RATINGS as $r) {
+
             if ($r == $rating) $selected = 'selected';
             else $selected = null;
-
+            
             $dropdown .= '<option value="' . $r . '" ' . $selected . '>';
             $dropdown .= "$r</option>";
+
         }
 
         $dropdown .= "</select>";

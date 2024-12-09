@@ -74,7 +74,7 @@ Class UserModel extends DatabaseModel {
             select * 
             from review 
             where book_fk = :book_fk
-            and user_fk = :user_dk
+            and user_fk = :user_fk
         ";
 
         $binds = array(
@@ -84,10 +84,13 @@ Class UserModel extends DatabaseModel {
 
         $query = $this->queryPrepareExecute($sql, $binds);
 
-        if ($query) 
-            return $this->formatData($query)[0];
-        else
+        
+        if ($query) {
+            return $this->formatData($query)[0]["grade"];
+        }
+        else {
             return 0;
+        }
     }
 
     /**
