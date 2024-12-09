@@ -330,6 +330,7 @@ nav a:not(.clickable-image):focus::after {
 .details-cover {
     height: auto;
     width: 30ch;
+    border-radius: var(--small-radius);
 }
 
 .cover img {
@@ -355,6 +356,7 @@ nav a:not(.clickable-image):focus::after {
 .data.wrap {
     gap: 1em;
     padding: 1.5ch 1ch;
+    margin: 2ch 0;
     background: var(--foreground);
     border-radius: var(--small-radius);
 }
@@ -382,11 +384,11 @@ nav a:not(.clickable-image):focus::after {
 #details-content-wrap {
     display: grid;
     grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto;
     gap: 4ch 2ch;
 }
 
 #details-content-wrap h3{
-    margin-top: 0;
     margin-bottom: 0rem;
 }
 
