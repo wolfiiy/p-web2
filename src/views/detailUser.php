@@ -12,5 +12,13 @@
 <p>
     A donné son avis sur <?= $userReviewedBook ?> livres
 </p>
+<?php
+    if (count($books) == 0){
+        echo "<p>Aucun livre noté</p>";
+    }
+
+    HtmlWriter::writeCompactBooksPreviewGrade($books);
+?>
+
 </main>
 

@@ -110,6 +110,14 @@ class DataHelper {
         else 
             $book["average_rating"] = Constants::NO_RATING;
 
+        // Format user grade
+        if (isset($book["grade"])){
+            $book["grade"] = number_format(
+                $book["grade"] , 
+                self::NB_DECIMALS, 
+                self::DECIMAL_SEPARATOR);
+        }
+
         // Convert date to printable format
         $book['release_date'] = FormatHelper::getFullDate($book['release_date']);
 

@@ -17,8 +17,9 @@ class HtmlWriter {
      * Writes the required HTML to display a book's preview.
      * @param array $book An array containing the book's details.
      * @param bool $isCompact Whether the preview should be compact.
+     * @param bool $grade Wheter the preview should display the user's grade
      */
-    public static function writeBookPreview(array $book, bool $isCompact) {
+    public static function writeBookPreview(array $book, bool $isCompact, bool $grade) {
         $html = "";
         $detailsUrl = "index.php?controller=book&action=detail&id=" 
                     . $book['book_id'];
@@ -47,6 +48,9 @@ class HtmlWriter {
         $html .= '<p><a href="' . $detailsUrl . '">';
         $html .= 'Détails';
         $html .= '</a></p>';
+        if ($grade){
+            $html .= "User rating: " . $book['grade'];
+        }
         $html .= '</div>';
         $html .= '</div>';
 
@@ -62,7 +66,7 @@ class HtmlWriter {
      */
     public static function writeBooksPreview(array $books) {
         foreach ($books as $b) {
-            self::writeBookPreview($b, false);
+            self::writeBookPreview($b, false, false);
         }
     }
 
@@ -73,7 +77,13 @@ class HtmlWriter {
      */
     public static function writeCompactBooksPreview(array $books) {
         foreach ($books as $b) {
-            self::writeBookPreview($b, true);
+            self::writeBookPreview($b, true, false);
+        }
+    }
+
+    public static function writeCompactBooksPreviewGrade(array $books){
+        foreach ($books as $b) {
+            self::writeBookPreview($b, true, true);
         }
     }
 }

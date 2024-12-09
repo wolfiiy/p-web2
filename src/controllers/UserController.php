@@ -29,6 +29,8 @@ class UserController extends Controller {
      */
     private function detailAction() {
 
+        include_once('../helpers/HtmlWriter.php');
+        include_once('../helpers/DataHelper.php');
         include_once('../models/UserModel.php');
         include_once('../models/BookModel.php');
        
@@ -47,6 +49,8 @@ class UserController extends Controller {
         $userPublishedBook = $bookmodel->countUserPublishedBookById($id)[0]["count(*)"];
         $userReviewedBook = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
+        $books = $bookmodel->booksReviewedByUser($id);
+        $books = DataHelper::BookPreview($books);
         $view = file_get_contents('../views/detailUser.php');
         
 
@@ -91,6 +95,7 @@ class UserController extends Controller {
                 {
                     // Stores user id in session
                     $_SESSION['user_id'] = $userCredentials['user_id'];
+                    $_SESSION['is_admin'] = $userCredentials['is_admin'];
                     
 
                     // From here, we can consider our user connected to the app
