@@ -11,7 +11,10 @@
  */
 class HtmlWriter {
     
-    // TODO writeCompactBookPreview, to use on the browse page
+    /**
+     * Path to the placeholder cover.
+     */
+    const DEFAULT_COVER_PATH = "assets/img/placeholders/cover-placeholder.png";
 
     /**
      * Writes the required HTML to display a book's preview.
@@ -23,6 +26,11 @@ class HtmlWriter {
         $detailsUrl = "index.php?controller=book&action=detail&id=" 
                     . $book['book_id'];
 
+        if (file_exists($book['cover_image']))
+            $cover = $book['cover_image'];
+        else
+            $cover = self::DEFAULT_COVER_PATH;
+
         $html .= '<div class="preview wrap-row shadow shadow-hover';
 
         if ($isCompact)
@@ -31,7 +39,7 @@ class HtmlWriter {
 
         $html .= 'onclick="window.location.href=\'' . $detailsUrl . '\'">';
         $html .= '<div class="cover">';
-        $html .= '<img src="assets/img/placeholders/cover-placeholder.png">';
+        $html .= '<img src="' . $cover . '">';
         $html .= '</div>';
 
         $html .= '<div class="preview-content wrap-col">';
