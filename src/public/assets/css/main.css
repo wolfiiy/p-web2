@@ -261,6 +261,10 @@ nav a:not(.clickable-image):focus::after {
     font-size: 1rem;
 }
 
+.preview .cover {
+    flex-shrink: 0;
+}
+
 .preview img {
     height: 30ch;
     aspect-ratio: 1/1.45;
@@ -274,6 +278,8 @@ nav a:not(.clickable-image):focus::after {
 
 .preview-content {
     justify-content: center;
+    flex-grow: 1;
+    flex-direction: column;
     height: auto;
 }
 
@@ -291,7 +297,13 @@ nav a:not(.clickable-image):focus::after {
  * Container for title, author name and category.
  */
 .preview-about {
-    width: 100%;
+    max-width: 65ch; /* TODO make this dynamic */
+}
+
+.preview-about h2 {
+    word-wrap: break-word; /* Allow breaking words */
+    overflow-wrap: break-word; /* Ensure compatibility */
+    white-space: normal; /* Allow wrapping */
 }
 
 .preview.compact .preview-about {
