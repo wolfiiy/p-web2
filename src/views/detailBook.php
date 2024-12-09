@@ -7,7 +7,7 @@
                     class="shadow shadow-hover details-cover"
                     onclick="window.location.href='<?=$book['cover_image'];?>'">
 
-            <div class="data wrap" id="two">
+            <div class="data wrap">
                 <div class="data-set">
                     <p class="type">
                         Moyenne
@@ -76,7 +76,7 @@
         </div>
 
         <div class="overview-and-summary">
-            <div class="overview wrap" id="three">
+            <div class="overview wrap">
                 <h2>
                     <?=$book['title']?>
                 </h2>

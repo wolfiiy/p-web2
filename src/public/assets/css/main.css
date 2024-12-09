@@ -49,6 +49,7 @@ main {
 }
 
 h1 {
+    margin: 2rem 0;
     text-align: center;
 }
 
@@ -322,6 +323,7 @@ nav a:not(.clickable-image):focus::after {
 
 /*
  * Book details
+ * TODO merge css
  */
 .cover {
     height: 100%;
@@ -331,13 +333,15 @@ nav a:not(.clickable-image):focus::after {
     height: auto;
     width: 30ch;
     border-radius: var(--small-radius);
+    cursor: pointer;
 }
 
-.cover img {
-    height: 100%;
-    width: auto;
-    border-radius: var(--small-radius);
-    cursor: pointer;
+.overview-and-summary h2 {
+    margin-top: 0;
+}
+
+.overview-and-summary p {
+    margin: 0.65rem 0;
 }
 
 .overview .rating {
@@ -376,9 +380,6 @@ nav a:not(.clickable-image):focus::after {
 .data .value {
     margin: 0;
     width: 100%;
-}
-
-.description {
 }
 
 #details-content-wrap {
