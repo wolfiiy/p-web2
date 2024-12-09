@@ -45,6 +45,11 @@ Class AuthorModel extends DatabaseModel {
         return;
     }
 
+    /**
+     * Select an author based on first and last name
+     * @param string $firstname Author's first name
+     * @param string $lastname Autor's last name 
+     */
     public function getAuthorByNameAndFirstname(string $firstname, string $lastname){
         $sql = "SELECT author_id FROM t_author WHERE first_name = :fistname AND last_name = :lastname";
         $binds = array(

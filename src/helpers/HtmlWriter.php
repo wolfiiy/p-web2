@@ -81,6 +81,11 @@ class HtmlWriter {
         }
     }
 
+    /**
+     * Writes the required HTML to display a collection of book's previews with the authentificated user's rating.
+     * @param array $books An array containing multiple books (arrays that 
+     * contains details about the book).
+     */
     public static function writeCompactBooksPreviewGrade(array $books){
         foreach ($books as $b) {
             self::writeBookPreview($b, true, true);

@@ -38,6 +38,11 @@ class PublisherModel extends DatabaseModel {
         $query = $this->queryPrepareExecute($sql, $binds);
     }
 
+    /**
+     * Get a publisher's ID from the name
+     * @param string $namePublishe Name of the publisher
+     * @return int Id of the publisher, 0 if none found
+     */
     public function getPublisherByName(string $namePublisher){
         $sql = "SELECT publisher_id FROM t_publisher WHERE name = :name";
         $binds = array("name" => $namePublisher);
