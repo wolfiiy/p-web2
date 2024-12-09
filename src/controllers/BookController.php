@@ -251,7 +251,7 @@ class BookController extends Controller
             $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
 
             // Définir le chemin de destination
-            $destination = "../public/assets/img/cover/" . $filename;
+            $destination = "assets/img/cover/" . $filename;
 
             // Définir la source du fichier temporaire
             $source = $_FILES["coverImage"]["tmp_name"];
