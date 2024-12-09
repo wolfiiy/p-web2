@@ -275,6 +275,22 @@ class BookController extends Controller
         }
     }
 
+    /**
+     * Rate a book with current authentified user 
+     */
+    private function rateAction(){
+
+        // Rate the book
+        include_once("../models/UserModel.php");
+        $userModel = new UserModel();
+        $userModel->setBookRating($_GET["book_id"] , $_SESSION["user_id"], $_POST["rating"]);
+
+        // Return to book details
+        header("Location: index.php?controller=book&action=detail&id=" . $_GET["book_id"]);
+
+        
+    }
+
     private function textController($info)
     {
         //vérifier le champs 
