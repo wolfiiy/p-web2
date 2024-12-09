@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open%20Sans:wght@400;500;700&display=swap');
+
 :root {
     /* Logo colors */
     --accent: #3f8363;
@@ -32,7 +34,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: var(--background);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text);
 }
 
@@ -443,13 +445,31 @@ ul.no-bullets {
     padding: 0;
 }
 
-#bookForm {
-    display: flex;
-    flex-direction: column;
-    width : 40%;
+/*
+ * Addition / edition form
+ */
+.submission-container {
+    padding: 2ch;
+    width: 100%;
+    background: var(--foreground);
 }
 
-.label-input {
+.submission-container .label-input {
     display: flex;
-    justify-content: space-between;
+    flex-flow: column wrap;
+    margin: 0.5ch 0;
+}
+
+.large-form {
+    gap: 2ch;
+}
+
+form label {
+    font-size: 0.75rem;
+}
+
+input {
+    border: 1px solid lightgray;
+    border-radius: var(--small-radius);
+    background: var(--background);
 }
