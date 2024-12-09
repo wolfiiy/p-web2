@@ -327,6 +327,11 @@ nav a:not(.clickable-image):focus::after {
     height: 100%;
 }
 
+.details-cover {
+    height: auto;
+    width: 30ch;
+}
+
 .cover img {
     height: 100%;
     width: auto;

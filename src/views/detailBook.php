@@ -1,11 +1,11 @@
 <main>
     <h1>Détails de l'oeuvre</h1>
     <div id="details-content-wrap" class="content-wrap">
-        <div class="cover wrap">
-            <img src="assets/img/placeholders/cover-placeholder.png" 
+        <div class="details-cover wrap">
+            <img src="<?=$book['cover_image'];?>" 
                  alt="Image de couverture"
                  class="shadow shadow-hover"
-                 onclick="window.location.href='assets/img/placeholders/cover-placeholder.png'">
+                 onclick="window.location.href='<?=$book['cover_image'];?>'">
         </div>
 
         <div class="overview wrap">
