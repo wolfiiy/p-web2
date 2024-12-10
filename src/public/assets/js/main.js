@@ -1,5 +1,5 @@
 /**
- * Value from which to hid the navbar.
+ * Value from which to hide the navbar.
  */
 const SCROLLING_THRESHOLD = 55;
 
@@ -9,7 +9,7 @@ const SCROLLING_THRESHOLD = 55;
 var oldScrollPos = window.scrollY;
 
 /**
- * Navbar's height.
+ * Height of the navbar.
  */
 var navHeight = "-9ch";
 

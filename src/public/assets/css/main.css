@@ -3,20 +3,26 @@
     --accent: #3f8363;
     --accent-hover: #4fa27c;
     --complement: #fc5f4c;
-    --background: #ffffff;
+    --background: #fdfdfc;
     --foreground: #fdf7ea;
     --text: #14110F;
+    --text-alt: #fdfdfc;
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-faint: rgba(0, 0, 0, 0.1);
     --shadow-strong: rgba(0, 0, 0, 0.2);
 
     --nav-height: 8ch;
 
-    --preview-card-radius: 10px;
+    --large-radius: 10px;
     --preview-compact-height: 8rem;
 
     /* Buttons a few characters wide, dropdowns, input fields, ... */
     --small-radius: 3px;
+}
+
+::selection {
+    color: var(--text-alt);
+    background: var(--accent);
 }
 
 /*
@@ -43,6 +49,7 @@ main {
 }
 
 h1 {
+    margin: 2rem 0;
     text-align: center;
 }
 
@@ -144,7 +151,7 @@ input {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.shadow:hover {
+.shadow-hover:hover {
     box-shadow: 0 0 2ch var(--shadow-faint), 0 10px 10px var(--shadow-strong);
 }
 
@@ -233,10 +240,11 @@ nav a:not(.clickable-image):focus::after {
  * Main preview container
  */
 .preview {
+    height: 30ch;
     margin: 2ch 0;
     gap: 2ch;
 
-    border-radius: var(--preview-card-radius);
+    border-radius: var(--large-radius);
     background-color: var(--foreground);
     cursor: pointer;
 }
@@ -250,10 +258,19 @@ nav a:not(.clickable-image):focus::after {
     margin: 0;
 }
 
+.preview.compact h2 {
+    font-size: 1rem;
+}
+
+.preview .cover {
+    flex-shrink: 0;
+}
+
 .preview img {
-    height: 100%;
-    border-top-left-radius: var(--preview-card-radius);
-    border-bottom-left-radius: var(--preview-card-radius);
+    height: 30ch;
+    aspect-ratio: 1/1.45;
+    border-top-left-radius: var(--large-radius);
+    border-bottom-left-radius: var(--large-radius);
 }
 
 .preview.compact img {
@@ -262,6 +279,8 @@ nav a:not(.clickable-image):focus::after {
 
 .preview-content {
     justify-content: center;
+    flex-grow: 1;
+    flex-direction: column;
     height: auto;
 }
 
@@ -279,7 +298,13 @@ nav a:not(.clickable-image):focus::after {
  * Container for title, author name and category.
  */
 .preview-about {
-    width: 100%;
+    max-width: 65ch; /* TODO make this dynamic */
+}
+
+.preview-about h2 {
+    word-wrap: break-word; /* Allow breaking words */
+    overflow-wrap: break-word; /* Ensure compatibility */
+    white-space: normal; /* Allow wrapping */
 }
 
 .preview.compact .preview-about {
@@ -298,8 +323,25 @@ nav a:not(.clickable-image):focus::after {
 
 /*
  * Book details
+ * TODO merge css
  */
 .cover {
+    height: 100%;
+}
+
+.details-cover {
+    height: auto;
+    width: 30ch;
+    border-radius: var(--small-radius);
+    cursor: pointer;
+}
+
+.overview-and-summary h2 {
+    margin-top: 0;
+}
+
+.overview-and-summary p {
+    margin: 0.65rem 0;
 }
 
 .overview .rating {
@@ -317,6 +359,10 @@ nav a:not(.clickable-image):focus::after {
 
 .data.wrap {
     gap: 1em;
+    padding: 1.5ch 1ch;
+    margin: 2ch 0;
+    background: var(--foreground);
+    border-radius: var(--small-radius);
 }
 
 .data-set {
@@ -336,13 +382,19 @@ nav a:not(.clickable-image):focus::after {
     width: 100%;
 }
 
-.description {
-}
-
 #details-content-wrap {
     display: grid;
-    grid-template-columns: 1fr 4fr;
-    gap: 2ch;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto;
+    gap: 4ch 2ch;
+}
+
+#details-content-wrap h3{
+    margin-bottom: 0rem;
+}
+
+#details-content-wrap .description p {
+    margin: 1rem 0;
 }
 
 .overview-wrap {
