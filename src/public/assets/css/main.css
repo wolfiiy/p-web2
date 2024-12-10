@@ -54,7 +54,7 @@
        --md-sys-color-surface-container-high: rgb(241 230 222);
        --md-sys-color-surface-container-highest: rgb(235 225 216);
 
-    --md-sys-color-primary: rgb(255 243 233);
+    /*--md-sys-color-primary: rgb(255 243 233);
     --md-sys-color-surface-tint: rgb(246 188 116);
     --md-sys-color-on-primary: rgb(70 42 0);
     --md-sys-color-primary-container: rgb(251 192 119);
@@ -102,7 +102,7 @@
     --md-sys-color-surface-container-low: rgb(31 27 22);
     --md-sys-color-surface-container: rgb(36 31 26);
     --md-sys-color-surface-container-high: rgb(46 41 36);
-    --md-sys-color-surface-container-highest: rgb(57 52 46);
+    --md-sys-color-surface-container-highest: rgb(57 52 46);*/
 
     /* Logo colors */
     --accent: var(--md-sys-color-primary);
