@@ -45,25 +45,60 @@ class BookModel extends DatabaseModel
      * @param int $count Number of books to get
      * @param int $result Pagination offset
      * @param int $genre Category of books filter
-     * @param string $keyword Search string, matched with book titles
+     * @param string $keyword Search string, matched with book title or author first/last name
      * @return array Array containing the x latest books
      */
     public function getLatestBooks(int $count, int $page = 1, int $genre = 0, string $keyword="")
     {
-        if ($genre != 0){
-            $query = "SELECT * from t_book WHERE title LIKE :varKeyword AND category_fk = :varCategory ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+        // Trim whitespaces
+        $keyword = trim($keyword);
+        
+        if ($genre != 0) {
+
+            // Modified with ChatGPT
+            $query = "
+                SELECT 
+                    b.* 
+                FROM 
+                    t_book b
+                JOIN 
+                    t_author a ON b.author_fk = a.author_id
+                WHERE 
+                    (b.title LIKE :varKeyword OR CONCAT(a.first_name, ' ', a.last_name) LIKE :varKeyword) 
+                    AND b.category_fk = :varCategory
+                ORDER BY 
+                    b.book_id DESC 
+                LIMIT 
+                    :varCount OFFSET :varPage";
+        
             $binds = array(
                 "varCount" => $count,
-                "varPage" => ($page-1)*$count,
+                "varPage" => ($page - 1) * $count,
                 "varCategory" => $genre,
                 "varKeyword" => "%" . $keyword . "%"
             );
         }
-        else{
-            $query = "SELECT * from t_book WHERE title LIKE :varKeyword ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+        
+        else {
+
+            // Modified with ChatGPT
+            $query = "
+                SELECT 
+                    b.* 
+                FROM 
+                    t_book b
+                JOIN 
+                    t_author a ON b.author_fk = a.author_id
+                WHERE 
+                    b.title LIKE :varKeyword OR CONCAT(a.first_name, ' ', a.last_name) LIKE :varKeyword
+                ORDER BY 
+                    b.book_id DESC 
+                LIMIT 
+                    :varCount OFFSET :varPage";
+        
             $binds = array(
                 "varCount" => $count,
-                "varPage" => ($page-1)*$count,
+                "varPage" => ($page - 1) * $count,
                 "varKeyword" => "%" . $keyword . "%"
             );
         }

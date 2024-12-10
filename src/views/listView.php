@@ -15,10 +15,10 @@
         </select>
     </div>
 
-    <!-- String input for book name -->
+    <!-- String input for book name or author's name -->
     <div class="filter-search">
-        <input placeholder="Chercher un titre" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
-        <button type="submit" class="small-button">
+        <input placeholder="Chercher un titre ou auteur" type="text" name="searchName" id="searchName" value="<?php echo $_GET["searchName"]?>">
+        <button id="submitSearch" type="submit" class="small-button">
             <img src="assets/img/icons/search.svg" alt="Rechercher">
         </button>
     </div>
@@ -31,10 +31,13 @@
         input.addEventListener("keypress", function(event){
             if (event.key === "Enter"){
                 event.preventDefault();
+                error_log("Hell");
                 document.getElementById("submitSearch").click();
             }
         })
+
     </script>
+
 
 <!-- List of books searched -->
 <?php
