@@ -70,7 +70,7 @@
                     <p class="value">
                         <a href="" class="button red">Supprimer</a>
                     </p>
-                    <?php }}?>
+                <?php }}?>
                 </div>
             </div>
         </div>
@@ -96,6 +96,8 @@
                     <?=$book['publisher']?>
                 </p>
                 
+
+                <?php if(isset($_SESSION["user_id"])){ ?>
                 <div class="rating">
                     <p>
                         Votre note:
@@ -106,6 +108,10 @@
                         <button type="submit" name="rate">Valider</button>
                     </form>
                 </div>
+                <?php } else {?>
+                <p>Veuillez vous <a href="index.php?controller=user&action=logout">connecter</a> pour évaluer ce livre</p>
+                <?php }?>
+
             </div>
             
             <div class="description wrap">

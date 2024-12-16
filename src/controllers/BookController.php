@@ -186,8 +186,17 @@ class BookController extends Controller
         return $content;
     }
 
+    /**
+     * Display a form to add a new book
+     */
     private function addAction()
     {
+
+        // If no user is connected, redirect to index
+        if (!isUserConnected()){
+            header("Location: index.php");
+        }
+
         include_once("../models/CategoryModel.php");
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
