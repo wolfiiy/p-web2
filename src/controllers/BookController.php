@@ -212,9 +212,6 @@ class BookController extends Controller
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $errors = [];
-
-            if (empty($erreur)) {
                 // Controler si l'éditeur existe déja 
                 $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
@@ -279,7 +276,6 @@ class BookController extends Controller
                 $id = $idbook->getIdBook($user_fk);
                 $destination = 'Location: index.php?controller=book&action=detail&id='.$id;
                 header($destination);
-            }
         }else
         {
             echo " Merci de balider le formulaire.";

@@ -25,7 +25,7 @@ class BookModel extends DatabaseModel
     }
     public function getIdBook($idUser)
     {
-        $query = "SELECT MAX(book_id) FROM t_book WHERE user_fk = :idUser";
+        $query = "SELECT MAX(book_id) FROM t_book WHERE user_fk = :user_fk";
         $binds = array("user_fk" => $idUser);
         $req = $this->queryPrepareExecute($query, $binds);
         $req = $this->formatData($req);
