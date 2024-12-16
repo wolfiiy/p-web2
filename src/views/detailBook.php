@@ -103,7 +103,12 @@
                     
                     <form method="post">
                         <?=$dropdown?>
-                        <button type="submit" name="rate">Valider</button>
+                        <button type="submit" 
+                                name="rate"
+                                class="md-button secondary"
+                        >
+                            Valider
+                        </button>
                     </form>
                 </div>
             </div>

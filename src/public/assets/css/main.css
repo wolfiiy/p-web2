@@ -213,9 +213,19 @@ button:hover {
     color: var(--md-sys-color-on-secondary-container);
 }
 
+.md-button.secondary:hover {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+}
+
 .md-button.tertiary {
     background-color: var(--md-sys-color-tertiary-container);
     color: var(--md-sys-color-on-tertiary-container);
+}
+
+.md-button.tertiary:hover {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
 }
 
 .md-button.error {
