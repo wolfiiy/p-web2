@@ -7,54 +7,34 @@
           id="bookForm"
           class="large-form wrap-col">
 
-        <div class="md-outlined-input on-surface-container">
-            <input type="text" name="test" placeholder=" ">
-            <label for="test">Prénom de l'auteur</label>
+        <div class="md-outlined-input on-surface-container">    
+            <input type="text" name="authorFirstName" id="authorFirstName" value="<?php if (isset($author["first_name"])){echo $author["first_name"];}?>" placeholder=" ">
+            <label for="authorFirstName">Nom de l'auteur</label>
         </div>
 
         <div class="md-outlined-input on-surface-container">
-            <input type="text" name="test" placeholder=" ">
-            <label for="test">Nom de l'auteur</label>
-        </div>
-
-        <div class="md-outlined-input on-surface-container large">
-            <input type="text" name="test" placeholder=" ">
-            <label for="test">Titre</label>
-        </div>
-
-        <div class="md-outlined-input on-surface-container">
-            <input type="text" name="test" placeholder=" ">
-            <label for="test">Editeur</label>
-        </div>
-
-        <div class="label-input">    
-            <label for="authorFirstName" class="type">Nom de l'auteur</label>
-            <input class="md-input secondary" type="text" name="authorFirstName" id="authorFirstName" value="<?php if (isset($author["first_name"])){echo $author["first_name"];}?>">
-        </div>
-
-        <div class="label-input">
+            <input type="text" name="authorLastName" id="authorLastName" value="<?php if (isset($author["last_name"])){echo $author["last_name"];}?>" placeholder=" ">
             <label for="authorLastName">Prénom de l'auteur</label>
-            <input class="md-input secondary" type="text" name="authorLastName" id="authorLastName" value="<?php if (isset($author["last_name"])){echo $author["last_name"];}?>">
         </div>
         
-        <div class="label-input">
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="bookTitle" id="bookTitle" value="<?php if (isset($book["title"])){echo $book["title"];}?>" placeholder=" ">
             <label for="bookTitle">Titre du livre</label>
-            <input class="md-input secondary" type="text" name="bookTitle" id="bookTitle" value="<?php if (isset($book["title"])){echo $book["title"];}?>">
         </div>
         
-        <div class="label-input">
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="bookEditor" id="bookEditor"  value="<?php if (isset($publisher["name"])){echo $publisher["name"];}?>" placeholder=" ">
             <label for="bookEditor">Editeur</label>
-            <input class="md-input secondary" type="text" name="bookEditor" id="bookEditor"  value="<?php if (isset($publisher["name"])){echo $publisher["name"];}?>">
         </div>
         
         <div class="label-input">
-            <label for="bookEditionYear">Année d'édition</label>
             <input class="md-input secondary" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (isset($book["release_date"])){echo $book["release_date"];}?>">
+            <label for="bookEditionYear">Année d'édition</label>
         </div>
         
-        <div class="label-input">
+        <div class="md-outlined-input on-surface-container">
+            <input type="number" name="bookPageNb" id="bookPageNb" value="<?php if (isset($book["number_of_pages"])){echo $book["number_of_pages"];}?>" placeholder=" ">
             <label for="bookPageNb">Nombre de page</label>
-            <input class="md-input secondary" type="number" name="bookPageNb" id="bookPageNb" value="<?php if (isset($book["number_of_pages"])){echo $book["number_of_pages"];}?>">
         </div>
         
         <div class="label-input">
@@ -79,9 +59,9 @@
         </div>
 <?php if ($_GET["action"] == "modify"){ echo "<p>Charger un nouveau fichier pour changer l'image</p>";}?> 
         
-        <div class="label-input">
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="snippetLink" id="snippetLink" value="<?php if (isset($book["excerpt"])){echo $book["excerpt"];}?>" placeholder=" ">
             <label for="snippetLink">Lien vers un extrait</label>
-            <input class="md-input secondary" type="text" name="snippetLink" id="snippetLink" value="<?php if (isset($book["excerpt"])){echo $book["excerpt"];}?>">
         </div>
         
         <div class="label-input">
