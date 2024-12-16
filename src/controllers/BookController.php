@@ -201,6 +201,8 @@ class BookController extends Controller
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
 
+        $actionURL ="index.php?controller=book&action=insert";
+
         $view = file_get_contents('../views/addBook.php');
 
         ob_start();
@@ -209,6 +211,50 @@ class BookController extends Controller
 
         return $content;
     }
+
+    /**
+     * Display a form to modify a book
+     */
+    private function modifyAction()
+    {
+        include_once("../models/BookModel.php");
+        $bookModel = new BookModel();
+        $book = $bookModel->getBookById($_GET["id"]);
+
+        include_once("../models/AuthorModel.php");
+        $authorModel = new AuthorModel();
+        $author = $authorModel->getAuthorById($book["author_fk"]);
+
+        include_once("../models/PublisherModel.php");
+        $publisherModel = new PublisherModel();
+        $publisher = $publisherModel->getPublisherById($book["publisher_fk"]);
+
+        include_once("../models/CategoryModel.php");
+        $categoryModel = new CategoryModel();
+        $genres = $categoryModel->getAllCategory();
+
+        // If no user is connected, redirect to index
+        if (isset($_SESSION["user_id"])){
+            if (!isAdminConnectedUser() && $_SESSION["user_id"] != $book["user_fk"]){
+                header("Location: index.php");
+            }
+        }
+        else{
+            header("Location: index.php");
+        }
+
+        $view = file_get_contents('../views/addBook.php');
+        $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    /**
+     * Insert a new book in the database
+     */
     private function insertAction()
     {
         include_once("../models/BookModel.php");
@@ -281,6 +327,92 @@ class BookController extends Controller
             $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
 
             header('Location: index.php?controller=book&action=add');
+        }
+    }
+
+    /**
+     * Update a book in the database
+     */
+    private function updateAction()
+    {
+        include_once("../models/BookModel.php");
+        include_once("../models/PublisherModel.php");
+        include_once("../models/AuthorModel.php");
+
+        $addBook = new BookModel();
+        $addPublisher = new PublisherModel();
+        $addAuthor = new AuthorModel();
+        
+        $book = $addBook->getBookById($_GET["id"]);
+        $currentCover = $book["cover_image"];
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Controler si l'éditeur existe déja 
+            $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
+
+            //Créer un éditeur s'il n'existe pas
+            if ($idPublisher === 0) {
+                $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
+                $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
+            }
+
+            //Controler si l'auteur exite déjà
+            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+
+            //Créer l'autheur s'il n'existe pas
+            if ($idAuthor === 0) {
+                $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
+                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+            }
+             
+            $destination = "";
+            if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK){
+                //téléchargement et traitement des images
+                if ($_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
+                    die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
+                }
+
+                // Vérifier la taille du fichier (limite : 2 Mo)
+                if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
+                    die("Erreur : Le fichier est trop volumineux.");
+                }
+
+                // Vérifier le type MIME du fichier
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
+                    die("Erreur : Type de fichier non autorisé.");
+                }
+
+                // Récupérer l'extension du fichier original
+                $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
+
+                // Générer un nom de fichier unique et court
+                $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
+
+                // Définir le chemin de destination
+                $destination = "assets/img/cover/" . $filename;
+
+                // Définir la source du fichier temporaire
+                $source = $_FILES["coverImage"]["tmp_name"];
+
+                // Déplacer le fichier
+                $result = move_uploaded_file($source, $destination);
+                if (!$result) {
+                    die("Erreur : Impossible de déplacer le fichier téléchargé.");
+                }
+
+                // Débogage pour confirmer le chemin final
+                error_log("Fichier téléchargé avec succès : " . $destination);
+
+                // Supprime la cover précédente 
+                unlink($currentCover);
+
+            }
+
+            //ajout d'un livre
+            $addBook->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
+
+            header('Location: index.php?controller=book&action=detail&id=' . $_GET["id"]);
         }
     }
 

@@ -147,14 +147,14 @@ class BookModel extends DatabaseModel
      * @param int $publisherFk Id of the book's publisher
      * @param int $authorFk Id of the book's author
      */
-    public function insertBook(string $title, string $exerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
+    public function insertBook(string $title, string $excerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
 
     
-        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :excerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
 
         $binds = array(
             'title'=> $title,
-            'exerpt' => $exerpt,
+            'excerpt' => $excerpt,
             'summary' => $summary,
             'release_date' => $releaseDate,
             'cover_image' => $coverImage,
@@ -165,6 +165,58 @@ class BookModel extends DatabaseModel
             'author_fk' => $authorFk,
         );
         $this->queryPrepareExecute($sql, $binds);
+    }
+
+     /**
+     * Update a book in the database
+     * @param int $bookId Book's ID
+     * @param string $title Book's title
+     * @param string $exerpt Book's exerpt, link to a PDF
+     * @param string $summary Book's summary
+     * @param string $releaseDate Book's release date
+     * @param string $coverImage Book's cover, link to the local ressource
+     * @param int $userFk Id of the user who added this book
+     * @param int $categoryFk Id of the category the book belongs to
+     * @param int $publisherFk Id of the book's publisher
+     * @param int $authorFk Id of the book's author
+     */
+    public function updateBook(int $bookId, string $title, string $excerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $categoryFk, int $publisherFk, int $authorFk){
+        
+        if ($coverImage != ""){
+            
+            $sql = "UPDATE t_book SET title = :title, excerpt = :excerpt, summary = :summary, release_date = :releaseDate, cover_image = :coverImage, number_of_pages = :numberOfPages, category_fk = :categoryFk, publisher_fk = :publisherFk, author_fk = :authorFk WHERE book_id = :book_id" ;
+            $binds = array(
+                'title'=> $title,
+                'excerpt' => $excerpt,
+                'summary' => $summary,
+                'releaseDate' => $releaseDate,
+                'coverImage' => $coverImage,
+                'numberOfPages' => $numberOfPages,
+                'categoryFk' => $categoryFk, 
+                'publisherFk' => $publisherFk, 
+                'authorFk' => $authorFk,
+                'book_id' => $bookId,
+            );
+        }
+        else{
+            $sql = "UPDATE t_book SET title = :title, excerpt = :excerpt, summary = :summary, release_date = :releaseDate, number_of_pages = :numberOfPages, category_fk = :categoryFk, publisher_fk = :publisherFk, author_fk = :authorFk WHERE book_id = :book_id";  
+            $binds = array(
+                'title'=> $title,
+                'excerpt' => $excerpt,
+                'summary' => $summary,
+                'releaseDate' => $releaseDate,
+                'numberOfPages' => $numberOfPages,
+                'categoryFk' => $categoryFk, 
+                'publisherFk' => $publisherFk, 
+                'authorFk' => $authorFk,
+                'book_id' => $bookId,
+            );
+        }
+
+        $this->queryPrepareExecute($sql, $binds);
+
+        header("Location: index.php?controller=book&action=detail&id=" . $bookId);
+
     }
 
      /**
