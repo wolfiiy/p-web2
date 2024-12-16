@@ -240,20 +240,41 @@ a:not(.clickable-image, .md-button):focus::after {
     filter: brightness(0.5);
 }
 
-/* Buttons only a few characters wide */
-.small-button {
-    background-color: var(--accent);
-}
-
-select {
-    padding: 0.5rem 0.75rem; /*TODO merge with small button*/
+.md-select {
     border: none;
-    border-radius: var(--small-radius);
+    border-radius: var(--large-radius);
+    padding: 0.5rem 0.75rem;
     transition: all 0.22s;
 }
 
-select:hover {
-    background-color: var(--accent-hover);
+.md-select:hover {
+    cursor: pointer;
+}
+
+.md-select.secondary {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md-select.secondary:hover {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+}
+
+.md-select>option {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+}
+
+select option:checked,
+select option:hover {
+    box-shadow: 0 0 10px 100px var(--md-sys-color-on-secondary) inset;
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+select:focus > option:checked { 
+    background: var(--md-sys-color-on-secondary) !important;
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 input {

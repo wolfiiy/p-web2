@@ -9,7 +9,7 @@
     <!-- Book category select -->
     <div class="filter-category">
         <label for="bookGenre">Genre: </label>
-        <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
+        <select class="md-select secondary" onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
             <option value="0">Tous</option>
             <?=$categoryDropdown;?>
         </select>

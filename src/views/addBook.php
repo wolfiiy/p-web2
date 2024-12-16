@@ -40,7 +40,7 @@
         <div class="label-input">
             <label for="bookGenre">Genre</label>
             <!-- $genres sont récupéré dans le bookController et passé à cette vue -->
-            <select name="bookGenre" id="bookGenre">
+            <select class="md-select secondary" name="bookGenre" id="bookGenre">
                 <?php
                 foreach($genres as $genre){
                     echo "<option value='".$genre["category_id"]."'>" . $genre["name"] ."</option>";
