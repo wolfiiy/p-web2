@@ -59,18 +59,18 @@
                 </div>
 
                 <div class="data-set">
+                <?php if(isset($_SESSION["user_id"])){
+                        if(isAdminConnectedUser() || $book["user_fk"] == $_SESSION["user_id"]){ ?>
                     <p class="type">
                         Editer cette page
                     </p>
-
                     <p class="value">
                         <a href="" class="button accent">Modifier</a>
-                    </p>
-                    <?php if(isAdminConnectedUser() || $book["user_fk"] = $_SESSION["user_id"]){ ?>
+                    </p>                  
                     <p class="value">
                         <a href="" class="button red">Supprimer</a>
                     </p>
-                    <?php }?>
+                    <?php }}?>
                 </div>
             </div>
         </div>
