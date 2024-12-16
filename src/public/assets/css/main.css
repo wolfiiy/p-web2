@@ -56,6 +56,18 @@
     --md-sys-color-surface-container-high: rgb(241 230 222);
     --md-sys-color-surface-container-highest: rgb(235 225 216);
 
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-faint: rgba(0, 0, 0, 0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.2);
+
+    --nav-height: 8ch;
+
+    --small-radius: 4px;
+    --large-radius: 10px;
+    --preview-compact-height: 8rem;
+}
+
+.dark {
     --md-sys-color-primary: rgb(255 243 233);
     --md-sys-color-surface-tint: rgb(246 188 116);
     --md-sys-color-on-primary: rgb(70 42 0);
@@ -105,26 +117,6 @@
     --md-sys-color-surface-container: rgb(36 31 26);
     --md-sys-color-surface-container-high: rgb(46 41 36);
     --md-sys-color-surface-container-highest: rgb(57 52 46);
-
-    /* Logo colors */
-    --accent: var(--md-sys-color-primary);
-    --accent-hover: #4fa27c;
-    --complement: #fc5f4c;
-    --background: var(--md-sys-color-surface);
-    --foreground: var(--md-sys-color-surface-container);
-    --text: var(--md-sys-color-on-surface);
-    --text-alt: #fdfdfc;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --shadow-faint: rgba(0, 0, 0, 0.1);
-    --shadow-strong: rgba(0, 0, 0, 0.2);
-
-    --nav-height: 8ch;
-
-    --large-radius: 10px;
-    --preview-compact-height: 8rem;
-
-    /* Buttons a few characters wide, dropdowns, input fields, ... */
-    --small-radius: 4px;
 }
 
 ::selection {
@@ -138,9 +130,9 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: var(--background);
+    background-color: var(--md-sys-color-surface);
     font-family: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--text);
+    color: var(--md-sys-color-on-surface);
 }
 
 body {
@@ -163,7 +155,7 @@ h1 {
 a {
     text-decoration: none;
     position: relative;
-    color: var(--accent);
+    color: var(--md-sys-color-primary);
 }
 
 a:not(.clickable-image, .md-button):after {
@@ -173,7 +165,7 @@ a:not(.clickable-image, .md-button):after {
     bottom: 0;
     left: 0;
     width: 0%;
-    background: var(--accent);
+    background: var(--md-sys-color-primary);
     transition: 0.2s;
 }
 
@@ -418,7 +410,7 @@ header {
     margin: 0;
     padding: 0;
 
-    background: var(--foreground);
+    background: var(--md-sys-color-surface-container);
     box-shadow: 0px 4px 8px 5px var(--shadow);
 }
 
@@ -429,7 +421,7 @@ nav {
     top: 0;
     text-align: center;
 
-    background-color: var(--foreground);
+    background-color: var(--md-sys-color-surface-container);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     
@@ -464,12 +456,12 @@ nav {
 }
 
 nav a {
-    color: var(--text);
+    color: var(--md-sys-color-on-surface);
 }
 
 nav a:not(.clickable-image)::after,
 nav a:not(.clickable-image):focus::after {
-    background: var(--text) ;
+    background: var(--md-sys-color-on-surface) ;
 }
 
 /* TODO: coherence (wrap-col) */
@@ -501,7 +493,7 @@ nav a:not(.clickable-image):focus::after {
     gap: 2ch;
 
     border-radius: var(--large-radius);
-    background-color: var(--foreground);
+    background-color: var(--md-sys-color-surface-container);
     cursor: pointer;
 }
 
@@ -617,7 +609,7 @@ nav a:not(.clickable-image):focus::after {
     gap: 1em;
     padding: 2ch 1.5ch;
     margin: 2ch 0;
-    background: var(--foreground);
+    background: var(--md-sys-color-surface-container);
     border-radius: var(--large-radius);
 }
 
@@ -712,7 +704,7 @@ ul.no-bullets {
 .submission-container {
     padding: 2ch;
     width: 100%;
-    background: var(--foreground);
+    background: var(--md-sys-color-surface-container);
 }
 
 .submission-container .label-input {

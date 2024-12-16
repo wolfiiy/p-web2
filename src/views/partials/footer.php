@@ -17,9 +17,12 @@
         <div>
             ETML
         </div>
+
+        <a id="dark-mode-toggle">Changer de thème</a>
     </div>
 
     
 </footer>
+<script src="assets/js/visuals.js"></script>
 </body>
 </html>
