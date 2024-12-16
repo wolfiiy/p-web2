@@ -266,4 +266,16 @@ class BookModel extends DatabaseModel
 
         return $this->formatData($query)    ;
     }
+
+    /**
+     * Delete book with given ID
+     * @param int $id Book's id
+     */
+    public function deleteBook($id){
+        $sql = "DELETE FROM t_book WHERE book_id = :book_id";
+        $binds = array("book_id" => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return;
+    }
 }
