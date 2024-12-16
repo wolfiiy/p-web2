@@ -1,5 +1,5 @@
 <main>
-<h1>Ajout d'un livre</h1>
+<h1><?php echo $h1 ?></h1>
 <form enctype = "multipart/form-data" action="<?php echo $actionURL ?>" method="post" id="bookForm">
 
 <div class="label-input">    
@@ -64,7 +64,7 @@
     <textarea name="bookSummary" id="bookSummary" ><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
 </div>
 <div>
-    <input type = "submit" value="Ajouter">
+    <input type = "submit" value="<?php echo $submitButton ?>">
     <button type = "button" onclick="document.getElementById('bookForm').reset();">Effacer</button>
 </div>
 
