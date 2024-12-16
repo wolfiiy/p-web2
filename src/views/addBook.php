@@ -24,7 +24,7 @@
 
 <div class="label-input">
     <label for="bookEditionYear">Année d'édition: </label>
-    <input type="number" name="bookEditionYear" id="bookEditionYear">
+    <input type="date" name="bookEditionYear" id="bookEditionYear">
 </div>
 
 <div class="label-input">
