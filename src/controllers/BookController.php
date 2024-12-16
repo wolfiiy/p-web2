@@ -267,9 +267,9 @@ class BookController extends Controller
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $errors = [];
+            //$errors = [];
 
-            if (empty($erreur)) {
+            //if (empty($erreur)) {
                 // Controler si l'éditeur existe déja 
                 $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
@@ -334,7 +334,7 @@ class BookController extends Controller
                 $id = $idbook->getIdBook($user_fk);
                 $destination = 'Location: index.php?controller=book&action=detail&id='.$id;
                 header($destination);
-            }
+            //}
         }else
         {
             echo " Merci de balider le formulaire.";
@@ -377,48 +377,56 @@ class BookController extends Controller
             }
              
             $destination = "";
-            if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK){
-                //téléchargement et traitement des images
-                if ($_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
-                    die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
-                }
-
-                // Vérifier la taille du fichier (limite : 2 Mo)
-                if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
+            if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK) {
+                // Vérifier la taille du fichier (limite : 40 Ko)
+                if ($_FILES["coverImage"]["size"] > 40 * 1024) {
                     die("Erreur : Le fichier est trop volumineux.");
                 }
-
+            
                 // Vérifier le type MIME du fichier
                 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
                 if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
                     die("Erreur : Type de fichier non autorisé.");
                 }
-
-                // Récupérer l'extension du fichier original
-                $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
-
+            
+                // Vérifier l'extension du fichier
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $fileExtension = strtolower(pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION));
+                if (!in_array($fileExtension, $allowedExtensions)) {
+                    die("Erreur : Extension de fichier non autorisée.");
+                }
+            
                 // Générer un nom de fichier unique et court
                 $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
-
+            
                 // Définir le chemin de destination
                 $destination = "assets/img/cover/" . $filename;
-
+            
                 // Définir la source du fichier temporaire
                 $source = $_FILES["coverImage"]["tmp_name"];
-
+            
+                // Vérifier si le dossier de destination est accessible en écriture
+                if (!is_writable("assets/img/cover/")) {
+                    die("Erreur : Le dossier de destination n'est pas accessible en écriture.");
+                }
+            
                 // Déplacer le fichier
                 $result = move_uploaded_file($source, $destination);
                 if (!$result) {
                     die("Erreur : Impossible de déplacer le fichier téléchargé.");
                 }
-
+            
                 // Débogage pour confirmer le chemin final
                 error_log("Fichier téléchargé avec succès : " . $destination);
-
-                // Supprime la cover précédente 
-                unlink($currentCover);
-
+            
+                // Supprimer la couverture précédente (si applicable)
+                if (isset($currentCover) && file_exists($currentCover)) {
+                    unlink($currentCover);
+                }
+            } else {
+                die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
             }
+            
 
             //ajout d'un livre
             $addBook->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
