@@ -164,7 +164,7 @@ a {
     color: var(--accent);
 }
 
-a:not(.clickable-image):after {
+a:not(.clickable-image, .md-button):after {
     content: '';
     height: 2px;
     position: absolute;
@@ -175,8 +175,8 @@ a:not(.clickable-image):after {
     transition: 0.2s;
 }
 
-a:not(.clickable-image):hover::after,
-a:not(.clickable-image):focus::after {
+a:not(.clickable-image, .md-button):hover::after,
+a:not(.clickable-image, .md-button):focus::after {
     width: 100%;
 }
 
@@ -190,6 +190,19 @@ button {
 button:hover {
     cursor: pointer;
     background: var(--accent-hover);
+}
+
+.md-button {
+    padding: 1ch 2ch;
+    border-radius: var(--large-radius);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    transition: all ease-in-out 0.15s;
+}
+
+.md-button:hover {
+    background-color: var(--md-sys-color-inverse-primary);
+    color: var(--md-sys-color-inverse-on-surface);
 }
 
 /* Filter generated using this tool
