@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open%20Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
+    --main-ease: cubic-bezier(.65,.05,.36,1);
     /* Color palette generated with the Material Theme Builder
        https://github.com/material-components/material-web/blob/main/docs/theming/color.md */
 
@@ -122,7 +124,7 @@
     --preview-compact-height: 8rem;
 
     /* Buttons a few characters wide, dropdowns, input fields, ... */
-    --small-radius: 3px;
+    --small-radius: 4px;
 }
 
 ::selection {
@@ -137,7 +139,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: var(--background);
-    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text);
 }
 
@@ -275,6 +277,76 @@ a:not(.clickable-image, .md-button):focus::after {
     border-radius: var(--large-radius);
     color: var(--md-sys-color-on-surface);
     padding: 1.25ch 2ch;
+}
+
+/* Input heavily inspired from
+   https://github.com/LeonGeldsch/css_material_input/tree/main */
+   /*TODO make it generic & add primary / secondary / tertiary variants*/
+.md-outlined-input {
+    position: relative;
+}
+
+.md-outlined-input input {
+    height: 3rem;
+    border-radius: var(--small-radius);
+    border: none;
+    background-color: transparent;
+    padding-left: 2ch;
+    padding-right: 2ch;
+    font-size: 1rem;
+    transition: .1s var(--main-ease);
+}
+
+.md-outlined-input.primary input {
+    color: var(--md-sys-color-on-surface);
+    outline: 1px solid var(--md-sys-color-secondary-container);
+}
+
+.md-outlined-input.on-surface-container input {
+    color: var(--md-sys-color-on-surface);
+    outline: 1px solid var(--md-sys-color-secondary-container);
+}
+
+.md-outlined-input.on-surface-container label {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md-outlined-input.small input {
+    width: 10ch;
+}
+
+.md-outlined-input.large input {
+    width: 35ch;
+}
+
+.md-outlined-input label {
+    position: absolute;
+    top: 50%;
+    left: 1ch;
+    transform: translateY(-50%);
+    text-align: center;
+    transition: .2s var(--main-ease);
+    font-size: 1rem;
+    pointer-events: none;
+    padding: 0 5px;
+}
+
+.md-outlined-input input:not(:placeholder-shown) ~ label,
+.md-outlined-input input:focus ~ label {
+    top: 0px;
+    left: 10px;
+    font-size: 0.8rem;
+}
+
+.md-outlined-input input:focus {
+    outline: 1px solid var(--md-sys-color-secondary) !important;
+}
+.md-outlined-input input:hover {
+    outline: 1px solid white;
+}
+.md-outlined-input input:focus ~ label {
+    color: var(--md-sys-color-secondary) !important;
 }
 
 /* DROPDOWNS */

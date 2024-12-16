@@ -7,6 +7,26 @@
           id="bookForm"
           class="large-form wrap-col">
 
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="test" placeholder=" ">
+            <label for="test">Prénom de l'auteur</label>
+        </div>
+
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="test" placeholder=" ">
+            <label for="test">Nom de l'auteur</label>
+        </div>
+
+        <div class="md-outlined-input on-surface-container large">
+            <input type="text" name="test" placeholder=" ">
+            <label for="test">Titre</label>
+        </div>
+
+        <div class="md-outlined-input on-surface-container">
+            <input type="text" name="test" placeholder=" ">
+            <label for="test">Editeur</label>
+        </div>
+
         <div class="label-input">    
             <label for="authorFirstName" class="type">Nom de l'auteur</label>
             <input class="md-input secondary" type="text" name="authorFirstName" id="authorFirstName">
