@@ -66,7 +66,7 @@
                     <p class="value">
                         <a href="" class="button accent">Modifier</a>
                     </p>
-                    <?php if(isAdminConnectedUser()){ ?>
+                    <?php if(isAdminConnectedUser() || $book["user_fk"] = $_SESSION["user_id"]){ ?>
                     <p class="value">
                         <a href="" class="button red">Supprimer</a>
                     </p>
