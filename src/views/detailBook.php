@@ -64,11 +64,11 @@
                     </p>
 
                     <p class="value">
-                        <a href="" class="button accent">Modifier</a>
+                        <a href="" class="md-button primary wide">Modifier</a>
                     </p>
                     <?php if(isAdminConnectedUser()){ ?>
                     <p class="value">
-                        <a href="" class="button red">Supprimer</a>
+                        <a href="" class="md-button error wide">Supprimer</a>
                     </p>
                     <?php }?>
                 </div>

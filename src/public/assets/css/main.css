@@ -193,48 +193,46 @@ button:hover {
 }
 
 .md-button {
-    padding: 1ch 2ch;
+    padding: 1.25ch 2ch;
     border-radius: var(--large-radius);
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
     transition: all ease-in-out 0.15s;
 }
 
-.md-button:hover {
+.md-button.primary {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.md-button.primary:hover {
     background-color: var(--md-sys-color-inverse-primary);
     color: var(--md-sys-color-inverse-on-surface);
 }
 
-/* Filter generated using this tool
-   https://codepen.io/sosuke/pen/Pjoqqp */
-button img {
-    filter: 
-        invert(99%) 
-        sepia(98%) 
-        saturate(83%) 
-        hue-rotate(147deg) 
-        brightness(119%) 
-        contrast(100%);
+.md-button.secondary {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
-.button {
+.md-button.tertiary {
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+}
+
+.md-button.error {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+}
+
+.md-button.error:hover {
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+}
+
+.md-button.wide {
     display: inline-block;
-    padding: 1ch 2ch;
     box-sizing: border-box;
     width: 100%;
-    border-radius: 3px;
-    
-    text-decoration: none;
-    color: var(--md-sys-color-on-primary);
     text-align: center;
-}
-
-.button.accent {
-    background-color: var(--accent);
-}
-
-.button.red {
-    background-color: var(--complement);
 }
 
 /* Buttons only a few characters wide */
