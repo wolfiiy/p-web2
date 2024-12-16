@@ -44,7 +44,7 @@
                     </p>
         
                     <p class="value">
-                        <?=$user['username']?>
+                        <a href="index.php?controller=user&action=detail&id=<?=$user['user_id']?>"><?=$user['username']?></a>
                     </p>
                 </div>
         
