@@ -269,7 +269,7 @@ a:not(.clickable-image, .md-button):focus::after {
 }
 
 /* INPUTS */
-.md-input {
+.md-input.secondary {
     background-color: var(--md-sys-color-surface-container);
     border: 1px solid var(--md-sys-color-secondary-container);
     border-radius: var(--large-radius);
@@ -313,6 +313,16 @@ select option:hover {
 select:focus > option:checked { 
     background: var(--md-sys-color-on-secondary) !important;
     color: var(--md-sys-color-on-secondary-container);
+}
+
+/* TEXT AREAS */
+.md-textarea.secondary {
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-secondary-container);
+    border-radius: var(--large-radius);
+    color: var(--md-sys-color-on-surface);
+    padding: 1.25ch 2ch;
+    resize: vertical;
 }
 
 /*

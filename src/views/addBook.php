@@ -9,32 +9,32 @@
 
         <div class="label-input">    
             <label for="authorFirstName" class="type">Nom de l'auteur</label>
-            <input type="text" name="authorFirstName" id="authorFirstName">
+            <input class="md-input secondary" type="text" name="authorFirstName" id="authorFirstName">
         </div>
 
         <div class="label-input">
             <label for="authorLastName">Prénom de l'auteur</label>
-            <input type="text" name="authorLastName" id="authorLastName">
+            <input class="md-input secondary" type="text" name="authorLastName" id="authorLastName">
         </div>
         
         <div class="label-input">
             <label for="bookTitle">Titre du livre</label>
-            <input type="text" name="bookTitle" id="bookTitle">
+            <input class="md-input secondary" type="text" name="bookTitle" id="bookTitle">
         </div>
         
         <div class="label-input">
             <label for="bookEditor">Editeur</label>
-            <input type="text" name="bookEditor" id="bookEditor">
+            <input class="md-input secondary" type="text" name="bookEditor" id="bookEditor">
         </div>
         
         <div class="label-input">
             <label for="bookEditionYear">Année d'édition</label>
-            <input type="number" name="bookEditionYear" id="bookEditionYear">
+            <input class="md-input secondary" type="number" name="bookEditionYear" id="bookEditionYear">
         </div>
         
         <div class="label-input">
             <label for="bookPageNb">Nombre de page</label>
-            <input type="number" name="bookPageNb" id="bookPageNb">
+            <input class="md-input secondary" type="number" name="bookPageNb" id="bookPageNb">
         </div>
         
         <div class="label-input">
@@ -51,17 +51,17 @@
 
         <div class="label-input">
             <label for="coverImage">Image de couverture</label>
-            <input type="file" name="coverImage" id="coverImage">
+            <input class="md-input secondary" type="file" name="coverImage" id="coverImage">
         </div>
         
         <div class="label-input">
             <label for="snippetLink">Lien vers un extrait</label>
-            <input type="text" name="snippetLink" id="snippetLink">
+            <input class="md-input secondary" type="text" name="snippetLink" id="snippetLink">
         </div>
         
         <div class="label-input">
             <label for="bookSummary">Résumé</label>
-            <textarea name="bookSummary" id="bookSummary"></textarea>
+            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary"></textarea>
         </div>
         <div>
             <input type = "submit" value="Ajouter" class="md-button primary">
