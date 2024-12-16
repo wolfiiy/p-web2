@@ -265,9 +265,10 @@ a:not(.clickable-image, .md-button):focus::after {
 /* INPUTS */
 .md-input.secondary {
     background-color: var(--md-sys-color-surface-container);
-    border: 1px solid var(--md-sys-color-secondary-container);
+    border: none;
     border-radius: var(--large-radius);
     color: var(--md-sys-color-on-surface);
+    outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
     padding: 1.25ch 2ch;
 }
 
@@ -296,7 +297,7 @@ a:not(.clickable-image, .md-button):focus::after {
 
 .md-outlined-input.on-surface-container input {
     color: var(--md-sys-color-on-surface);
-    outline: 1px solid var(--md-sys-color-secondary-container);
+    outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
 }
 
 .md-outlined-input.on-surface-container label {
@@ -334,8 +335,12 @@ a:not(.clickable-image, .md-button):focus::after {
 .md-outlined-input input:focus {
     outline: 1px solid var(--md-sys-color-secondary) !important;
 }
-.md-outlined-input input:hover {
-    outline: 1px solid white;
+
+.md-input:hover,
+.md-outlined-input input:hover,
+.md-textarea:hover {
+    outline: 1px solid var(--md-sys-color-outline);
+    transition: 0.2s var(--main-ease);
 }
 .md-outlined-input input:focus ~ label {
     color: var(--md-sys-color-secondary) !important;
@@ -382,10 +387,11 @@ select:focus > option:checked {
 /* TEXT AREAS */
 .md-textarea.secondary {
     background-color: var(--md-sys-color-surface-container);
-    border: 1px solid var(--md-sys-color-secondary-container);
+    border: none;
     border-radius: var(--large-radius);
     color: var(--md-sys-color-on-surface);
     padding: 1.25ch 2ch;
+    outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
     resize: vertical;
 }
 

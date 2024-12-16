@@ -28,8 +28,8 @@
         </div>
         
         <div class="label-input">
-            <input class="md-input secondary" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (isset($book["release_date"])){echo $book["release_date"];}?>">
             <label for="bookEditionYear">Année d'édition</label>
+            <input class="md-input secondary" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (isset($book["release_date"])){echo $book["release_date"];}?>">
         </div>
         
         <div class="md-outlined-input on-surface-container">
