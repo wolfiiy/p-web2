@@ -433,6 +433,24 @@ class BookController extends Controller
     }
 
     /**
+     * Delete a book with a specific ID
+     */
+    public function deleteAction(){
+
+        include_once("../models/BookModel.php");
+        $bookModel = new BookModel();
+        $book = $bookModel->getBookById($_GET["id"]);
+
+        // Check for privilege before deletion
+        if (isAdminConnectedUser() || $_SESSION["user_id"] == $book["user_fk"]){
+            $bookModel->deleteBook($_GET["id"]);
+        }
+
+        // Return to index
+        header ("Location: index.php");
+    }
+
+    /**
      * Rate a book with current authentified user 
      */
     public function rateAction()

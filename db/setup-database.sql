@@ -61,8 +61,8 @@ CREATE TABLE if not exists review(
    user_fk INT,
    grade TINYINT,
    PRIMARY KEY(book_fk, user_fk),
-   FOREIGN KEY(book_fk) REFERENCES t_book(book_id),
-   FOREIGN KEY(user_fk) REFERENCES t_user(user_id)
+   FOREIGN KEY(book_fk) REFERENCES t_book(book_id) ON DELETE CASCADE,
+   FOREIGN KEY(user_fk) REFERENCES t_user(user_id) ON DELETE CASCADE
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Data

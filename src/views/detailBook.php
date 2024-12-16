@@ -68,7 +68,7 @@
                         <a href="index.php?controller=book&action=modify&id=<?php echo $book["book_id"]?>" class="md-button primary wide">Modifier</a>
                     </p>                  
                     <p class="value">
-                        <a href="" class="md-button error wide">Supprimer</a>
+                        <a href="index.php?controller=book&action=delete&id=<?php echo $book["book_id"]?>" class="md-button error wide">Supprimer</a>
                     </p>
                 <?php }}?>
                 </div>
