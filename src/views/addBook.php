@@ -64,8 +64,8 @@
             <textarea name="bookSummary" id="bookSummary"></textarea>
         </div>
         <div>
-            <input type = "submit" value="Ajouter">
-            <button type = "button" onclick="document.getElementById('bookForm').reset();">Effacer</button>
+            <input type = "submit" value="Ajouter" class="md-button primary">
+            <button type = "button" onclick="document.getElementById('bookForm').reset();" class="md-button error">Effacer</button>
         </div>
     </form>
 </div>

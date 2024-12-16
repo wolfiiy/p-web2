@@ -180,21 +180,11 @@ a:not(.clickable-image, .md-button):focus::after {
     width: 100%;
 }
 
-button {
-    border: none;
-    border-radius: var(--small-radius);
-    padding: 0.55rem 0.75rem;
-    transition: all 0.15s;
-}
-
-button:hover {
-    cursor: pointer;
-    background: var(--accent-hover);
-}
-
 .md-button {
+    border: none;
     padding: 1.25ch 2ch;
     border-radius: var(--large-radius);
+    cursor: pointer;
     transition: all ease-in-out 0.15s;
 }
 
@@ -203,7 +193,7 @@ button:hover {
     color: var(--md-sys-color-on-primary-container);
 }
 
-.md-button.primary:hover {
+.md-button.primary:hover:not([disabled]) {
     background-color: var(--md-sys-color-primary);
     color: var(--md-sys-color-on-primary);
 }
@@ -213,7 +203,7 @@ button:hover {
     color: var(--md-sys-color-on-secondary-container);
 }
 
-.md-button.secondary:hover {
+.md-button.secondary:hover:not([disabled]) {
     background-color: var(--md-sys-color-secondary);
     color: var(--md-sys-color-on-secondary);
 }
@@ -223,19 +213,19 @@ button:hover {
     color: var(--md-sys-color-on-tertiary-container);
 }
 
-.md-button.tertiary:hover {
+.md-button.tertiary:hover:not([disabled]) {
     background-color: var(--md-sys-color-tertiary);
     color: var(--md-sys-color-on-tertiary);
 }
 
 .md-button.error {
-    background-color: var(--md-sys-color-error-container);
-    color: var(--md-sys-color-on-error-container);
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
 }
 
 .md-button.error:hover {
-    background-color: var(--md-sys-color-error);
-    color: var(--md-sys-color-on-error);
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
 }
 
 .md-button.wide {
@@ -243,6 +233,11 @@ button:hover {
     box-sizing: border-box;
     width: 100%;
     text-align: center;
+}
+
+.md-button:disabled {
+    cursor: default;
+    filter: brightness(0.5);
 }
 
 /* Buttons only a few characters wide */
