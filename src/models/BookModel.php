@@ -23,7 +23,13 @@ class BookModel extends DatabaseModel
         if ($req) return $this -> formatData($req);
         else return false;
     }
-
+    public function getIdBook()
+    {
+        $query = "SELECT MAX(book_id) FROM t_book";
+        $req = $this->querySimpleExecute($query);
+        $req = $this->formatData($req);
+        return $req[0]['MAX(book_id)'];
+    }
     /**
      * Given an ID, gets the coresponding book or returns null if it does not
      * exists.

@@ -70,50 +70,51 @@ class BookController extends Controller
         $categories = $categoryModel->getAllCategory();
 
         // By default page 1
-        if(!isset($_GET["page"])) 
+        if (!isset($_GET["page"]))
             $page = 1;
-        else 
+        else
             $page = $_GET["page"];
-        
+
         // Defaults to all all books of all categories (i.e. empty filters)
-        if (!isset($_GET["bookGenre"])) 
+        if (!isset($_GET["bookGenre"]))
             $_GET["bookGenre"] = self::DEFAULT_CATEGORY_FILTER;
 
-        if (!isset($_GET["searchName"])) 
+        if (!isset($_GET["searchName"]))
             $_GET["searchName"] = self::DEFAULT_SEARCH_FILTER;
 
         // Create the category filter dropdown
         $categoryDropdown = '';
-        foreach($categories as $c){   
-            $categoryDropdown .= '<option value="' . $c['category_id'] . '"';        
-            
-            if ($c["category_id"] == $_GET["bookGenre"]) 
+        foreach ($categories as $c) {
+            $categoryDropdown .= '<option value="' . $c['category_id'] . '"';
+
+            if ($c["category_id"] == $_GET["bookGenre"])
                 $categoryDropdown .= "selected";
 
-            $categoryDropdown .= ">" . ucfirst($c['name']) .'</option>';
+            $categoryDropdown .= ">" . ucfirst($c['name']) . '</option>';
         }
 
         // Get latest book with category filter and name filter
         // Get total number of result for pagination
         if ($_GET["bookGenre"] == 0) {
             $books = $bookModel->getLatestBooks(
-                self::RESULT_PER_PAGE, $page, keyword:$_GET["searchName"]
+                self::RESULT_PER_PAGE,
+                $page,
+                keyword: $_GET["searchName"]
             );
-            
+
             $nbResult = $bookModel->resultCount(
                 keyword: $_GET["searchName"]
             );
-        }
-        else {
+        } else {
             $books = $bookModel->getLatestBooks(
-                self::RESULT_PER_PAGE, 
-                $page, 
-                $_GET["bookGenre"], 
-                keyword:$_GET["searchName"]
+                self::RESULT_PER_PAGE,
+                $page,
+                $_GET["bookGenre"],
+                keyword: $_GET["searchName"]
             );
-            
+
             $nbResult = $bookModel->resultCount(
-                $_GET["bookGenre"], 
+                $_GET["bookGenre"],
                 keyword: $_GET["searchName"]
             );
         }
@@ -122,11 +123,11 @@ class BookController extends Controller
         $maxPage = round($nbResult / self::RESULT_PER_PAGE);
 
         // Between 0 and RESULT_PER_PAGE, one page
-        if ($maxPage == 0) 
+        if ($maxPage == 0)
             $maxPage = self::DEFAULT_PAGE_NUMBER;
 
         $books = DataHelper::BookPreview($books);
-        
+
         $view = file_get_contents('../views/listView.php');
 
         ob_start();
@@ -159,19 +160,19 @@ class BookController extends Controller
             // Add rating to database
             if (isset($_SESSION['id'])) {
                 $userModel->setBookRating(
-                    $id, 
-                    (int)$_SESSION['user_id'], 
+                    $id,
+                    (int)$_SESSION['user_id'],
                     $_POST['rating']
                 );
             }
 
             // Clear post to allow refreshes
-            header('Location: '.$_SERVER['HTTP_REFERER']);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
 
         $user = $userModel->getUserById($book['user_fk']);
 
-        $userRating = isset($_SESSION['user_id']) 
+        $userRating = isset($_SESSION['user_id'])
             ? $userModel->getBookRating($id, $_SESSION['user_id'])
             : '-';
 
@@ -207,88 +208,95 @@ class BookController extends Controller
         include_once("../models/AuthorModel.php");
 
         $addBook = new BookModel();
+        $idbook = new BookModel();
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Controler si l'éditeur existe déja 
-            $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
-            //Créer un éditeur s'il n'existe pas
-            if ($idPublisher === 0) {
-                $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
-                $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
-            }
 
-            //Controler si l'auteur exite déjà
-            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
 
-            //Créer l'autheur s'il n'existe pas
-            if ($idAuthor === 0) {
-                $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
-                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
-            }
+            //if ($erreur == 0) {
+                // Controler si l'éditeur existe déja 
+                $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
-            //téléchargement et traitement des images
-            if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
-                die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
-            }
+                //Créer un éditeur s'il n'existe pas
+                if ($idPublisher === 0) {
+                    $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
+                    $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
+                }
 
-            // Vérifier la taille du fichier (limite : 2 Mo)
-            if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
-                die("Erreur : Le fichier est trop volumineux.");
-            }
+                //Controler si l'auteur exite déjà
+                $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
 
-            // Vérifier le type MIME du fichier
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
-                die("Erreur : Type de fichier non autorisé.");
-            }
+                //Créer l'autheur s'il n'existe pas
+                if ($idAuthor === 0) {
+                    $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
+                    $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                }
 
-            // Récupérer l'extension du fichier original
-            $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
+                //téléchargement et traitement des images
+                if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
+                    die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
+                }
 
-            // Générer un nom de fichier unique et court
-            $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
+                // Vérifier la taille du fichier (limite : 2 Mo)
+                if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
+                    die("Erreur : Le fichier est trop volumineux.");
+                }
 
-            // Définir le chemin de destination
-            $destination = "assets/img/cover/" . $filename;
+                // Vérifier le type MIME du fichier
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
+                    die("Erreur : Type de fichier non autorisé.");
+                }
 
-            // Définir la source du fichier temporaire
-            $source = $_FILES["coverImage"]["tmp_name"];
+                // Récupérer l'extension du fichier original
+                $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
 
-            // Déplacer le fichier
-            $result = move_uploaded_file($source, $destination);
-            if (!$result) {
-                die("Erreur : Impossible de déplacer le fichier téléchargé.");
-            }
+                // Générer un nom de fichier unique et court
+                $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
 
-            // Débogage pour confirmer le chemin final
-            error_log("Fichier téléchargé avec succès : " . $destination);
+                // Définir le chemin de destination
+                $destination = "assets/img/cover/" . $filename;
 
-            //TODO: utilisateur défini pour les test
-            $user_fk = 1;
+                // Définir la source du fichier temporaire
+                $source = $_FILES["coverImage"]["tmp_name"];
 
-            //ajout d'un livre
-            $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
+                // Déplacer le fichier
+                $result = move_uploaded_file($source, $destination);
+                if (!$result) {
+                    die("Erreur : Impossible de déplacer le fichier téléchargé.");
+                }
 
-            header('Location: index.php?controller=book&action=add');
+                // Débogage pour confirmer le chemin final
+                error_log("Fichier téléchargé avec succès : " . $destination);
+
+                //TODO: utilisateur défini pour les test
+                $user_fk = 1;
+
+                //ajout d'un livre
+                $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
+                //recupérer l'id
+                $id = $idbook->getIdBook();
+                $destination = 'Location: index.php?controller=book&action=detail&id='.$id;
+                header($destination);
+            //}
         }
     }
 
     /**
      * Rate a book with current authentified user 
      */
-    private function rateAction(){
+    private function rateAction()
+    {
 
         // Rate the book
         include_once("../models/UserModel.php");
         $userModel = new UserModel();
-        $userModel->setBookRating($_GET["book_id"] , $_SESSION["user_id"], $_POST["rating"]);
+        $userModel->setBookRating($_GET["book_id"], $_SESSION["user_id"], $_POST["rating"]);
 
         // Return to book details
         header("Location: index.php?controller=book&action=detail&id=" . $_GET["book_id"]);
-
-        
     }
 
     private function textController($info)
