@@ -212,10 +212,9 @@ class BookController extends Controller
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $errors = [];
 
-
-
-            //if ($erreur == 0) {
+            if (empty($erreur)) {
                 // Controler si l'éditeur existe déja 
                 $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
 
@@ -272,22 +271,25 @@ class BookController extends Controller
                 error_log("Fichier téléchargé avec succès : " . $destination);
 
                 //TODO: utilisateur défini pour les test
-                $user_fk = 1;
+                $user_fk = $_SESSION["user_id"];
 
                 //ajout d'un livre
                 $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
                 //recupérer l'id
-                $id = $idbook->getIdBook();
+                $id = $idbook->getIdBook($user_fk);
                 $destination = 'Location: index.php?controller=book&action=detail&id='.$id;
                 header($destination);
-            //}
+            }
+        }else
+        {
+            echo " Merci de balider le formulaire.";
         }
     }
 
     /**
      * Rate a book with current authentified user 
      */
-    private function rateAction()
+    public function rateAction()
     {
 
         // Rate the book
@@ -299,7 +301,7 @@ class BookController extends Controller
         header("Location: index.php?controller=book&action=detail&id=" . $_GET["book_id"]);
     }
 
-    private function textController($info)
+    public function textController($info)
     {
         //vérifier le champs 
         if (isset($info)) {
@@ -316,7 +318,7 @@ class BookController extends Controller
             return false;
         }
     }
-    private function yearController($year)
+    public function yearController($year)
     {
         if (isset($year)) {
             $year = trim($year);
@@ -331,7 +333,7 @@ class BookController extends Controller
             return false;
         }
     }
-    private function pageController($number)
+    public function pageController($number)
     {
 
         if (isset($number)) {
@@ -347,7 +349,7 @@ class BookController extends Controller
             return false;
         }
     }
-    private function urlController($url)
+    public function urlController($url)
     {
         if (isset($url)) {
             $url = trim($url);
@@ -362,7 +364,7 @@ class BookController extends Controller
             return false;
         }
     }
-    private function resumeController($resume)
+    public function resumeController($resume)
     {
         if (isset($resume)) {
             $url = trim($resume);
