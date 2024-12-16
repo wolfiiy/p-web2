@@ -16,7 +16,7 @@ include_once('../models/UserModel.php');
  */
 class DataHelper {
 
-    private const RATINGS = array(0, 1, 2, 3, 4, 5, '-');
+    private const RATINGS = array('-', 1, 2, 3, 4, 5);
     private const NB_DECIMALS = 2;
     private const DECIMAL_SEPARATOR = '.';
     
@@ -71,11 +71,13 @@ class DataHelper {
         $dropdown = '<select class="md-select secondary" name="rating" id="rating"';
 
         foreach (self::RATINGS as $r) {
+
             if ($r == $rating) $selected = 'selected';
             else $selected = null;
-
+            
             $dropdown .= '<option value="' . $r . '" ' . $selected . '>';
             $dropdown .= "$r</option>";
+
         }
 
         $dropdown .= "</select>";
@@ -109,6 +111,14 @@ class DataHelper {
                                         self::DECIMAL_SEPARATOR);
         else 
             $book["average_rating"] = Constants::NO_RATING;
+
+        // Format user grade
+        if (isset($book["grade"])){
+            $book["grade"] = number_format(
+                $book["grade"] , 
+                self::NB_DECIMALS, 
+                self::DECIMAL_SEPARATOR);
+        }
 
         // Convert date to printable format
         $book['release_date'] = FormatHelper::getFullDate($book['release_date']);

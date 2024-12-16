@@ -15,10 +15,10 @@
         </select>
     </div>
 
-    <!-- String input for book name -->
+    <!-- String input for book name or author's name -->
     <div class="filter-search wrap-row">
-        <input class="md-input secondary" placeholder="Chercher un titre" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
-        <button type="submit" class="md-button secondary icon">
+        <input class="md-input secondary" placeholder="Chercher un titre ou auteur" type="text" name="searchName" id="searchName" value="<?php echo $_GET["searchName"]?>">
+        <button id="submitSearch" type="submit" class="md-button secondary icon">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg">
                 <path d="M 10.50,10.50 C 10.50,10.50 8.32,8.32 8.32,8.32M 9.50,5.50 C 9.50,7.71 7.71,9.50 5.50,9.50 3.29,9.50 1.50,7.71 1.50,5.50 1.50,3.29 3.29,1.50 5.50,1.50 7.71,1.50 9.50,3.29 9.50,5.50 Z"/>
             </svg>
@@ -33,10 +33,13 @@
         input.addEventListener("keypress", function(event){
             if (event.key === "Enter"){
                 event.preventDefault();
+                error_log("Hell");
                 document.getElementById("submitSearch").click();
             }
         })
+
     </script>
+
 
 <!-- List of books searched -->
 <?php

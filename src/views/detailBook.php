@@ -59,18 +59,18 @@
                 </div>
 
                 <div class="data-set">
+                <?php if(isset($_SESSION["user_id"])){
+                        if(isAdminConnectedUser() || $book["user_fk"] == $_SESSION["user_id"]){ ?>
                     <p class="type">
                         Editer cette page
                     </p>
-
                     <p class="value">
-                        <a href="" class="md-button primary wide">Modifier</a>
-                    </p>
-                    <?php if(isAdminConnectedUser()){ ?>
+                        <a href="index.php?controller=book&action=modify&id=<?php echo $book["book_id"]?>" class="md-button primary wide">Modifier</a>
+                    </p>                  
                     <p class="value">
                         <a href="" class="md-button error wide">Supprimer</a>
                     </p>
-                    <?php }?>
+                <?php }}?>
                 </div>
             </div>
         </div>
@@ -96,12 +96,14 @@
                     <?=$book['publisher']?>
                 </p>
                 
+
+                <?php if(isset($_SESSION["user_id"])){ ?>
                 <div class="rating">
                     <p>
                         Votre note:
                     </p>
                     
-                    <form method="post">
+                    <form method="post" action="index.php?controller=book&action=rate&book_id=<?php echo $book["book_id"]?>">
                         <?=$dropdown?>
                         <button type="submit" 
                                 name="rate"
@@ -111,6 +113,10 @@
                         </button>
                     </form>
                 </div>
+                <?php } else {?>
+                <p>Veuillez vous <a href="index.php?controller=user&action=logout">connecter</a> pour évaluer ce livre</p>
+                <?php }?>
+
             </div>
             
             <div class="description wrap">

@@ -20,8 +20,9 @@ class HtmlWriter {
      * Writes the required HTML to display a book's preview.
      * @param array $book An array containing the book's details.
      * @param bool $isCompact Whether the preview should be compact.
+     * @param bool $grade Wheter the preview should display the user's grade
      */
-    public static function writeBookPreview(array $book, bool $isCompact) {
+    public static function writeBookPreview(array $book, bool $isCompact, bool $grade) {
         $html = "";
         $detailsUrl = "index.php?controller=book&action=detail&id=" 
                     . $book['book_id'];
@@ -51,10 +52,13 @@ class HtmlWriter {
 
         $html .= '<div class="preview-community wrap-row">';
         $html .= '<p>' . $book['average_rating'] . '</p>';
-        $html .= '<p>Ajouté par ' . $book['username_name'] . '</p>';
+        $html .= '<p>Ajouté par <a href="index.php?controller=user&action=detail&id=' . $book['user_fk']. '">' . $book['username_name'] . '<a></p>';
         $html .= '<p><a href="' . $detailsUrl . '">';
         $html .= 'Détails';
         $html .= '</a></p>';
+        if ($grade){
+            $html .= "User rating: " . $book['grade'];
+        }
         $html .= '</div>';
         $html .= '</div>';
 
@@ -70,7 +74,7 @@ class HtmlWriter {
      */
     public static function writeBooksPreview(array $books) {
         foreach ($books as $b) {
-            self::writeBookPreview($b, false);
+            self::writeBookPreview($b, false, false);
         }
     }
 
@@ -81,7 +85,18 @@ class HtmlWriter {
      */
     public static function writeCompactBooksPreview(array $books) {
         foreach ($books as $b) {
-            self::writeBookPreview($b, true);
+            self::writeBookPreview($b, true, false);
+        }
+    }
+
+    /**
+     * Writes the required HTML to display a collection of book's previews with the authentificated user's rating.
+     * @param array $books An array containing multiple books (arrays that 
+     * contains details about the book).
+     */
+    public static function writeCompactBooksPreviewGrade(array $books){
+        foreach ($books as $b) {
+            self::writeBookPreview($b, true, true);
         }
     }
 }

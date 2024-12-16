@@ -49,17 +49,24 @@ Class UserModel extends DatabaseModel {
      * @param mixed $rating Rating given by the user.
      */
     public function setBookRating(int $bookId, int $userId, mixed $rating) {
-        $sql = "
+        $currentReview = $this->getBookRating($bookId, $userId);
+        if ($currentReview){
+            $sql = "
+            update review set grade=:rating where book_fk=:book_fk AND user_fk=:user_fk
+        ";
+        }
+        else{
+            $sql = "
             insert into review (book_fk, user_fk, grade)
             values (:book_fk, :user_fk, :rating)
         ";
-
+        }
+        
         $binds = array(
             ':book_fk' => $bookId,
             ':user_fk' => $userId,
             ':rating' => $rating
         );
-
         $this->queryPrepareExecute($sql, $binds);
     }
 
@@ -74,7 +81,7 @@ Class UserModel extends DatabaseModel {
             select * 
             from review 
             where book_fk = :book_fk
-            and user_fk = :user_dk
+            and user_fk = :user_fk
         ";
 
         $binds = array(
@@ -84,10 +91,15 @@ Class UserModel extends DatabaseModel {
 
         $query = $this->queryPrepareExecute($sql, $binds);
 
-        if ($query) 
-            return $this->formatData($query)[0];
-        else
+        if ($query) {
+            $results = $this->formatData($query);
+            if (isset($results[0])){
+                return $results[0]["grade"];
+            }
+        }
+        else {
             return 0;
+        }
     }
 
     /**

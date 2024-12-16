@@ -23,7 +23,14 @@ class BookModel extends DatabaseModel
         if ($req) return $this -> formatData($req);
         else return false;
     }
-
+    public function getIdBook($idUser)
+    {
+        $query = "SELECT MAX(book_id) FROM t_book WHERE user_fk = :idUser";
+        $binds = array("user_fk" => $idUser);
+        $req = $this->queryPrepareExecute($query, $binds);
+        $req = $this->formatData($req);
+        return $req[0]['MAX(book_id)'];
+    }
     /**
      * Given an ID, gets the coresponding book or returns null if it does not
      * exists.
@@ -45,25 +52,60 @@ class BookModel extends DatabaseModel
      * @param int $count Number of books to get
      * @param int $result Pagination offset
      * @param int $genre Category of books filter
-     * @param string $keyword Search string, matched with book titles
+     * @param string $keyword Search string, matched with book title or author first/last name
      * @return array Array containing the x latest books
      */
     public function getLatestBooks(int $count, int $page = 1, int $genre = 0, string $keyword="")
     {
-        if ($genre != 0){
-            $query = "SELECT * from t_book WHERE title LIKE :varKeyword AND category_fk = :varCategory ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+        // Trim whitespaces
+        $keyword = trim($keyword);
+        
+        if ($genre != 0) {
+
+            // Modified with ChatGPT
+            $query = "
+                SELECT 
+                    b.* 
+                FROM 
+                    t_book b
+                JOIN 
+                    t_author a ON b.author_fk = a.author_id
+                WHERE 
+                    (b.title LIKE :varKeyword OR CONCAT(a.first_name, ' ', a.last_name) LIKE :varKeyword) 
+                    AND b.category_fk = :varCategory
+                ORDER BY 
+                    b.book_id DESC 
+                LIMIT 
+                    :varCount OFFSET :varPage";
+        
             $binds = array(
                 "varCount" => $count,
-                "varPage" => ($page-1)*$count,
+                "varPage" => ($page - 1) * $count,
                 "varCategory" => $genre,
                 "varKeyword" => "%" . $keyword . "%"
             );
         }
-        else{
-            $query = "SELECT * from t_book WHERE title LIKE :varKeyword ORDER BY book_id DESC LIMIT :varCount OFFSET :varPage";
+        
+        else {
+
+            // Modified with ChatGPT
+            $query = "
+                SELECT 
+                    b.* 
+                FROM 
+                    t_book b
+                JOIN 
+                    t_author a ON b.author_fk = a.author_id
+                WHERE 
+                    b.title LIKE :varKeyword OR CONCAT(a.first_name, ' ', a.last_name) LIKE :varKeyword
+                ORDER BY 
+                    b.book_id DESC 
+                LIMIT 
+                    :varCount OFFSET :varPage";
+        
             $binds = array(
                 "varCount" => $count,
-                "varPage" => ($page-1)*$count,
+                "varPage" => ($page - 1) * $count,
                 "varKeyword" => "%" . $keyword . "%"
             );
         }
@@ -112,14 +154,14 @@ class BookModel extends DatabaseModel
      * @param int $publisherFk Id of the book's publisher
      * @param int $authorFk Id of the book's author
      */
-    public function insertBook(string $title, string $exerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
+    public function insertBook(string $title, string $excerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $userFk, int $categoryFk, int $publisherFk, int $authorFk){
 
     
-        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :exerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
+        $sql = "INSERT INTO t_book (`title`, `excerpt`, `summary`, `release_date`, `cover_image`, `number_of_pages`, `user_fk`, `category_fk`, `publisher_fk`, `author_fk`) VALUES (:title, :excerpt, :summary, :release_date, :cover_image, :number_of_pages, :user_fk, :category_fk, :publisher_fk, :author_fk)";
 
         $binds = array(
             'title'=> $title,
-            'exerpt' => $exerpt,
+            'excerpt' => $excerpt,
             'summary' => $summary,
             'release_date' => $releaseDate,
             'cover_image' => $coverImage,
@@ -130,6 +172,58 @@ class BookModel extends DatabaseModel
             'author_fk' => $authorFk,
         );
         $this->queryPrepareExecute($sql, $binds);
+    }
+
+     /**
+     * Update a book in the database
+     * @param int $bookId Book's ID
+     * @param string $title Book's title
+     * @param string $exerpt Book's exerpt, link to a PDF
+     * @param string $summary Book's summary
+     * @param string $releaseDate Book's release date
+     * @param string $coverImage Book's cover, link to the local ressource
+     * @param int $userFk Id of the user who added this book
+     * @param int $categoryFk Id of the category the book belongs to
+     * @param int $publisherFk Id of the book's publisher
+     * @param int $authorFk Id of the book's author
+     */
+    public function updateBook(int $bookId, string $title, string $excerpt, string $summary, string $releaseDate, string $coverImage, int $numberOfPages, int $categoryFk, int $publisherFk, int $authorFk){
+        
+        if ($coverImage != ""){
+            
+            $sql = "UPDATE t_book SET title = :title, excerpt = :excerpt, summary = :summary, release_date = :releaseDate, cover_image = :coverImage, number_of_pages = :numberOfPages, category_fk = :categoryFk, publisher_fk = :publisherFk, author_fk = :authorFk WHERE book_id = :book_id" ;
+            $binds = array(
+                'title'=> $title,
+                'excerpt' => $excerpt,
+                'summary' => $summary,
+                'releaseDate' => $releaseDate,
+                'coverImage' => $coverImage,
+                'numberOfPages' => $numberOfPages,
+                'categoryFk' => $categoryFk, 
+                'publisherFk' => $publisherFk, 
+                'authorFk' => $authorFk,
+                'book_id' => $bookId,
+            );
+        }
+        else{
+            $sql = "UPDATE t_book SET title = :title, excerpt = :excerpt, summary = :summary, release_date = :releaseDate, number_of_pages = :numberOfPages, category_fk = :categoryFk, publisher_fk = :publisherFk, author_fk = :authorFk WHERE book_id = :book_id";  
+            $binds = array(
+                'title'=> $title,
+                'excerpt' => $excerpt,
+                'summary' => $summary,
+                'releaseDate' => $releaseDate,
+                'numberOfPages' => $numberOfPages,
+                'categoryFk' => $categoryFk, 
+                'publisherFk' => $publisherFk, 
+                'authorFk' => $authorFk,
+                'book_id' => $bookId,
+            );
+        }
+
+        $this->queryPrepareExecute($sql, $binds);
+
+        header("Location: index.php?controller=book&action=detail&id=" . $bookId);
+
     }
 
      /**
@@ -154,6 +248,19 @@ class BookModel extends DatabaseModel
     public function countUserReviewBookById($id)
     {
         $sql = "select count(*) from review where user_fk = :user_fk;";
+        $binds = array(':user_fk' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query)    ;
+    }
+
+    /**
+     * Get the list of books reviewed by given user
+     * @param int $id User's id
+     * @return array List of books revied by the user
+     */ 
+    public function booksReviewedByUser($id){
+        $sql = "SELECT * FROM t_book b JOIN review r ON b.book_id=r.book_fk JOIN t_user u ON r.user_fk = u.user_id WHERE u.user_id = :user_fk;";
         $binds = array(':user_fk' => $id);
         $query = $this->queryPrepareExecute($sql, $binds);
 
