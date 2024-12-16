@@ -101,7 +101,7 @@
                         Votre note:
                     </p>
                     
-                    <form method="post">
+                    <form method="post" action="index.php?controller=book&action=rate&book_id=<?php echo $book["book_id"]?>">
                         <?=$dropdown?>
                         <button type="submit" name="rate">Valider</button>
                     </form>
