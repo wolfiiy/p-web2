@@ -5,6 +5,13 @@ $userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : "";
 
 if (isUserConnected()) {
     $accountNav .= <<< HTML
+    
+        <li>
+            <a href="index.php?controller=book&action=add">
+                Ajouter une entrée
+            </a>
+        </li>
+        
         <li>
             <a href="index.php?controller=user&action=detail&id={$userId}">
                 Mon compte
@@ -39,12 +46,6 @@ if (isUserConnected()) {
                 <li>
                     <a href="index.php?controller=book&action=list">
                         Liste des oeuvres
-                    </a>
-                </li>
-    
-                <li>
-                    <a href="index.php?controller=book&action=add">
-                        Ajouter une entrée
                     </a>
                 </li>
     
