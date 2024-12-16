@@ -64,9 +64,9 @@
             <label for="snippetLink">Lien vers un extrait</label>
         </div>
         
-        <div class="label-input">
+        <div class="md-outlined-textarea on-surface-container">
+            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" placeholder=" "><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
             <label for="bookSummary">Résumé</label>
-            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" ><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
         </div>
         <div>
             <input type = "submit" value="<?php echo $submitButton ?>" class="md-button primary">
