@@ -7,7 +7,7 @@
     <input type="hidden" name="action" value="list">
 
     <!-- Book category select -->
-    <div class="filter-category">
+    <div class="filter-category wrap-row">
         <label for="bookGenre">Genre: </label>
         <select class="md-select secondary" onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
             <option value="0">Tous</option>
@@ -16,7 +16,7 @@
     </div>
 
     <!-- String input for book name -->
-    <div class="filter-search">
+    <div class="filter-search wrap-row">
         <input class="md-input" placeholder="Chercher un titre" type="text" name="searchName" id="searchName" value=<?php echo $_GET["searchName"]?>>
         <button type="submit" class="md-button secondary icon">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg">
