@@ -192,6 +192,8 @@ class BookController extends Controller
      */
     private function addAction()
     {
+        $h1 = "Ajout d'un livre";
+        $submitButton = "Ajouter";
 
         // If no user is connected, redirect to index
         if (!isUserConnected()){
@@ -218,6 +220,10 @@ class BookController extends Controller
      */
     private function modifyAction()
     {
+
+        $h1 = "Modification d'un livre";
+        $submitButton = "Modifier";
+        
         include_once("../models/BookModel.php");
         $bookModel = new BookModel();
         $book = $bookModel->getBookById($_GET["id"]);
