@@ -28,7 +28,6 @@ class UserController extends Controller {
      * @return string
      */
     private function detailAction() {
-
         include_once('../helpers/HtmlWriter.php');
         include_once('../helpers/DataHelper.php');
         include_once('../models/UserModel.php');
@@ -36,8 +35,6 @@ class UserController extends Controller {
        
         $usermodel = new UserModel();
         $bookmodel = new BookModel();
-
-
 
         if (isset($_GET['id'])) $id = $_GET['id'];
         else $id = $_SESSION["user_id"];
@@ -67,7 +64,6 @@ class UserController extends Controller {
      * @return string
      */
     private function loginAction() {
-
         include_once('../models/UserModel.php');
         $usermodel = new UserModel();
         $bookmodel = new BookModel();
@@ -80,15 +76,12 @@ class UserController extends Controller {
         {
             // Values
             $userCredentials = $usermodel->checkUser($_POST['userAttemp']); // Real credentials
-            
 
             if($userCredentials)
             {
                 // Values of Books
                 $userPublishedBook = $bookmodel->countUserPublishedBookById($userCredentials['user_id']);
                 $userReviewedBook = $bookmodel->countUserReviewBookById($userCredentials['user_id']);
-
-
 
                 // TODO: hashed passwords must be stored
                 if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
@@ -128,10 +121,46 @@ class UserController extends Controller {
     /*
     * Logout Action
     */
-    private function logoutAction()
-    {
+    private function logoutAction() {
         session_destroy();
         // Use of the header method because the commonly used display causes a bug with the information of a session that does not exist but shows as if it did.
         header('Location: index.php?controller=user&action=login');  // To show login page
+    }
+
+    /**
+     * Displays the signup form.
+     * @return string The sign up view.
+     */
+    private function signupAction() {
+        include_once('../models/UserModel.php');
+        $userModel = new UserModel();
+        $view = file_get_contents('../views/signupView.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+
+        // Handle user account creation
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isUserConnected()) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+
+        }
+
+        return $content;
+    }
+
+    private function createAccountAction() {
+        include_once('../model/UserModel.php');
+        $userModel = new UserModel();
+        $view = file_get_contents('../views/signupView.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
     }
 }

@@ -124,4 +124,19 @@ Class UserModel extends DatabaseModel {
         }
         return null;
     }
+
+    /**
+     * Checks whether a user exists.
+     * @param string $username Username to check.
+     * @return true|false True if a user with the given username exists, 
+     * false otherwise.
+     */
+    public function userExists(string $username) {
+        $sql = "select 1 from t_user where username = :username";
+        $binds = array(':username' => $username);
+        $query = $this->queryPrepareExecute($sql, $binds);
+        $query = $this->formatData($query);
+
+        return $query != null ? true : false;
+    }
 }
