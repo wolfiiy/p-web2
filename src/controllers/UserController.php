@@ -52,6 +52,11 @@ class UserController extends Controller {
         $books = $bookmodel->booksReviewedByUser($id);
 
         $books = DataHelper::BookPreview($books);
+
+        $publishedBooks = $bookmodel->userPublishedBookByID($id);
+
+        $publishedBooks = DataHelper::BookPreview($publishedBooks);
+
         $view = file_get_contents('../views/detailUser.php');
 
         ob_start();
