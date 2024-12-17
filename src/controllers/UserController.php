@@ -121,12 +121,8 @@ class UserController extends Controller {
             }
         }
 
-
-    
         // To display the login page if the form has not been completed correctly
         return $content;
-    
-
     }
 
     /*
