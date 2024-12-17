@@ -68,7 +68,7 @@ class DataHelper {
      * @param mixed $rating The rating to be selected.
      */
     static function createRatingDropdown(mixed $rating) {
-        $dropdown = '<select name="rating" id="rating">';
+        $dropdown = '<select class="md-select secondary" name="rating" id="rating"';
 
         foreach (self::RATINGS as $r) {
 

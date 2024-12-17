@@ -7,19 +7,21 @@
     <input type="hidden" name="action" value="list">
 
     <!-- Book category select -->
-    <div class="filter-category">
+    <div class="filter-category wrap-row">
         <label for="bookGenre">Genre: </label>
-        <select onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
+        <select class="md-select secondary" onchange ='document.getElementById("genreForm").submit()' name="bookGenre" id="bookGenre">
             <option value="0">Tous</option>
             <?=$categoryDropdown;?>
         </select>
     </div>
 
     <!-- String input for book name or author's name -->
-    <div class="filter-search">
-        <input placeholder="Chercher un titre ou auteur" type="text" name="searchName" id="searchName" value="<?php echo $_GET["searchName"]?>">
-        <button id="submitSearch" type="submit" class="small-button">
-            <img src="assets/img/icons/search.svg" alt="Rechercher">
+    <div class="filter-search wrap-row">
+        <input class="md-input secondary" placeholder="Chercher un titre ou auteur" type="text" name="searchName" id="searchName" value="<?php echo $_GET["searchName"]?>">
+        <button id="submitSearch" type="submit" class="md-button secondary icon">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 10.50,10.50 C 10.50,10.50 8.32,8.32 8.32,8.32M 9.50,5.50 C 9.50,7.71 7.71,9.50 5.50,9.50 3.29,9.50 1.50,7.71 1.50,5.50 1.50,3.29 3.29,1.50 5.50,1.50 7.71,1.50 9.50,3.29 9.50,5.50 Z"/>
+            </svg>
         </button>
     </div>
     </form>
@@ -50,10 +52,10 @@
 
 <!-- Pagination buttons -->
 <form action=""></form>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=1\"'";} else {echo '\'" disabled ';} ?>><<</button>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=" . $page-1 . "\"'";} else {echo '\'" disabled ';} ?>><</button>
+<button class="md-button secondary" onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=1\"'";} else {echo '\'" disabled ';} ?>><<</button>
+<button class="md-button secondary" onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page>1) {echo "&page=" . $page-1 . "\"'";} else {echo '\'" disabled ';} ?>><</button>
 <?php echo $page . " / " . $maxPage?> 
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $page+1 . "\"'";} else {echo '\'" disabled';} ?>>></button>
-<button onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $maxPage . "\"'";} else {echo '\'" disabled';} ?>>>></button>
+<button class="md-button secondary" onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $page+1 . "\"'";} else {echo '\'" disabled';} ?>>></button>
+<button class="md-button secondary" onclick='window.location.href="index.php?controller=book&action=list&searchName=<?php echo $_GET["searchName"] . "&bookGenre=" . $_GET["bookGenre"]; if ($page<$maxPage) {echo "&page=" . $maxPage . "\"'";} else {echo '\'" disabled';} ?>>>></button>
 
 </main>

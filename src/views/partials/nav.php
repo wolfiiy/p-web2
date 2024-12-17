@@ -13,13 +13,13 @@ if (isUserConnected()) {
         </li>
         
         <li>
-            <a href="index.php?controller=user&action=detail&id={$userId}">
+            <a href="index.php?controller=user&action=detail" class="md-button primary">
                 Mon compte
             </a>
         </li>
 
         <li>
-            <a href="index.php?controller=user&action=logout">
+            <a href="index.php?controller=user&action=logout" class="md-button primary">
                 Déconnexion
             </a>
         </li>
@@ -27,7 +27,7 @@ if (isUserConnected()) {
 } else {
     $accountNav .= <<< HTML
         <li>
-            <a href="index.php?controller=user&action=logout">
+            <a href="index.php?controller=user&action=logout" class="md-button primary">
                 Connexion
             </a>
         </li>

@@ -44,7 +44,7 @@
                     </p>
         
                     <p class="value">
-                        <?=$user['username']?>
+                        <a href="index.php?controller=user&action=detail&id=<?=$user['user_id']?>"><?=$user['username']?></a>
                     </p>
                 </div>
         
@@ -65,10 +65,10 @@
                         Editer cette page
                     </p>
                     <p class="value">
-                        <a href="index.php?controller=book&action=modify&id=<?php echo $book["book_id"]?>" class="button accent">Modifier</a>
+                        <a href="index.php?controller=book&action=modify&id=<?php echo $book["book_id"]?>" class="md-button primary wide">Modifier</a>
                     </p>                  
                     <p class="value">
-                        <a href="" class="button red">Supprimer</a>
+                        <a href="index.php?controller=book&action=delete&id=<?php echo $book["book_id"]?>" class="md-button error wide">Supprimer</a>
                     </p>
                 <?php }}?>
                 </div>
@@ -105,7 +105,12 @@
                     
                     <form method="post" action="index.php?controller=book&action=rate&book_id=<?php echo $book["book_id"]?>">
                         <?=$dropdown?>
-                        <button type="submit" name="rate">Valider</button>
+                        <button type="submit" 
+                                name="rate"
+                                class="md-button secondary"
+                        >
+                            Valider
+                        </button>
                     </form>
                 </div>
                 <?php } else {?>
