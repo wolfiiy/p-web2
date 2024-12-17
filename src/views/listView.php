@@ -24,10 +24,51 @@
             </svg>
         </button>
     </div>
+
+    <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+    <button type="button" class="collapsible" id="advancedSearch">+</button>
+    <div class="content">
+        <label for="bookSummary">Résumé :</label>
+        <input type="text" name="bookSummary" id="bookSummary">
+        <label for="bookAuthorFirstName">Prénom de l'auteur :</label>
+        <input type="text" name="bookAuthorFirstName" id="bookAuthorFirstName">
+        <label for="bookAuthorLastName">Nom de l'auteur :</label>
+        <input type="text" name="bookAuthorLastName" id="bookAuthorLastName">
+        <label for="bookUser">Ajouté par :</label>
+        <input type="text" name="bookUser" id="bookUser">
+        <label for="bookPublisher">Editeur :</label>
+        <input type="text" name="bookPublisher" id="bookPublisher">
+        <label for="bookReleaseDate">Date de publication :</label>
+        <select name="dateSearch" id="dateSearch">
+            <option value="">-</option>
+            <option value="precise">Publié le: </option>
+            <option value="after">Publié avant: </option>
+            <option value="before">Publié après: </option>
+        </select>
+        <input type="date" name="bookReleaseDate" id="bookReleaseDate">
+        
+        <hr>
+        Sort by TODO
+
+    </div>
     </form>
 
     <script>
-       
+
+        // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
+        var coll = document.getElementById("advancedSearch");
+
+        coll.addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
+
+        
         // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
         // Click on the submit button when enter is pressed in the text input
         var input = document.getElementById("searchName");

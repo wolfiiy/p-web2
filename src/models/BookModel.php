@@ -117,6 +117,22 @@ class BookModel extends DatabaseModel
 
 
     /**
+     * Get latest books, with pagination and category filter
+     * @param int $count Number of books to get
+     * @param int $result Pagination offset
+     * @param int $genre Category of books filter
+     * @param string $keyword Search string, matched with book title or author first/last name
+     * @return array Array containing the x latest books
+     */
+    public function getLatestBooksAdvances(int $count, int $genre, string $keyword, string $title, string $summary, string $authorFirstName, string $authorLastName, string $userAdded, string $publisher, string $date, string $dateMethod, int $page = 1){
+        $keyword = trim($keyword);
+
+        $sql = "SELECT b.* from t_book";
+        
+        
+    }
+
+    /**
      * Get the total number of books in total or in category
      * @param int $genre Category of books filter
      * @param string $keyword Search string, matched with book titles
