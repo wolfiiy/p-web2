@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Authors: Valentin Pignat, Sébastien Tille
- * Date: November 25th, 2024
+ * Authors: Valentin Pignat, Sébastien Tille, Abigaël Périsset
+ * Date: December 17, 2024
  */
 
 include_once('DatabaseModel.php');
