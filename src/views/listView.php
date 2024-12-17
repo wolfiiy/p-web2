@@ -27,14 +27,15 @@
     </form>
 
     <script>
+       
         // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
         // Click on the submit button when enter is pressed in the text input
         var input = document.getElementById("searchName");
-        input.addEventListener("keypress", function(event){
+        input.addEventListener("keydown", function(event){
             if (event.key === "Enter"){
                 event.preventDefault();
-                error_log("Hell");
-                document.getElementById("submitSearch").click();
+                const currentValue = this.value;
+                document.getElementById("genreForm").submit();
             }
         })
 
