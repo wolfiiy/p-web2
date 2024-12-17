@@ -57,7 +57,7 @@ class HtmlWriter {
         $html .= 'Détails';
         $html .= '</a></p>';
         if ($grade){
-            $html .= "User rating: " . $book['grade'];
+            $html .= "Noté: " . $book['grade'];
         }
         $html .= '</div>';
         $html .= '</div>';

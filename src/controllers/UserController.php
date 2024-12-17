@@ -50,9 +50,9 @@ class UserController extends Controller {
         $userReviewedBook = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
         $books = $bookmodel->booksReviewedByUser($id);
+
         $books = DataHelper::BookPreview($books);
         $view = file_get_contents('../views/detailUser.php');
-        
 
         ob_start();
         eval('?>' . $view);
