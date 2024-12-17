@@ -1,5 +1,5 @@
 <main>
-<h1>Login Page</h1>
+<h1>Connexion</h1>
 <div class="submission-container">
     <form enctype = "multipart/form-data" 
           action="index.php?controller=user&action=login" 
@@ -18,8 +18,11 @@
         </div>
     
         <div>
-            <input type="submit" value="Login" class="md-button primary">
-            <button type="button">Mot de passe oublié</button>
+            <input type="submit" value="Connexion" class="md-button primary">
+            <a href="index.php_controller=user&action=signup" 
+               class="md-button secondary">
+                Créer un compte
+            </a>
         </div>
     </form>
 </div>
