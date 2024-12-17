@@ -139,4 +139,20 @@ Class UserModel extends DatabaseModel {
 
         return $query != null ? true : false;
     }
+
+    /**
+     * Inserts a new account in the database.
+     * @param string $username Username of the account.
+     * @param string $hash Hash of the password.
+     */
+    public function createAccount(string $username, string $hash) {
+        $sql = "insert into t_user (username, pass) values (:username, :hash)";
+        
+        $binds = array(
+            ':username' => $username,
+            ':pass' => $hash
+        );
+
+        $this->queryPrepareExecute($sql, $binds);
+    }
 }

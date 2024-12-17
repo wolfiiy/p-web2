@@ -9,7 +9,26 @@ include_once('../helpers/utils.php');
 
 class UserController extends Controller {
 
-    
+    /**
+     * Error message to display if the user did not provide the correct 
+     * password when attempting to sign in.
+     */
+    private const ERROR_PASSWORD_IS_INCORRECT =
+        "Le mot de passe est érroné.";
+
+    /**
+     * Error message to display when the passwords given by the user during the
+     * account creation process do not match.
+     */
+    private const ERROR_PASSWORD_MISMATCH =
+        "Les mots de passes ne sont pas identiques.";
+
+    /**
+     * Error message to display if the user attempts to create an account
+     * with a username that is not available.
+     */
+    private const ERROR_USERNAME_UNAVAILABLE = 
+        "Le nom d'utilisateur spécifié n'est pas disponible.";
 
     /**
      * Dispatch current action
@@ -140,26 +159,28 @@ class UserController extends Controller {
         eval('?>' . $view);
         $content = ob_get_clean();
 
-
         // Handle user account creation
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isUserConnected()) {
+            $errors = array();
             $username = $_POST['username'];
             $password = $_POST['password'];
+            $passwordConfirm = $_POST['password-confirm'];
 
+            if ($userModel->userExists($username)) {
+                $errors[] = self::ERROR_USERNAME_UNAVAILABLE;
+            }
 
+            if ($password != $passwordConfirm) {
+                $errors[] = self::ERROR_PASSWORD_MISMATCH;
+            }
+
+            if (count($errors) > 0) {
+                // Display errors
+            } else {
+                $userModel->createAccount($username, $hash);
+                header("Location: index.php");
+            }
         }
-
-        return $content;
-    }
-
-    private function createAccountAction() {
-        include_once('../model/UserModel.php');
-        $userModel = new UserModel();
-        $view = file_get_contents('../views/signupView.php');
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
 
         return $content;
     }
