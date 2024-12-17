@@ -272,6 +272,9 @@ class BookController extends Controller
         $idbook = new BookModel();
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
+
+        $errors    = [];
+        $fir
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             
@@ -334,13 +337,15 @@ class BookController extends Controller
             $user_fk = $_SESSION["user_id"];
 
             //ajout d'un livre
-            $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
+            $addBook->insertBook($_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"],
+            $destination, $_POST["bookPageNb"], $user_fk, $_POST["bookGenre"], $idPublisher, $idAuthor);
             //recupérer l'id
             $id = $idbook->getIdBook($user_fk);
             $destination = 'Location: index.php?controller=book&action=detail&id='.$id;
             header($destination);
             
-        }else
+        }
+        else
         {
             echo " Merci de balider le formulaire.";
         }
