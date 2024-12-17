@@ -146,6 +146,7 @@ Class UserModel extends DatabaseModel {
      * @param string $hash Hash of the password.
      */
     public function createAccount(string $username, string $hash) {
+        // TODO add sign_up_date, is_admin default 0
         $sql = "insert into t_user (username, pass) values (:username, :hash)";
         
         $binds = array(
