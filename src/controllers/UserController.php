@@ -155,10 +155,6 @@ class UserController extends Controller {
         $userModel = new UserModel();
         $view = file_get_contents('../views/signupView.php');
 
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
         // Handle user account creation
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isUserConnected()) {
             $errors = array();
@@ -166,21 +162,27 @@ class UserController extends Controller {
             $password = $_POST['password'];
             $passwordConfirm = $_POST['password-confirm'];
 
-            if ($userModel->userExists($username)) {
+            // Check if username is available
+            if ($userModel->userExists($username))
                 $errors[] = self::ERROR_USERNAME_UNAVAILABLE;
-            }
 
-            if ($password != $passwordConfirm) {
+            // Generate hash if the passwords match
+            if ($password != $passwordConfirm)
                 $errors[] = self::ERROR_PASSWORD_MISMATCH;
-            }
-
+            else
+                $hash = password_hash($password, PASSWORD_BCRYPT);
+            
             if (count($errors) > 0) {
-                // Display errors
+                
             } else {
                 $userModel->createAccount($username, $hash);
                 header("Location: index.php");
             }
         }
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
 
         return $content;
     }

@@ -4,6 +4,11 @@
 <div class="submission-container">
     <p>
         Veuillez renseigner les champs suivants.
+        <?php
+            if (isset($errors)) {
+                var_dump($errors);
+            }
+        ?>
     </p>
     
     <form enctype="multipart/form-data" 
