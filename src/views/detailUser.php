@@ -18,6 +18,12 @@
     }
 
     HtmlWriter::writeCompactBooksPreviewGrade($books);
+
+    if (count($books) == 0){
+        echo "<p>Aucun livre noté</p>";
+    }
+
+    HtmlWriter::writeCompactBooksPreview($publishedBooks);
 ?>
 
 </main>
