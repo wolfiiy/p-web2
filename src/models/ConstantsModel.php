@@ -13,13 +13,29 @@ class Constants
     /**
      * Error message to display when the field is missing in a form.
      */
-    const ERROR_MISSING_LAST_NAME = "Veuillez entrer un nom de famille.";
+    const ERROR_REQUIRED = "Veuillez renseigner ce champ";
+
+    /**
+     * Error message to display when is not alphabetic.
+     */
+    const ERROR_NAME = "Seuls les caractères alphabétique et les espaces sont autorisés";
+
+    /**
+     * Error message to display when is not alphabetic.
+     */
+    const ERROR_TEXT = "Seuls les caractères alphanumériques, les espaces et les caractères spéciaux suivants sont autorisés : &minus; . , : ; ( ) ? ! &#39;";
+
 
     /**
      * Error message to display when the text exceed the authorized size.
      */
-    const ERROR_LENGTH  = "Le champ doit avoir un nombre de caractères entre 2 et 50";
+    const ERROR_LENGTH  = "Le champ doit avoir un nombre de caractères entre 2 et 150";
 
+    /**
+     * Error message to display when the text exceed the authorized size.
+     */
+
+    const ERROR_RESUME  = "Le champ doit avoir un nombre de caractères entre 50 et 2000";
     /**
      * Error message to display when the field is not a url.
      */
