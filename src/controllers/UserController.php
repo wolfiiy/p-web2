@@ -50,9 +50,14 @@ class UserController extends Controller {
         $userReviewedBook = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
         $books = $bookmodel->booksReviewedByUser($id);
+
         $books = DataHelper::BookPreview($books);
+
+        $publishedBooks = $bookmodel->userPublishedBookByID($id);
+
+        $publishedBooks = DataHelper::BookPreview($publishedBooks);
+
         $view = file_get_contents('../views/detailUser.php');
-        
 
         ob_start();
         eval('?>' . $view);
@@ -121,12 +126,8 @@ class UserController extends Controller {
             }
         }
 
-
-    
         // To display the login page if the form has not been completed correctly
         return $content;
-    
-
     }
 
     /*

@@ -116,7 +116,7 @@ class DataHelper {
         if (isset($book["grade"])){
             $book["grade"] = number_format(
                 $book["grade"] , 
-                self::NB_DECIMALS, 
+                0, 
                 self::DECIMAL_SEPARATOR);
         }
 

@@ -240,6 +240,20 @@ class BookModel extends DatabaseModel
         return $this->formatData($query);
     }
 
+    /**
+     * Get the books published by use with given id
+     * @param int $id user id
+     * @return array Books published by the user
+     */
+    public function userPublishedBookByID($id)
+    {
+        $sql = "SELECT * from t_book where user_fk = :user_fk";
+        $binds = array(':user_fk' => $id);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query);
+    }
+
      /**
      * Get the total number of books reviewed by a user
      * @param int $id fk_id of User
@@ -260,7 +274,7 @@ class BookModel extends DatabaseModel
      * @return array List of books revied by the user
      */ 
     public function booksReviewedByUser($id){
-        $sql = "SELECT * FROM t_book b JOIN review r ON b.book_id=r.book_fk JOIN t_user u ON r.user_fk = u.user_id WHERE u.user_id = :user_fk;";
+        $sql = "SELECT *, b.user_fk AS user_fk, r.user_fk AS review_user_fk FROM t_book b JOIN review r ON b.book_id=r.book_fk JOIN t_user u ON r.user_fk = u.user_id WHERE u.user_id = :user_fk;";
         $binds = array(':user_fk' => $id);
         $query = $this->queryPrepareExecute($sql, $binds);
 
