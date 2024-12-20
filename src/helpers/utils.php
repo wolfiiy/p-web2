@@ -119,13 +119,13 @@ function resumeController($resume)
         $url = trim($resume);
 
         if (empty($resume)) {
-            return false;
+            return $resume = "";
         } elseif (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $resume)) {
-            return false;
+            return $resume = "";;
         }
         $resume = htmlspecialchars($resume);
         return $resume;
     } else {
-        return false;
+        return $resume = "";
     }
 }
