@@ -8,13 +8,13 @@
           class="large-form wrap-col">
     
         <div class="md-outlined-input large on-surface-container">    
-            <input type="text" name="userAttemp" id="userAttemp" placeholder=" ">
-            <label for="userAttemp">Nom d'utilisateur</label>
+            <input type="text" name="usernameInput" id="usernameInput" placeholder=" ">
+            <label for="usernameInput">Nom d'utilisateur</label>
         </div>
     
         <div class="md-outlined-input large on-surface-container">    
-            <input type="password" name="passwordAttempt" id="passwordAttempt" placeholder=" ">
-            <label for="passwordAttempt">Mot de passe</label>
+            <input type="passwordInput" name="passwordInput" id="passwordInput" placeholder=" ">
+            <label for="passwordInput">Mot de passe</label>
         </div>
     
         <div>

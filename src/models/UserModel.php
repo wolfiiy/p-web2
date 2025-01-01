@@ -103,6 +103,22 @@ Class UserModel extends DatabaseModel {
     }
 
     /**
+     * Given a username, will attempt to get the corresponding user from the 
+     * database. This method is safe to use with user-provided inputs.
+     * @param string $username The username.
+     * @return array|null An array that contains information about the 
+     * user (username, account creation date) if it has been found and false
+     * otherwise.
+     */
+    public function getUserByUsername(string $username) {
+        $sql = "select * from t_user where username = :username";
+        $binds = array('username' => $username);
+        $query = $this->queryPrepareExecute($sql, $binds);
+
+        return $this->formatData($query)[0];
+    }
+
+    /**
      * Verification of data if the user exists.
      * @param string $userAttemp used to find the requested user
      * @return array|null Returns information about the existing user, such as the user and password.
@@ -136,7 +152,7 @@ Class UserModel extends DatabaseModel {
             select 1 from t_user 
             where lower(username) = lower(:username)
         ";
-        
+
         $binds = array(':username' => $username);
         $query = $this->queryPrepareExecute($sql, $binds);
         $query = $this->formatData($query);

@@ -31,6 +31,14 @@ class UserController extends Controller {
         "Les mots de passes ne sont pas identiques.";
 
     /**
+     * Error message to display when a user could not be found.
+     */
+    private const ERROR_INVALID_CREDENTIALS = "
+        L'utilisateur spécifié n'a pas été trouvé ou le mot de passe est 
+        incorrect.
+    ";
+
+    /**
      * Error message to display if the user attempts to create an account
      * with a username that is not available.
      */
@@ -85,59 +93,49 @@ class UserController extends Controller {
     }
 
     /**
-     * Login page user
-     *
+     * Logs in the user.
      * @return string
      */
     private function loginAction() {
         include_once('../models/UserModel.php');
-        $usermodel = new UserModel();
-        $bookmodel = new BookModel();
+        $userModel = new UserModel();
         $view = file_get_contents('../views/login.php'); 
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST' && !isUserConnected()) 
-        {
-            // Values
-            $userCredentials = $usermodel->checkUser($_POST['userAttemp']); // Real credentials
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && !isUserConnected()) {
+            $errors = array();
 
-            if($userCredentials)
-            {
-                // Values of Books
-                $userPublishedBook = $bookmodel->countUserPublishedBookById($userCredentials['user_id']);
-                $userReviewedBook = $bookmodel->countUserReviewBookById($userCredentials['user_id']);
+            // Sanitize input
+            $usernameInput = trim($_POST['usernameInput'] ?? '');
+            $usernameInput = strtolower($usernameInput);
+            $passwordInput = trim($_POST['passwordInput'] ?? '');
+            $userExists = $userModel->userExists($usernameInput);
 
-                // TODO: hashed passwords must be stored
-                if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['password'] === $_POST['passwordAttempt'])
-                {
-                    // Stores user id in session
-                    $_SESSION['user_id'] = $userCredentials['user_id'];
-                    $_SESSION['is_admin'] = $userCredentials['is_admin'];
-                    
+            if ($userExists) {
+                // Get credentials
+                $userData = $userModel->getUserByUsername($usernameInput);
+                $usernameFound = strtolower($userData['username']);
+                $passwordFound = $userData['password'];
 
-                    // From here, we can consider our user connected to the app
+                // Attempt user log-in
+                if ($usernameInput === $usernameFound 
+                    && password_verify($passwordInput, $passwordFound)) {
+                    // Store user information in session
+                    $_SESSION['user_id'] = $userData['user_id'];
+                    $_SESSION['username'] = $userData['username'];
+                    $_SESSION['is_admin'] = $userData['id_admin'];
+
+                    // Redirect to user page
                     header('Location: index.php?controller=user&action=detail&id=' . $_SESSION["user_id"]);
                     return true;
                 }
-                else
-                {
-                    ?>
-                    <script type="text/javascript">
-                    window.onload = function () { alert("Mot de passe incorrect"); } 
-                    </script>
-                    <?php 
-                }
+            } else {
+                $errors[] = self::ERROR_INVALID_CREDENTIALS;
             }
-            else
-            {
-                ?>
-                <script type="text/javascript">
-                window.onload = function () { alert("Utilisateur n'existe pas"); } 
-                </script>
-                <?php 
-            }
+        } else {
+            $errors[] = self::ERROR_INVALID_CREDENTIALS;
         }
 
         // To display the login page if the form has not been completed correctly
