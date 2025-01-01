@@ -20,7 +20,7 @@ function isUserConnected() {
  */
 function isAdminConnectedUser() {
     if (isUserConnected()) {
-        return $_SESSION["loggedUserIsAdmin"];
+        return $_SESSION["is_admin"];
     }
 }
 
