@@ -103,7 +103,7 @@ class UserController extends Controller {
                 $userReviewedBook = $bookmodel->countUserReviewBookById($userCredentials['user_id']);
 
                 // TODO: hashed passwords must be stored
-                if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['pass'] === $_POST['passAttemp'])
+                if($userCredentials['username'] === $_POST['userAttemp'] && $userCredentials['password'] === $_POST['passwordAttempt'])
                 {
                     // Stores user id in session
                     $_SESSION['user_id'] = $userCredentials['user_id'];
