@@ -1,27 +1,50 @@
 <footer>
-    <hr>
     <div id="footer-content" class="wrap-row footer-wrapper">
-        <div>
-            2024-2025
-        </div>
-        <div>
-            <ul class="no-bullets">
-                <li><a href="mailto:sebastien.tille@eduvaud.ch">Sébastien Marc Tille</a></li>
-                <li><a href="mailto:abigael.perisset@eduvaud.ch">Abigaël Périsset</a></li>
-                <li><a href="mailto:santiago.escobar1@eduvaud.ch">Santiago Escobar Toro</a></li>
-                <li><a href="mailto:valentin.pignat@eduvaud.ch">Valentin Pignat</a></li>
-            </ul>
-        <br>
-        
-        </div>
-        <div>
-            ETML
+        <div class="footer-col">
+            <h3>
+                Thème
+            </h3>
+            <p>
+                <a id="dark-mode-toggle">Changer de thème</a>
+            </p>
         </div>
 
-        <a id="dark-mode-toggle">Changer de thème</a>
+        <div class="footer-col">
+            <h3>
+                A propos de l'application
+            </h3>
+            <p>
+                Passion Lecture à été développé à l'ETML dans le cadre du module 
+                ICT 151.
+            </p>
+
+            <p>
+                Mis à jour en janvier 2025.
+            </p>
+
+            <p>
+                <a href="https://github.com/wolfiiy/p-web2">Code source</a>
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h3>
+                Contacter les développeurs
+            </h3>
+            <p>
+               <a href="mailto:sebastien.tille@eduvaud.ch">Sébastien Marc Tille</a>
+            </p>
+            <p>
+                <a href="mailto:abigael.perisset@eduvaud.ch">Abigaël Périsset</a>
+            </p>
+            <p>
+                <a href="mailto:santiago.escobar1@eduvaud.ch">Santiago Escobar Toro</a>
+            </p>
+            <p>
+            <a href="mailto:valentin.pignat@eduvaud.ch">Valentin Pignat</a>
+            </p>
+        </div>
     </div>
-
-    
 </footer>
 <script src="assets/js/visuals.js"></script>
 </body>
