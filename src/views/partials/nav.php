@@ -13,8 +13,8 @@ if (isUserConnected()) {
         </li>
         
         <li>
-            <a href="index.php?controller=user&action=detail" class="md-button primary">
-                Mon compte
+            <a href="index.php?controller=user&action=detail">
+                {$_SESSION['username']}
             </a>
         </li>
 
