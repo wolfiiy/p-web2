@@ -8,18 +8,18 @@
           class="large-form wrap-col">
     
         <div class="md-outlined-input large on-surface-container">    
-            <input type="text" name="userAttemp" id="userAttemp" placeholder=" ">
-            <label for="userAttemp">Nom d'utilisateur</label>
+            <input type="text" name="usernameInput" id="usernameInput" placeholder=" ">
+            <label for="usernameInput">Nom d'utilisateur</label>
         </div>
     
         <div class="md-outlined-input large on-surface-container">    
-            <input type="password" name="passAttemp" id="passAttemp" placeholder=" ">
-            <label for="passAttemp">Mot de passe</label>
+            <input type="passwordInput" name="passwordInput" id="passwordInput" placeholder=" ">
+            <label for="passwordInput">Mot de passe</label>
         </div>
     
         <div>
             <input type="submit" value="Connexion" class="md-button primary">
-            <a href="index.php_controller=user&action=signup" 
+            <a href="index.php?controller=user&action=signup" 
                class="md-button secondary">
                 Créer un compte
             </a>
