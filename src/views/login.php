@@ -13,8 +13,8 @@
         </div>
     
         <div class="md-outlined-input large on-surface-container">    
-            <input type="password" name="passAttemp" id="passAttemp" placeholder=" ">
-            <label for="passAttemp">Mot de passe</label>
+            <input type="password" name="passwordAttempt" id="passwordAttempt" placeholder=" ">
+            <label for="passwordAttempt">Mot de passe</label>
         </div>
     
         <div>

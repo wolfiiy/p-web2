@@ -116,7 +116,7 @@ Class UserModel extends DatabaseModel {
             {
                 $credentials['user_id'] = $user['user_id'];
                 $credentials['username'] = $user['username'];
-                $credentials['pass'] = $user['pass'];
+                $credentials['password'] = $user['password'];
                 $credentials['sign_up_date'] = $user['sign_up_date'];
                 $credentials['is_admin'] = $user['is_admin'];
                 return $credentials;
