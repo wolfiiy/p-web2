@@ -69,23 +69,42 @@ class UserController extends Controller {
        
         $usermodel = new UserModel();
         $bookmodel = new BookModel();
+        $labelAdditions = "";
+        $labelReviews = "";
 
         if (isset($_GET['id'])) $id = $_GET['id'];
         else $id = $_SESSION["user_id"];
 
         // Values
         $user = $usermodel->getUserById($id);
+        $signupDateLabel 
+            = "Membre depuis le " 
+            . FormatHelper::getFullDate($user['sign_up_date']);
 
         // Values of Books
-        $userPublishedBook = $bookmodel->countUserPublishedBookById($id)[0]["count(*)"];
-        $userReviewedBook = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
+        $nbAdditions = $bookmodel->countUserPublishedBookById($id)[0]["count(*)"];
+        $nbReviews = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
+
+        if ($nbAdditions < 1) {
+            $labelAdditions = "Aucun livre n'a été ajouté par cet utilisateur.";
+        } else if ($nbAdditions == 1) {
+            $labelAdditions = $nbAdditions . " livre ajouté";
+        } else {
+            $labelAdditions = $nbAdditions . " livres ajoutés";
+        }
+
+        if ($nbReviews < 1) {
+            $labelReviews = "Aucun livre n'a été noté par cet utilisateur.";
+        } else if ($nbReviews == 1) {
+            $labelReviews = $nbReviews . " livre noté";
+        } else {
+            $labelReviews = $nbReviews . " livres notés";
+        }
 
         $books = $bookmodel->booksReviewedByUser($id);
-
         $books = DataHelper::BookPreview($books);
 
         $publishedBooks = $bookmodel->userPublishedBookByID($id);
-
         $publishedBooks = DataHelper::BookPreview($publishedBooks);
 
         $view = file_get_contents('../views/detailUser.php');

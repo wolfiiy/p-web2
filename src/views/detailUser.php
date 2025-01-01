@@ -1,30 +1,45 @@
 <main>
-<img src="assets\img\placeholders\user-placeholder.png" width="70" height="70" alt="Phto profil user">
-<p>
-    Profil de <?= $user['username'] ?>
-</p>
-<p>
-    Membre depuis le <?= $user["sign_up_date"] ?>
-</p>
-<p>
-    <?= $userPublishedBook ?> ajoutés à la base de données
-</p>
-<p>
-    A donné son avis sur <?= $userReviewedBook ?> livres
-</p>
-<?php
-    if (count($books) == 0){
-        echo "<p>Aucun livre noté</p>";
-    }
+    <h1>
+        Profil utilisateur
+    </h1>
 
-    HtmlWriter::writeCompactBooksPreviewGrade($books);
+    <div class="profile-overview wrap-row very-rounded">
+        <img src="assets\img\placeholders\user-placeholder.png" 
+                alt="Image de couverture"
+                class="profile-picture"
+                onclick="window.location.href='<?=$book['cover_image'];?>'">
 
-    if (count($books) == 0){
-        echo "<p>Aucun livre noté</p>";
-    }
+        <div class="wrap">
+            <h2>
+                <?=$user['username'];?>
+            </h2>
+        
+            <p>
+                <?=$signupDateLabel;?>
+            </p>
+            
+            <p>
+                <?=$labelAdditions;?>
+            </p>
+            
+            <p>
+                <?=$labelReviews;?>
+            </p>
 
-    HtmlWriter::writeCompactBooksPreview($publishedBooks);
-?>
+        </div>
+    </div>
 
+    <?php
+        if (count($books) == 0){
+            echo "<p>Aucun livre noté</p>";
+        }
+
+        HtmlWriter::writeCompactBooksPreviewGrade($books);
+
+        if (count($books) == 0){
+            echo "<p>Aucun livre noté</p>";
+        }
+
+        HtmlWriter::writeCompactBooksPreview($publishedBooks);
+    ?>
 </main>
-

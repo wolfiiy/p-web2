@@ -793,3 +793,28 @@ footer p {
 form label {
     font-size: 0.75rem;
 }
+
+.profile-picture {
+    height: 12rem;
+    max-width: 20rem;
+}
+
+.profile-overview {
+    background-color: var(--md-sys-color-surface-container);
+    align-items: center;
+    gap: 4ch;
+}
+
+.profile-overview p,
+.profile-overview h2 {
+    margin: 0.5rem 0;
+    padding: 0;
+}
+
+.slightly-rounded {
+    border-radius: var(--small-radius);
+}
+
+.very-rounded {
+    border-radius: var(--large-radius);
+}
