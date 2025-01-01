@@ -10,6 +10,13 @@ include_once('../helpers/utils.php');
 class UserController extends Controller {
 
     /**
+     * Error message to display if a field is left empty during the sign up
+     * process.
+     */
+    private const ERROR_EMPTY_FIELD =
+        "Veuillez remplir tout les champs.";
+
+    /**
      * Error message to display if the user did not provide the correct 
      * password when attempting to sign in.
      */
@@ -154,36 +161,46 @@ class UserController extends Controller {
         include_once('../models/UserModel.php');
         $userModel = new UserModel();
         $view = file_get_contents('../views/signupView.php');
-
+    
         // Handle user account creation
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isUserConnected()) {
             $errors = array();
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $passwordConfirm = $_POST['password-confirm'];
 
+            // Sanitize input
+            $username = trim($_POST['username'] ?? '');
+            $password = trim($_POST['password'] ?? '');
+            $passwordConfirm = trim($_POST['password-confirm'] ?? '');
+    
+            // Validate input fields
+            if (empty($username) || empty($password) || empty($passwordConfirm)) {
+                $errors[] = self::ERROR_EMPTY_FIELD;
+            }
+    
             // Check if username is available
-            if ($userModel->userExists($username))
+            if ($userModel->userExists($username)) {
                 $errors[] = self::ERROR_USERNAME_UNAVAILABLE;
-
-            // Generate hash if the passwords match
-            if ($password != $passwordConfirm)
+            }
+    
+            // Verify passwords
+            if ($password !== $passwordConfirm) {
                 $errors[] = self::ERROR_PASSWORD_MISMATCH;
-            else
+            }
+    
+            // Create the account if no errors occured, otherwise display error
+            // messages
+            if (empty($errors)) {
                 $hash = password_hash($password, PASSWORD_BCRYPT);
-            
-            if (count($errors) > 0) {
-                
-            } else {
                 $userModel->createAccount($username, $hash);
                 header("Location: index.php");
+                exit;
             }
         }
-
+    
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
-
+    
         return $content;
     }
+    
 }

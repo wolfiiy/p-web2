@@ -132,7 +132,11 @@ Class UserModel extends DatabaseModel {
      * false otherwise.
      */
     public function userExists(string $username) {
-        $sql = "select 1 from t_user where username = :username";
+        $sql = "
+            select 1 from t_user 
+            where lower(username) = lower(:username)
+        ";
+        
         $binds = array(':username' => $username);
         $query = $this->queryPrepareExecute($sql, $binds);
         $query = $this->formatData($query);
@@ -141,19 +145,24 @@ Class UserModel extends DatabaseModel {
     }
 
     /**
-     * Inserts a new account in the database.
-     * @param string $username Username of the account.
-     * @param string $hash Hash of the password.
+     * Creates a new user account.
+     * @param string $username The username.
+     * @param string $hash The hashed password.
      */
     public function createAccount(string $username, string $hash) {
-        // TODO add sign_up_date, is_admin default 0
-        $sql = "insert into t_user (username, pass) values (:username, :hash)";
+        $today = date('Y-m-d');
+    
+        $sql = "
+            insert into t_user (username, password, sign_up_date) 
+            values (:username, :hash, :sign_up_date)
+        ";
         
         $binds = array(
-            ':username' => $username,
-            ':pass' => $hash
+            'username' => $username,
+            'hash' => $hash,
+            'sign_up_date' => $today
         );
-
+    
         $this->queryPrepareExecute($sql, $binds);
     }
 }
