@@ -110,45 +110,48 @@ html, body {
   color: var(--md-sys-color-on-error-container);
 }
 
-/*
-* Main preview container
-*/
 .preview {
   height: 30ch;
   margin: 2ch 0;
   gap: 2ch;
-  border-radius: var(--large-radius);
+  border-radius: 10px;
   background-color: var(--md-sys-color-surface-container);
   cursor: pointer;
 }
-
-.preview.compact {
-  height: var(--preview-compact-height);
+.preview img {
+  height: 30ch;
+  aspect-ratio: 0.6896551724;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
-
-.preview.compact h2,
-.preview.compact p {
-  margin: 0;
-}
-
-.preview.compact h2 {
-  font-size: 1rem;
-}
-
 .preview .cover {
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
 
-.preview img {
-  height: 30ch;
-  aspect-ratio: 1/1.45;
-  border-top-left-radius: var(--large-radius);
-  border-bottom-left-radius: var(--large-radius);
+.preview.compact {
+  height: 8rem;
 }
-
+.preview.compact h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+.preview.compact p {
+  margin: 0;
+}
 .preview.compact img {
-  height: var(--preview-compact-height);
+  height: 8rem;
+}
+.preview.compact .preview-about {
+  display: flex row;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+}
+.preview.compact .preview-content {
+  height: 8rem;
 }
 
 .preview-content {
@@ -165,41 +168,15 @@ html, body {
   height: auto;
 }
 
-.preview.compact .preview-content {
-  height: var(--preview-compact-height);
-}
-
-.preview-wrap-link {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  text-decoration: none;
-  color: inherit;
-}
-
-/*
-* Container for title, author name and category.
-*/
 .preview-about {
-  max-width: 65ch; /* TODO make this dynamic */
+  max-width: 65ch;
 }
-
 .preview-about h2 {
-  word-wrap: break-word; /* Allow breaking words */
-  overflow-wrap: break-word; /* Ensure compatibility */
-  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-.preview.compact .preview-about {
-  display: flex row;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: end;
-}
-
-/*
-* Container for the average rating, "added by" and details url.
-*/
 .preview-community {
   height: -webkit-fit-content;
   height: -moz-fit-content;

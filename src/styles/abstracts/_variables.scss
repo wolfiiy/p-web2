@@ -3,11 +3,19 @@ $shadow-default: rgba(0, 0, 0, 0.1);
 $shadow-faint: rgba(0, 0, 0, 0.1);
 $shadow-strong: rgba(0, 0, 0, 0.2);
 
+// Gaps
+$gap-small: 2ch;
+
 // Icons
 $icon-button-size: 1rem;
 
 // Layout
 $navigation-height: 8ch;
+$preview-height-compact: 8rem;
+$preview-image-height: 30ch;
+
+// Misc.
+$preview-cover-aspect-ratio: 1/1.45;
 
 // Rounded corners
 $border-radius-small: 4px;

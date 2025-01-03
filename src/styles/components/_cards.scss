@@ -1,44 +1,55 @@
-/*
-* Main preview container
-*/
+// Default preview container (homepage)
 .preview {
   height: 30ch;
   margin: 2ch 0;
-  gap: 2ch;
+  gap: $gap-small;
   
-  border-radius: var(--large-radius);
+  border-radius: $border-radius-large;
   background-color: var(--md-sys-color-surface-container);
   cursor: pointer;
+
+  // Book covers
+  img {
+    height: $preview-image-height;
+    aspect-ratio: $preview-cover-aspect-ratio;
+    object-fit: cover;
+    border-top-left-radius: $border-radius-large;
+    border-bottom-left-radius: $border-radius-large;
+  }
+
+  .cover {
+    flex-shrink: 0;
+  }
 }
 
+// Compact preview container (browse, rating)
 .preview.compact {
-  height: var(--preview-compact-height);
+  height: $preview-height-compact;
+
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  img {
+    height: $preview-height-compact;
+  }
+
+  .preview-about {
+    display: flex row;
+    align-items: end;
+  }
+
+  .preview-content {
+    height: $preview-height-compact;
+  }
 }
 
-.preview.compact h2,
-.preview.compact p {
-  margin: 0;
-}
-
-.preview.compact h2 {
-  font-size: 1rem;
-}
-
-.preview .cover {
-  flex-shrink: 0;
-}
-
-.preview img {
-  height: 30ch;
-  aspect-ratio: 1/1.45;
-  border-top-left-radius: var(--large-radius);
-  border-bottom-left-radius: var(--large-radius);
-}
-
-.preview.compact img {
-  height: var(--preview-compact-height);
-}
-
+// Preview text (title, author, genre, average rating, added by label, details)
 .preview-content {
   justify-content: center;
   flex-grow: 1;
@@ -46,39 +57,21 @@
   height: auto;
 }
 
-.preview.compact .preview-content {
-  height: var(--preview-compact-height);
-}
-
-.preview-wrap-link {
-  display: flex;
-  text-decoration: none;
-  color: inherit;
-}
-
-/*
-* Container for title, author name and category.
-*/
+// Title, author and genre
 .preview-about {
-  max-width: 65ch; /* TODO make this dynamic */
+  max-width: 65ch;
+
+  h2 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
 }
 
-.preview-about h2 {
-  word-wrap: break-word; /* Allow breaking words */
-  overflow-wrap: break-word; /* Ensure compatibility */
-  white-space: normal; /* Allow wrapping */
-}
-
-.preview.compact .preview-about {
-  display: flex row;
-  align-items: end;
-}
-
-/*
-* Container for the average rating, "added by" and details url.
-*/
+// Contains the community elements of the preview (average, aded by text, 
+// details url)
 .preview-community {
   height: fit-content;
-  gap: 2ch;
+  gap: $gap-small;
   width: 100%;
 }
