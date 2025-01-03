@@ -1,20 +1,18 @@
-/*
-* Addition / edition form
-*/
+// Addition / edition form
 .submission-container {
-  padding: 2ch;
+  padding: $gap-small;
   width: 100%;
   background: var(--md-sys-color-surface-container);
-}
-
-.submission-container .label-input {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 0.5ch 0;
+  
+  .label-input {
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0.5ch 0;
+  }
 }
 
 .large-form {
-  gap: 2ch;
+  gap: $gap-small;
 }
 
 form label {

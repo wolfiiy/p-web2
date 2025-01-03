@@ -235,15 +235,11 @@ html, body {
   gap: 1ch;
 }
 
-/*
-* Addition / edition form
-*/
 .submission-container {
   padding: 2ch;
   width: 100%;
   background: var(--md-sys-color-surface-container);
 }
-
 .submission-container .label-input {
   display: -webkit-box;
   display: -ms-flexbox;
