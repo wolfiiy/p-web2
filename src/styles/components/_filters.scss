@@ -1,0 +1,11 @@
+// Search filters
+.filter {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-search,
+.filter-category {
+    align-items: center;
+    gap: 1ch;
+}

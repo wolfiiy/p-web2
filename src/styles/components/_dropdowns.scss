@@ -1,0 +1,36 @@
+.md-select {
+  border: none;
+  border-radius: var(--large-radius);
+  padding: 0.5rem 0.75rem;
+  transition: all 0.22s;
+}
+
+.md-select:hover {
+  cursor: pointer;
+}
+
+.md-select.secondary {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.md-select.secondary:hover {
+  background-color: var(--md-sys-color-secondary);
+  color: var(--md-sys-color-on-secondary);
+}
+
+.md-select>option {
+  background-color: var(--md-sys-color-secondary);
+  color: var(--md-sys-color-on-secondary);
+}
+
+select option:checked,
+select option:hover {
+  box-shadow: 0 0 10px 100px var(--md-sys-color-on-secondary) inset;
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+select:focus > option:checked { 
+  background: var(--md-sys-color-on-secondary) !important;
+  color: var(--md-sys-color-on-secondary-container);
+}

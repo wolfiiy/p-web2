@@ -1,0 +1,9 @@
+.md-textarea.secondary {
+  background-color: var(--md-sys-color-surface-container);
+  border: none;
+  border-radius: var(--large-radius);
+  color: var(--md-sys-color-on-surface);
+  padding: 1.25ch 2ch;
+  outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
+  resize: vertical;
+}

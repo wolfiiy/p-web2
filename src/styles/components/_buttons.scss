@@ -1,0 +1,95 @@
+.md-button {
+  border: none;
+  padding: 1.25ch 2ch;
+  border-radius: $border-radius-large;
+  cursor: pointer;
+  transition: all ease-in-out $transition-short;
+  
+  // Disabled state
+  &:disabled {
+    cursor: default;
+    filter: brightness(0.5);
+  }
+
+  // Wide buttons ("Modifier", "Supprimer")
+  &.wide {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+  }
+
+  // Buttons with an icon (search)
+  &.icon {
+    padding: 0.7rem 0.8rem;
+    padding-top: 0.82rem; /* TODO fix alignment*/
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // Icons inside of text
+  .icon {
+    height: $icon-button-size;
+    width: $icon-button-size;
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+    stroke-linecap: round; 
+    stroke-linejoin: round;
+  }
+}
+
+// Using primary color
+.md-button.primary {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  
+  &:hover:not([disabled]) {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+}
+
+// Using secondary color
+.md-button.secondary {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  
+  &:hover:not([disabled]) {
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+  }
+
+  // Icons (search)
+  svg path {
+    stroke: var(--md-sys-color-on-secondary-container);
+    transition: all $transition-short;
+  }
+
+  &:hover svg path {
+    stroke: var(--md-sys-color-on-secondary);
+  }
+}
+
+// Using tertiary color
+.md-button.tertiary {
+  background-color: var(--md-sys-color-tertiary-container);
+  color: var(--md-sys-color-on-tertiary-container);
+  
+  &:hover:not([disabled]) {
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
+  }
+}
+
+// Error button
+.md-button.error {
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+
+  &:hover {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+  }
+}

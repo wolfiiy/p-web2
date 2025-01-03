@@ -1,0 +1,84 @@
+/*
+* Main preview container
+*/
+.preview {
+  height: 30ch;
+  margin: 2ch 0;
+  gap: 2ch;
+  
+  border-radius: var(--large-radius);
+  background-color: var(--md-sys-color-surface-container);
+  cursor: pointer;
+}
+
+.preview.compact {
+  height: var(--preview-compact-height);
+}
+
+.preview.compact h2,
+.preview.compact p {
+  margin: 0;
+}
+
+.preview.compact h2 {
+  font-size: 1rem;
+}
+
+.preview .cover {
+  flex-shrink: 0;
+}
+
+.preview img {
+  height: 30ch;
+  aspect-ratio: 1/1.45;
+  border-top-left-radius: var(--large-radius);
+  border-bottom-left-radius: var(--large-radius);
+}
+
+.preview.compact img {
+  height: var(--preview-compact-height);
+}
+
+.preview-content {
+  justify-content: center;
+  flex-grow: 1;
+  flex-direction: column;
+  height: auto;
+}
+
+.preview.compact .preview-content {
+  height: var(--preview-compact-height);
+}
+
+.preview-wrap-link {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+}
+
+/*
+* Container for title, author name and category.
+*/
+.preview-about {
+  max-width: 65ch; /* TODO make this dynamic */
+}
+
+.preview-about h2 {
+  word-wrap: break-word; /* Allow breaking words */
+  overflow-wrap: break-word; /* Ensure compatibility */
+  white-space: normal; /* Allow wrapping */
+}
+
+.preview.compact .preview-about {
+  display: flex row;
+  align-items: end;
+}
+
+/*
+* Container for the average rating, "added by" and details url.
+*/
+.preview-community {
+  height: fit-content;
+  gap: 2ch;
+  width: 100%;
+}

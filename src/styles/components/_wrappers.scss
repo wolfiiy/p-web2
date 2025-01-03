@@ -1,0 +1,15 @@
+// TODO remove one
+.wrap {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.wrap-col {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.wrap-row {
+  display: flex;
+  flex-flow: row wrap;
+}

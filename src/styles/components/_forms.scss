@@ -1,0 +1,22 @@
+/*
+* Addition / edition form
+*/
+.submission-container {
+  padding: 2ch;
+  width: 100%;
+  background: var(--md-sys-color-surface-container);
+}
+
+.submission-container .label-input {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0.5ch 0;
+}
+
+.large-form {
+  gap: 2ch;
+}
+
+form label {
+  font-size: 0.75rem;
+}
