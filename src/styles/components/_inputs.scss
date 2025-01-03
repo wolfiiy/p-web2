@@ -1,6 +1,5 @@
 /* Input heavily inspired from
 https://github.com/LeonGeldsch/css_material_input/tree/main */
-/*TODO make it generic & add primary / secondary / tertiary variants*/
 .md-outlined-input,
 .md-outlined-textarea {
   position: relative;
@@ -8,23 +7,23 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 
 .md-outlined-input input {
   height: 3rem;
-  border-radius: var(--small-radius);
+  border-radius: $border-radius-small;
   border: none;
   background-color: transparent;
   padding-left: 2ch;
   padding-right: 2ch;
   font-size: 1rem;
-  transition: .1s var(--main-ease);
+  transition: $transision-shortest var(--main-ease);
 }
 
 .md-outlined-input.primary input {
   color: var(--md-sys-color-on-surface);
-  outline: 1px solid var(--md-sys-color-secondary-container);
+  outline: $md-border-width solid var(--md-sys-color-secondary-container);
 }
 
 .md-outlined-input.on-surface-container input {
   color: var(--md-sys-color-on-surface);
-  outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
+  outline: $md-border-width solid var(--md-sys-color-on-secondary-fixed-variant);
 }
 
 .md-outlined-input.on-surface-container label {
@@ -46,7 +45,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   left: 1ch;
   transform: translateY(-50%);
   text-align: center;
-  transition: .2s var(--main-ease);
+  transition: $transition-short var(--main-ease);
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;
@@ -60,14 +59,14 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 }
 
 .md-outlined-input input:focus {
-  outline: 1px solid var(--md-sys-color-secondary) !important;
+  outline: $md-border-width solid var(--md-sys-color-secondary) !important;
 }
 
 .md-input:hover,
 .md-outlined-input input:hover,
 .md-textarea:hover {
-  outline: 1px solid var(--md-sys-color-outline);
-  transition: 0.2s var(--main-ease);
+  outline: $md-border-width solid var(--md-sys-color-outline);
+  transition: $transition-short var(--main-ease);
 }
 .md-outlined-input input:focus ~ label {
   color: var(--md-sys-color-secondary) !important;
@@ -78,7 +77,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   border: none;
   border-radius: var(--large-radius);
   color: var(--md-sys-color-on-surface);
-  outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
+  outline: $md-border-width solid var(--md-sys-color-on-secondary-fixed-variant);
   padding: 1.25ch 2ch;
 }
 
@@ -96,12 +95,12 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 
 .md-outlined-input.primary input {
   color: var(--md-sys-color-on-surface);
-  outline: 1px solid var(--md-sys-color-secondary-container);
+  outline: $md-border-width solid var(--md-sys-color-secondary-container);
 }
 
 .md-outlined-input.on-surface-container input {
   color: var(--md-sys-color-on-surface);
-  outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
+  outline: $md-border-width solid var(--md-sys-color-on-secondary-fixed-variant);
 }
 
 .md-outlined-input.on-surface-container label {
@@ -123,7 +122,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   left: 1ch;
   transform: translateY(-50%);
   text-align: center;
-  transition: .2s var(--main-ease);
+  transition: $transition-short var(--main-ease);
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;
@@ -137,7 +136,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 }
 
 .md-outlined-input input:focus {
-  outline: 1px solid var(--md-sys-color-secondary) !important;
+  outline: $md-border-width solid var(--md-sys-color-secondary) !important;
 }
 
 .md-outlined-input input:focus ~ label {

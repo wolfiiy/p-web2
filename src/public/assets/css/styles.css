@@ -261,7 +261,6 @@ form label {
 
 /* Input heavily inspired from
 https://github.com/LeonGeldsch/css_material_input/tree/main */
-/*TODO make it generic & add primary / secondary / tertiary variants*/
 .md-outlined-input,
 .md-outlined-textarea {
   position: relative;
@@ -269,7 +268,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 
 .md-outlined-input input {
   height: 3rem;
-  border-radius: var(--small-radius);
+  border-radius: 4px;
   border: none;
   background-color: transparent;
   padding-left: 2ch;

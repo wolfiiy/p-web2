@@ -1,16 +1,16 @@
 .profile-picture {
-    height: 12rem;
-    max-width: 20rem;
+  height: 12rem;
+  max-width: 20rem;
 }
 
 .profile-overview {
-    background-color: var(--md-sys-color-surface-container);
-    align-items: center;
-    gap: 4ch;
+  background-color: var(--md-sys-color-surface-container);
+  align-items: center;
+  gap: $gap-medium;
 }
 
 .profile-overview p,
 .profile-overview h2 {
-    margin: 0.5rem 0;
-    padding: 0;
+  margin: 0.5rem 0;
+  padding: 0;
 }

@@ -1,51 +1,51 @@
 html, body {
-    background-color: var(--md-sys-color-surface);
-    font-family: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface);
+  font-family: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--md-sys-color-on-surface);
 }
 
 body {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 }
 
 main {
-    margin: 2em auto;
-    padding-top: var(--nav-height);
-    width: 90ch;
+  margin: 2em auto;
+  padding-top: var(--nav-height);
+  width: 90ch;
 }
 
 h1 {
-    margin: 2rem 0;
-    text-align: center;
+  margin: 2rem 0;
+  text-align: center;
 }
 
 a {
-    text-decoration: none;
-    position: relative;
-    color: var(--md-sys-color-primary);
+  text-decoration: none;
+  position: relative;
+  color: var(--md-sys-color-primary);
 }
 
 a:not(.clickable-image, .md-button):after {
-    content: '';
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    background: var(--md-sys-color-primary);
-    transition: 0.2s;
+  content: '';
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  background: var(--md-sys-color-primary);
+  transition: 0.2s;
 }
 
 a:not(.clickable-image, .md-button):hover::after,
 a:not(.clickable-image, .md-button):focus::after {
-    width: 100%;
+  width: 100%;
 }
 
 /* TODO improve */
 @media only screen and (max-width: 1000px) {
-    main {
-        max-width: 98vw;
-    }
+  main {
+    max-width: 98vw;
+  }
 }
