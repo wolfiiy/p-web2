@@ -495,7 +495,7 @@ class BookController extends Controller
                 // Store form data and errors in session
                 $_SESSION['form_data'] = $_POST;
                 $_SESSION['form_errors'] = $errors;
-                
+
                 // Redirect to addAction
                 header('Location: index.php?controller=book&action=add');
                 exit;
@@ -519,8 +519,8 @@ class BookController extends Controller
         $publisherModel = new PublisherModel();
         $authorModel = new AuthorModel();
 
-        //$book = $bookModel->getBookById($_GET["id"]);
-        //$currentCover = $book["cover_image"];
+        $book = $bookModel->getBookById($_GET["id"]);
+        $currentCover = $book["cover_image"];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Controler si l'éditeur existe déja 
@@ -539,8 +539,7 @@ class BookController extends Controller
                 $author = $authorModel->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
                 $idAuthor = (int)$authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
             }
-            error_log("meh");
-            echo $_FILES["coverImage"]["error"];
+
             $destination = "";
             if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK) {
                 // Vérifier la taille du fichier (limite : 40 Ko)
@@ -588,10 +587,7 @@ class BookController extends Controller
                 if (isset($currentCover) && file_exists($currentCover)) {
                     unlink($currentCover);
                 }
-            } else {
-                die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
-            }
-
+            } 
 
             //ajout d'un livre
             $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
