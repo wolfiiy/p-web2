@@ -283,6 +283,8 @@ class BookController extends Controller
      */
     private function insertAction()
     {
+        mb_internal_encoding("UTF-8");
+
         include_once("../models/BookModel.php");
         include_once("../models/PublisherModel.php");
         include_once("../models/AuthorModel.php");
@@ -306,9 +308,7 @@ class BookController extends Controller
         $bookGenre="";
 
         $_POST["validated"] = 0;
-        error_log($_POST["bookEditionYear"]);
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            error_log($_POST["bookEditionYear"]);
             /*
             * NETTOYAGE DES DONNES
             *  récupérer plusieurs valeurs d'une super-globale et filter ses données.
@@ -330,7 +330,6 @@ class BookController extends Controller
 
                 ]
             );
-            error_log($_POST["bookEditionYear"]);
             /*
                 * VALIDATIONS DES DONNEES
                 * les ?? qui permettent d'initialiser les variables avec la valeur '' dans le cas ou $_POST['key'] est null
@@ -346,17 +345,16 @@ class BookController extends Controller
             $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
             $bookGenre           = $_POST["bookGenre"] ?? '';
 
-            error_log($bookEditionYear);
             //snippetLink
             if (!$snippetLink) {
                 $errors["snippetLink"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $snippetLink)) {
+            } else if (!filter_var($snippetLink, FILTER_VALIDATE_URL)) {
                 $errors["snippetLink"] = Constants::ERROR_TEXT;
             }
             // authorFirstName
             if (!$authorFirstName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorFirstName)) {
+            } else if (!preg_match("/^[\p{L}\s\-]+$/u", $authorFirstName)) {
                 $errors["authorFirstName"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
                 $errors["authorFirstName"] = Constants::ERROR_LENGTH;
@@ -365,7 +363,7 @@ class BookController extends Controller
             // authorLastName
             if (! $authorLastName) {
                 $errors["authorLastName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $authorLastName)) {
+            } else if (!preg_match("/^[\p{L}\s\-]+$/u",  $authorLastName)) {
                 $errors["authorLastName"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
                 $errors["authorLastName"] = Constants::ERROR_LENGTH;
@@ -476,7 +474,6 @@ class BookController extends Controller
             } else {
                 // Form is invalid
                 $_POST['validated'] = 0;
-                error_log($bookEditionYear);
                 // Form
                 include_once("../models/CategoryModel.php");
                 $categoryModel = new CategoryModel();
@@ -488,6 +485,10 @@ class BookController extends Controller
                 ob_start();
                 eval('?>' . $view);
                 $content = ob_get_clean();
+
+                foreach ($errors as $key => $e) {
+                    error_log("Key: $key, Error: $e");
+                }
 
                 return $content;
             }

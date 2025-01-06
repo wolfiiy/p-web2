@@ -65,7 +65,6 @@
         </div>
         
         <div class="md-outlined-textarea on-surface-container">
-            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" placeholder=" "><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
             <label for="bookSummary">Résumé</label>
             <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" ><?=$bookSummary;?></textarea>
         </div>
