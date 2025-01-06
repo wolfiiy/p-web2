@@ -145,6 +145,11 @@ class BookController extends Controller
      */
     private function detailAction()
     {
+        // Check if a user is authentified
+        if (!isUserConnected()){
+            header("Location: index.php");
+        }
+
         // Check if ID has been set.
         // TODO error page if ID is not set.
         if (isset($_GET['id'])) $id = $_GET['id'];
