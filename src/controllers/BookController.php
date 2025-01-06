@@ -146,7 +146,7 @@ class BookController extends Controller
     private function detailAction()
     {
         // Check if a user is authentified
-        if (!isUserConnected()){
+        if (!isUserConnected()) {
             header("Location: index.php?controller=user&action=login");
         }
         // Check if ID has been set.
@@ -247,7 +247,7 @@ class BookController extends Controller
 
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
-        
+
         // If no user is connected, redirect to index
         if (!isUserConnected()) {
             header("Location: index.php");
@@ -305,7 +305,7 @@ class BookController extends Controller
         $idbook = new BookModel();
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
-        
+
         $errors    = [];
         $authorFirstName = "";
         $authorLastName = "";
@@ -314,8 +314,8 @@ class BookController extends Controller
         $bookPageNb = "";
         $snippetLink = "";
         $bookSummary = "";
-        $bookEditionYear="";
-        $bookGenre="";
+        $bookEditionYear = "";
+        $bookGenre = "";
 
         $_POST["validated"] = 0;
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -353,7 +353,17 @@ class BookController extends Controller
             $bookSummary        = $_POST["bookSummary"] ?? '';
             $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
             $bookGenre          = $_POST["bookGenre"] ?? '';
-            /*
+
+            //bookEditionYear
+            if (!$bookEditionYear) {
+                $errors["bookEditionYear"] = Constants::ERROR_REQUIRED;
+            }
+
+            //bookPageNb
+            if (!$bookPageNb) {
+                $errors["bookPageNb"] = Constants::ERROR_REQUIRED;
+            }
+
             //snippetLink
             if (!$snippetLink) {
                 $errors["snippetLink"] = Constants::ERROR_REQUIRED;
@@ -363,8 +373,8 @@ class BookController extends Controller
             // authorFirstName
             if (!$authorFirstName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[\p{L}\s\-]+$/u", $authorFirstName)) {
-                $errors["authorFirstName"] = Constants::ERROR_NAME;
+                //} else if (!preg_match("/^[\p{L}\s\-]+$/u", $authorFirstName)) {
+                // $errors["authorFirstName"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
                 $errors["authorFirstName"] = Constants::ERROR_LENGTH;
             }
@@ -372,8 +382,8 @@ class BookController extends Controller
             // authorLastName
             if (! $authorLastName) {
                 $errors["authorLastName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[\p{L}\s\-]+$/u",  $authorLastName)) {
-                $errors["authorLastName"] = Constants::ERROR_NAME;
+                //} else if (!preg_match("/^[\p{L}\s\-]+$/u",  $authorLastName)) {
+                //    $errors["authorLastName"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
                 $errors["authorLastName"] = Constants::ERROR_LENGTH;
             }
@@ -381,8 +391,8 @@ class BookController extends Controller
             //bookTitle 
             if (!$bookTitle) {
                 $errors["bookTitle"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)) {
-                $errors["bookTitle"] = Constants::ERROR_TEXT;
+                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)) {
+                //    $errors["bookTitle"] = Constants::ERROR_TEXT;
             } elseif (mb_strlen($bookTitle) < 2 || mb_strlen($bookTitle) > 150) {
                 $errors["bookTitle"] = Constants::ERROR_LENGTH;
             }
@@ -390,8 +400,8 @@ class BookController extends Controller
             //bookEditor
             if (! $bookEditor) {
                 $errors["bookEditor"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $bookEditor)) {
-                $errors["bookEditor"] = Constants::ERROR_NAME;
+                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $bookEditor)) {
+                //    $errors["bookEditor"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
                 $errors["bookEditor"] = Constants::ERROR_LENGTH;
             }
@@ -399,11 +409,11 @@ class BookController extends Controller
             //bookSummary
             if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookSummary)) {
-                $errors["bookSummary"] = Constants::ERROR_TEXT;
+                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookSummary)) {
+                //    $errors["bookSummary"] = Constants::ERROR_TEXT;
             } elseif (mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000) {
                 $errors["bookSummary"] = Constants::ERROR_RESUME;
-            }*/
+            }
 
             // Controler si l'éditeur existe déja 
             $idPublisher = $addPublisher->getPublisherByName($bookEditor);
@@ -413,7 +423,7 @@ class BookController extends Controller
                 $publisher = $addPublisher->insertPublisher($bookEditor);
                 $idPublisher = (int)$addPublisher->getPublisherByName($bookEditor);
             }
-            
+
             //Controler si l'auteur exite déjà
             $idAuthor = $addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
 
@@ -424,37 +434,40 @@ class BookController extends Controller
             }
 
             //téléchargement et traitement des images
+            $validated = 1;
+            $allowedTypes = ['image/jpeg', 'image/png'];
             if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
-                $errors["coverImage"] = "Erreur lors du téléchargement de l'image. ";
+                $errors["coverImage"] = "Veillez insérer une image.";
+                $validated = 0;
             }
-
             // Vérifier la taille du fichier (limite : 2 Mo)
-            if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
-                $errors["coverImage"] .= "Le fichier est trop volumineux. ";
+            elseif ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
+                $errors["coverImage"] = "Le fichier est trop volumineux. La limite est de 2 Mo. ";
+                $validated = 0;
             }
-
             // Vérifier le type MIME du fichier
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
-                $errors["coverImage"] .= " Type de fichier non autorisé. ";
+            elseif (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
+                $errors["coverImage"] = " Seule les images jpeg, png sont autorisés.  ";
+                $validated = 0;
             }
+            if ($validated == 1) {
+                // Récupérer l'extension du fichier original
+                $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
 
-            // Récupérer l'extension du fichier original
-            $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
+                // Générer un nom de fichier unique et court
+                $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
 
-            // Générer un nom de fichier unique et court
-            $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
+                // Définir le chemin de destination
+                $destination = "assets/img/cover/" . $filename;
 
-            // Définir le chemin de destination
-            $destination = "assets/img/cover/" . $filename;
+                // Définir la source du fichier temporaire
+                $source = $_FILES["coverImage"]["tmp_name"];
 
-            // Définir la source du fichier temporaire
-            $source = $_FILES["coverImage"]["tmp_name"];
-
-            // Déplacer le fichier
-            $result = move_uploaded_file($source, $destination);
-            if (!$result) {
-                $errors["coverImage"] .= "Impossible de déplacer le fichier téléchargé.";
+                // Déplacer le fichier
+                $result = move_uploaded_file($source, $destination);
+                if (!$result) {
+                    $errors["coverImage"] = "Impossible de télécharger votre image veuillez réessayer.";
+                }
             }
             foreach ($errors as $error) {
                 error_log($error);
@@ -479,12 +492,12 @@ class BookController extends Controller
                     $idPublisher,
                     $idAuthor
                 );
-                            //recupérer l'id
+                //recupérer l'id
                 $id = $idbook->getIdBook($user_fk);
                 $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
                 header($destination);
             } else {
-                
+                $_POST['validated'] = 0;
                 // Store form data and errors in session
                 $_SESSION['form_data'] = $_POST;
                 $_SESSION['form_errors'] = $errors;
@@ -493,7 +506,6 @@ class BookController extends Controller
                 header('Location: index.php?controller=book&action=add');
                 exit;
             }
-
         } else {
             echo " Merci de valider le formulaire.";
         }
