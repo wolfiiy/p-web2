@@ -101,8 +101,12 @@ class DataHelper {
     private static function fillDetails($book, AuthorModel $authorModel, 
         CategoryModel $categoryModel, PublisherModel $publisherModel, 
         ReviewModel $reviewModel, UserModel $userModel) {
+
         // Get the average rating or use a placeholder text
         $bookRating = $reviewModel->getAverageRating($book["book_id"]);
+
+        // Get the number of reviews
+        $book["nb_rating"] = $reviewModel->getNumberRating($book["book_id"]);
                     
         if (!is_null($bookRating)) 
             $book["average_rating"] = number_format(

@@ -28,6 +28,21 @@ class ReviewModel extends DatabaseModel {
     }
 
     /**
+     * Get the number of rating for a book
+     * @param int $count Id of the rated book
+     * @return int number of rating for the book
+     */
+    public function getNumberRating(int $bookId)
+    {
+        $query = "SELECT COUNT(*) AS nb_rating from review where book_fk = :varBookId";
+        $binds = array("varBookId" => $bookId);
+        $req = $this->queryPrepareExecute($query, $binds);
+        // var_dump($this->formatData($req));
+        if ($req) return $this -> formatData($req)[0]["nb_rating"];
+        else return false;
+    }
+
+    /**
      * Insert a new review in the database
      * @param int $bookFk Id of the book receiving the review
      * @param int $userFk Id of the user rating

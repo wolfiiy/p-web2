@@ -17,6 +17,16 @@
                         <?=$book['average_rating']?>
                     </p>
                 </div>
+
+                <div class="data-set">
+                    <p class="type">
+                        Nombre d'appréciations
+                    </p>
+        
+                    <p class="value">
+                        <?=$book['nb_rating']?>
+                    </p>
+                </div>
         
                 <div class="data-set">
                     <p class="type">
