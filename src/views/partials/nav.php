@@ -13,7 +13,6 @@ $userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : "";
 // If the user is logged in, display their name and a logout button.
 if (isUserConnected()) {
     $accountNav .= <<< HTML
-    
         <li>
             <a href="index.php?controller=book&action=add">
                 Ajouter une entrée
