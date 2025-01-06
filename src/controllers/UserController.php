@@ -39,6 +39,16 @@ class UserController extends Controller {
     ";
 
     /**
+     * Title displayed over the list of added entries.
+     */
+    private const TITLE_ADDITIONS = "Ajouts";
+
+    /**
+     * Title displayed over the list of reviews.
+     */
+    private const TITLE_REVIEWS = "Reviews";
+
+    /**
      * Error message to display if the user attempts to create an account
      * with a username that is not available.
      */
@@ -69,6 +79,8 @@ class UserController extends Controller {
        
         $usermodel = new UserModel();
         $bookmodel = new BookModel();
+        $titleAdditions = self::TITLE_ADDITIONS;
+        $titleReviews = self::TITLE_REVIEWS;
         $labelAdditions = "";
         $labelReviews = "";
 
@@ -86,6 +98,7 @@ class UserController extends Controller {
         $nbReviews = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
         if ($nbAdditions < 1) {
+            $titleAdditions = "";
             $labelAdditions = "Aucun livre n'a été ajouté par cet utilisateur.";
         } else if ($nbAdditions == 1) {
             $labelAdditions = $nbAdditions . " livre ajouté";
@@ -94,6 +107,7 @@ class UserController extends Controller {
         }
 
         if ($nbReviews < 1) {
+            $titleReviews = "";
             $labelReviews = "Aucun livre n'a été noté par cet utilisateur.";
         } else if ($nbReviews == 1) {
             $labelReviews = $nbReviews . " livre noté";

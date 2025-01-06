@@ -29,12 +29,9 @@
         </div>
     </div>
 
-    <?php
+    <h3><?=$titleAdditions;?></h3>
+    <?=HtmlWriter::writeCompactBooksPreviewGrade($books);?>
 
-        echo "<h1>Reviews</h1>";
-        HtmlWriter::writeCompactBooksPreviewGrade($books);
-
-        echo "<h1>Books</h1>";  
-        HtmlWriter::writeCompactBooksPreview($publishedBooks);
-    ?>
+    <h3><?=$titleReviews;?></h3>
+    <?=HtmlWriter::writeCompactBooksPreview($publishedBooks);?>
 </main>
