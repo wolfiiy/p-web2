@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: STE 
+ * Author: Sebastien Tille
  * Date: September 30th, 2024
  */
 
@@ -8,6 +8,11 @@
  * Handles database interactions.
  */
 class DatabaseModel {
+
+    /**
+     * Path to the configuration file.
+     */
+    private const PATH_TO_CONFIG = "../../secrets.json";
 
     /**
      * Connection to the database.
@@ -33,7 +38,7 @@ class DatabaseModel {
     public function __construct() {
         try {
             // Attempt to read the config file
-            $configFile = file_get_contents('../../secrets.json');
+            $configFile = file_get_contents(self::PATH_TO_CONFIG);
             $conf = json_decode($configFile, true);
 
             // Create the DSN
@@ -42,7 +47,7 @@ class DatabaseModel {
             $dsn .= "dbname=" . $conf['DB_NAME'] . ";";
             $dsn .= "charset=" . $conf['DB_CHARSET'];
         } catch (Exception $e) {
-            die ('An error occured while reading the config file.'
+            die (Constants::ERROR_CONFIG_FILE
                 . $e -> getMessage());
         }
 
@@ -56,7 +61,7 @@ class DatabaseModel {
         } catch (PDOException $e) {
             // Kill the application if it failed to connect
             die(
-                'An error occured when connecting to the database: ' 
+                Constants::ERROR_DB_CONNECTION 
                 . $e -> getMessage()
             );
         }
@@ -77,7 +82,7 @@ class DatabaseModel {
         } catch (PDOException $e) {
             // Log any PDO-related exceptions
             error_log(
-                "An error occured during a simple query execution: " 
+                Constants::ERROR_QUERY_PREPARE 
                 . $e -> getMessage()
             );
             return false;
@@ -96,18 +101,14 @@ class DatabaseModel {
      * of the query if it succeeded, false otherwise.
      */
     protected function queryPrepareExecute(string $query, $binds) {
-
         try {
             // Prepare the SQL query string by protecting it against SQL
             // injections and binding values
             $req = $this -> connector -> prepare($query);
             foreach ($binds as $name => $value) {
-                if (!is_int($value))
-                {
+                if (!is_int($value)) {
                     $req -> bindValue($name, $value, PDO::PARAM_STR);
-                }
-                else
-                {
+                } else {
                     $req -> bindValue($name, $value, PDO::PARAM_INT);
                 }
             }
@@ -115,11 +116,10 @@ class DatabaseModel {
             // Return the request only if successful
             $req -> execute(); 
             return $req;
-            // else return false;
         } catch (PDOException $e) {
             // Log any PDO-related exceptions
             error_log(
-                "An error occured during a query execution. " 
+                Constants::ERROR_QUERY_PREPARE 
                 . $e -> getMessage()
             );
         }

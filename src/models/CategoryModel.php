@@ -1,26 +1,26 @@
 <?php
 
 /** 
- * Authors: Abigaël Périsset, Sébasten Tille, Valentin Pignat
+ * Authors: Abigaël Périsset, Valentin Pignat, Sebastien Tille
  * Date: November 25th, 2024
  */
 
 include_once('DatabaseModel.php');
 
-
 /**
  * This class holds database queries relative to categories.
  */
-class CategoryModel extends DatabaseModel
-{
+class CategoryModel extends DatabaseModel {
     
     /**
-     * Get all categories
-     * @return array Array containing every category
+     * Gets all categories.
+     * @return array|false An array containing all categories or false if the 
+     * query failed.
      */
     public function getAllCategory(){
         $query = "SELECT * FROM t_category";
         $req = $this->querySimpleExecute($query);
+
         if ($req) return $this -> formatData($req);
         else return false;
     }
@@ -39,6 +39,5 @@ class CategoryModel extends DatabaseModel
 
         if ($req) return $this->formatData($req)[0];
         else return false;
-    }
-    
+    } 
 }

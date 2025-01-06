@@ -2,7 +2,7 @@
 
 /**
  * Author: Sébastien Tille, Abigaël Périsset
- * Date: december 17, 2024
+ * Date: December 17, 2024
  */
 
 include_once('DatabaseModel.php');
@@ -39,25 +39,20 @@ class PublisherModel extends DatabaseModel {
     }
 
     /**
-     * Get a publisher's ID from the name
-     * @param string $namePublishe Name of the publisher
-     * @return int Id of the publisher, 0 if none found
+     * Gets a publisher's ID from its name.
+     * @param string $publisherName Name of the publisher.
+     * @return int The ID of the publisher or 0 if it could not be found.
      */
-    public function getPublisherByName(string $namePublisher){
+    public function getPublisherByName(string $publisherName){
         $sql = "SELECT publisher_id FROM t_publisher WHERE name = :name";
-        $binds = array("name" => $namePublisher);
+        $binds = array("name" => $publisherName);
 
-        // $query = $this->querySimpleExecute($sql);
         $query = $this->queryPrepareExecute($sql, $binds);
-
         $publisher = $this->formatData($query);
 
-        if(empty($publisher)){
+        if (empty($publisher))
             return 0;
-        }
-        else {
+        else
             return (int) $publisher[0]["publisher_id"];
-        }
     }
-
 }
