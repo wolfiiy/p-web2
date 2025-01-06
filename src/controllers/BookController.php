@@ -17,7 +17,8 @@ include_once('../models/UserModel.php');
 /**
  * Controller used to handle books-related pages.
  */
-class BookController extends Controller {
+class BookController extends Controller
+{
 
     /**
      * Default value of the category filter (i.e. shows everything).
@@ -48,7 +49,8 @@ class BookController extends Controller {
      * Dispatches the current action
      * @return mixed A callback to a function.
      */
-    public function display() {
+    public function display()
+    {
         include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
         return call_user_func(array($this, $action));
@@ -59,7 +61,8 @@ class BookController extends Controller {
      * pages of 10 elements.
      * @return string The book list view.
      */
-    private function listAction() {
+    private function listAction()
+    {
         include_once('../helpers/HtmlWriter.php');
         include_once("../models/CategoryModel.php");
         include_once('../models/BookModel.php');
@@ -142,7 +145,8 @@ class BookController extends Controller {
      * @param int $id The unique ID of the book.
      * @return string The page to be printed.
      */
-    private function detailAction() {
+    private function detailAction()
+    {
         // Check if a user is authentified
         if (!isUserConnected()) {
             header("Location: index.php?controller=user&action=login");
@@ -197,7 +201,8 @@ class BookController extends Controller {
      * Displays the form used to add a new entry to the database.
      * @return string The addition view.
      */
-    private function addAction() {
+    private function addAction()
+    {
         $h1 = "Ajout d'un livre";
         $submitButton = "Ajouter";
         $actionURL = "index.php?controller=book&action=insert";
@@ -240,7 +245,8 @@ class BookController extends Controller {
      * Displays the form used to modify an existing entry.
      * @return string The modification view.
      */
-    private function modifyAction() {
+    private function modifyAction()
+    {
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
 
@@ -284,7 +290,8 @@ class BookController extends Controller {
     /**
      * Inserts a new book in the database.
      */
-    private function insertAction() {
+    private function insertAction()
+    {
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
         $submitButton = "Ajouter";
@@ -312,7 +319,10 @@ class BookController extends Controller {
         $bookEditionYear = "";
         $bookGenre = "";
 
-        $_POST["validated"] = 0;
+        $validatedImage = 1;
+        $validatedEditor = 1;
+        $validatedName = 1;
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             /*
             * NETTOYAGE DES DONNES
@@ -357,7 +367,7 @@ class BookController extends Controller {
             //bookPageNb
             if (!$bookPageNb) {
                 $errors["bookPageNb"] = Constants::ERROR_REQUIRED;
-            }elseif ($bookPageNb<=0){
+            } elseif ($bookPageNb <= 0) {
                 $errors["bookPageNb"] = "Seul les nombres au dessus de 0 sont autorisés.";
             }
 
@@ -367,87 +377,87 @@ class BookController extends Controller {
             } else if (!filter_var($snippetLink, FILTER_VALIDATE_URL)) {
                 $errors["snippetLink"] = "Seul les URLs sont acceptés.";
             }
-            // authorFirstName
-            if (!$authorFirstName) {
-                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-                //} else if (!preg_match("/^[\p{L}\s\-]+$/u", $authorFirstName)) {
-                // $errors["authorFirstName"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
-                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
-            }
-
-            // authorLastName
-            if (! $authorLastName) {
-                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
-                //} else if (!preg_match("/^[\p{L}\s\-]+$/u",  $authorLastName)) {
-                //    $errors["authorLastName"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
-                $errors["authorLastName"] = Constants::ERROR_LENGTH;
-            }
 
             //bookTitle 
             if (!$bookTitle) {
                 $errors["bookTitle"] = Constants::ERROR_REQUIRED;
-                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)) {
-                //    $errors["bookTitle"] = Constants::ERROR_TEXT;
             } elseif (mb_strlen($bookTitle) < 2 || mb_strlen($bookTitle) > 150) {
                 $errors["bookTitle"] = Constants::ERROR_LENGTH;
-            }
-
-            //bookEditor
-            if (! $bookEditor) {
-                $errors["bookEditor"] = Constants::ERROR_REQUIRED;
-                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $bookEditor)) {
-                //    $errors["bookEditor"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
-                $errors["bookEditor"] = Constants::ERROR_LENGTH;
             }
 
             //bookSummary
             if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
-                //} else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookSummary)) {
-                //    $errors["bookSummary"] = Constants::ERROR_TEXT;
-            } elseif (mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000) {
-                $errors["bookSummary"] = Constants::ERROR_RESUME;
+            } elseif (mb_strlen($bookEditor) < 5 || mb_strlen($bookEditor) > 150) {
+                $errors["bookSummary"] = Constants::ERROR_LENGTH;
             }
 
-            // Controler si l'éditeur existe déja 
-            $idPublisher = $addPublisher->getPublisherByName($bookEditor);
-
-            //Créer un éditeur s'il n'existe pas
-            if ($idPublisher === 0) {
-                $publisher = $addPublisher->insertPublisher($bookEditor);
-                $idPublisher = (int)$addPublisher->getPublisherByName($bookEditor);
+            //bookEditor
+            if (! $bookEditor) {
+                $errors["bookEditor"] = Constants::ERROR_REQUIRED;
+                $validatedEditor = 0;
+            } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
+                $errors["bookEditor"] = Constants::ERROR_LENGTH;
+                $validatedEditor = 0;
             }
 
-            //Controler si l'auteur exite déjà
-            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
+            if ($validatedEditor = 1) {
+                // Controler si l'éditeur existe déja 
+                $idPublisher = $addPublisher->getPublisherByName($bookEditor);
 
-            //Créer l'autheur s'il n'existe pas
-            if ($idAuthor === 0) {
-                $author = $addAuthor->insertAuthor($authorFirstName, $authorLastName);
-                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
+                //Créer un éditeur s'il n'existe pas
+                if ($idPublisher === 0) {
+                    $publisher = $addPublisher->insertPublisher($bookEditor);
+                    $idPublisher = (int)$addPublisher->getPublisherByName($bookEditor);
+                }
+            }
+
+            // authorFirstName
+            if (!$authorFirstName) {
+                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
+                $validatedName = 0;
+            } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
+                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+                $validatedName = 0;
+            }
+
+            // authorLastName
+            if (! $authorLastName) {
+                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
+                $validatedName = 0;
+            } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
+                $errors["authorLastName"] = Constants::ERROR_LENGTH;
+                $validatedName = 0;
+            }
+
+            if ($validatedName = 1) {
+                //Controler si l'auteur exite déjà
+                $idAuthor = $addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
+
+                //Créer l'autheur s'il n'existe pas
+                if ($idAuthor === 0) {
+                    $author = $addAuthor->insertAuthor($authorFirstName, $authorLastName);
+                    $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
+                }
             }
 
             //téléchargement et traitement des images
-            $validated = 1;
             $allowedTypes = ['image/jpeg', 'image/png'];
             if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
                 $errors["coverImage"] = "Veillez insérer une image.";
-                $validated = 0;
+                $validatedImage = 0;
             }
             // Vérifier la taille du fichier (limite : 2 Mo)
             elseif ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
                 $errors["coverImage"] = "Le fichier est trop volumineux. La limite est de 2 Mo. ";
-                $validated = 0;
+                $validatedImage = 0;
             }
             // Vérifier le type MIME du fichier
             elseif (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
                 $errors["coverImage"] = " Seule les images jpeg, png sont autorisés.  ";
-                $validated = 0;
+                $validatedImage = 0;
             }
-            if ($validated == 1) {
+            if ($validatedImage == 1) {
                 // Récupérer l'extension du fichier original
                 $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
 
@@ -465,9 +475,6 @@ class BookController extends Controller {
                 if (!$result) {
                     $errors["coverImage"] = "Impossible de télécharger votre image veuillez réessayer.";
                 }
-            }
-            foreach ($errors as $error) {
-                error_log($error);
             }
 
             //utilisateur
@@ -518,7 +525,8 @@ class BookController extends Controller {
     /**
      * Updates an existing book.
      */
-    private function updateAction() {
+    private function updateAction()
+    {
         include_once("../models/BookModel.php");
         include_once("../models/PublisherModel.php");
         include_once("../models/AuthorModel.php");
@@ -595,7 +603,7 @@ class BookController extends Controller {
                 if (isset($currentCover) && file_exists($currentCover)) {
                     unlink($currentCover);
                 }
-            } 
+            }
 
             //ajout d'un livre
             $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
@@ -609,7 +617,8 @@ class BookController extends Controller {
      * Note: The ID is not specified in the method because the ID of the page
      * from which the deletion is requested is used.
      */
-    public function deleteAction() {
+    public function deleteAction()
+    {
         include_once("../models/BookModel.php");
         $bookModel = new BookModel();
         $book = $bookModel->getBookById($_GET["id"]);
@@ -630,7 +639,8 @@ class BookController extends Controller {
     /**
      * Add a new review from the logged user.
      */
-    public function rateAction() {
+    public function rateAction()
+    {
         // Rate the book
         include_once("../models/UserModel.php");
         $userModel = new UserModel();
