@@ -204,7 +204,17 @@ class BookController extends Controller
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
 
+        // Form
         $actionURL = "index.php?controller=book&action=insert";
+        $authorFirstName    = $_POST["authorFirstName"] ?? '';
+        $authorLastName     = $_POST["authorLastName"] ?? '';
+        $bookTitle          = $_POST["bookTitle"] ?? '';
+        $bookEditor         = $_POST["bookEditor"] ?? '';
+        $bookPageNb         = $_POST["bookPageNb"] ?? '';
+        $snippetLink        = $_POST["snippetLink"] ?? '';
+        $bookSummary        = $_POST["bookSummary"] ?? '';
+        $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
+        $bookGenre           = $_POST["bookGenre"] ?? '';
 
         $view = file_get_contents('../views/addBook.php');
 
@@ -273,6 +283,7 @@ class BookController extends Controller
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
 
+        $submitButton = "Ajouter";
         $errors    = [];
         $authorFirstName = "";
         $authorLastName = "";
@@ -281,17 +292,18 @@ class BookController extends Controller
         $bookPageNb = "";
         $snippetLink = "";
         $bookSummary = "";
+        $bookEditionYear="";
+        $bookGenre="";
 
         $_POST["validated"] = 0;
-
+        error_log($_POST["bookEditionYear"]);
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+            error_log($_POST["bookEditionYear"]);
             /*
             * NETTOYAGE DES DONNES
             *  récupérer plusieurs valeurs d'une super-globale et filter ses données.
             * INPUT_POST pour la super globale $_POST
             */
-
             $_POST = filter_input_array(
                 INPUT_POST,
                 [
@@ -300,14 +312,19 @@ class BookController extends Controller
                     "bookTitle"         => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     "bookEditor"        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     "bookPageNb"        => FILTER_SANITIZE_NUMBER_INT,
-                    "snippetLink "      => FILTER_SANITIZE_URL,
+                    "snippetLink"       => FILTER_SANITIZE_URL,
                     "bookSummary"       => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookEditionYear"   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookGenre"         => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+
+
                 ]
             );
+            error_log($_POST["bookEditionYear"]);
             /*
                 * VALIDATIONS DES DONNEES
                 * les ?? qui permettent d'initialiser les variables avec la valeur '' dans le cas ou $_POST['key'] est null
-                */
+             */
 
             $authorFirstName    = $_POST["authorFirstName"] ?? '';
             $authorLastName     = $_POST["authorLastName"] ?? '';
@@ -316,14 +333,16 @@ class BookController extends Controller
             $bookPageNb         = $_POST["bookPageNb"] ?? '';
             $snippetLink        = $_POST["snippetLink"] ?? '';
             $bookSummary        = $_POST["bookSummary"] ?? '';
+            $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
+            $bookGenre           = $_POST["bookGenre"] ?? '';
 
+            error_log($bookEditionYear);
             //snippetLink
             if (!$snippetLink) {
                 $errors["snippetLink"] = Constants::ERROR_REQUIRED;
             } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $snippetLink)) {
                 $errors["snippetLink"] = Constants::ERROR_TEXT;
             }
-
             // authorFirstName
             if (!$authorFirstName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
@@ -335,18 +354,18 @@ class BookController extends Controller
 
             // authorLastName
             if (! $authorLastName) {
-                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
+                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
             } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $authorLastName)) {
-                $errors["authorFirstName"] = Constants::ERROR_NAME;
+                $errors["authorLastName"] = Constants::ERROR_NAME;
             } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
-                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+                $errors["authorLastName"] = Constants::ERROR_LENGTH;
             }
 
             //bookTitle 
             if (!$bookTitle) {
-                $errors["bookTitle "] = Constants::ERROR_REQUIRED;
+                $errors["bookTitle"] = Constants::ERROR_REQUIRED;
             } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)) {
-                $errors["bookTitle "] = Constants::ERROR_TEXT;
+                $errors["bookTitle"] = Constants::ERROR_TEXT;
             } elseif (mb_strlen($bookTitle) < 2 || mb_strlen($bookTitle) > 150) {
                 $errors["bookTitle"] = Constants::ERROR_LENGTH;
             }
@@ -369,15 +388,6 @@ class BookController extends Controller
                 $errors["bookSummary"] = Constants::ERROR_RESUME;
             }
 
-            //bookEditor
-            if (!$bookEditor) {
-                $errors["bookEditor"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $bookEditor)) {
-                $errors["bookEditor"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
-                $errors["bookEditor"] = Constants::ERROR_LENGTH;
-            }
-
             // Controler si l'éditeur existe déja 
             $idPublisher = $addPublisher->getPublisherByName($bookEditor);
 
@@ -386,24 +396,7 @@ class BookController extends Controller
                 $publisher = $addPublisher->insertPublisher($bookEditor);
                 $idPublisher = (int)$addPublisher->getPublisherByName($bookEditor);
             }
-
-            //authorFirstName
-            if (!$authorFirstName) {
-                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorFirstName)) {
-                $errors["authorFirstName"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
-                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
-            }
-
-            //authorLastName
-            if (!$authorLastName) {
-                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
-            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorLastName)) {
-                $errors["authorLastName"] = Constants::ERROR_NAME;
-            } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
-                $errors["authorLastName"] = Constants::ERROR_LENGTH;
-            }
+            
             //Controler si l'auteur exite déjà
             $idAuthor = $addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
 
@@ -447,14 +440,11 @@ class BookController extends Controller
                 $errors["coverImage"] .= "Impossible de déplacer le fichier téléchargé.";
             }
 
-            // Débogage pour confirmer le chemin final
-            error_log("Fichier téléchargé avec succès : " . $destination);
-
             //utilisateur
             $user_fk = $_SESSION["user_id"];
 
             //controle si des erreurs existent
-            if (sizeof($errors) == 0) {
+            if (count($errors) < 1) {
                 $_POST['validated'] = 1;
                 //ajout d'un livre
                 $addBook->insertBook(
@@ -474,9 +464,22 @@ class BookController extends Controller
             $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
             header($destination);
             } else {
+                // Form is invalid
                 $_POST['validated'] = 0;
-                $destination = 'Location: index.php?controller=book&action=add';
-                header($destination);
+                error_log($bookEditionYear);
+                // Form
+                include_once("../models/CategoryModel.php");
+                $categoryModel = new CategoryModel();
+                $genres = $categoryModel->getAllCategory();
+                $actionURL = "index.php?controller=book&action=insert";
+
+                // View
+                $view = file_get_contents('../views/addBook.php');
+                ob_start();
+                eval('?>' . $view);
+                $content = ob_get_clean();
+
+                return $content;
             }
 
         } else {
