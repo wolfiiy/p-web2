@@ -1,4 +1,14 @@
 /**
+ * ETML
+ * Author: Sebastien Tille
+ * Date: October 8th, 2020
+ * Description: Handles the navbar' state (shown / hidden). Behavior inpired by
+ * the Anilist website.
+ * Note: Taken from a previous project.
+ * See https://gitlab.com/wolfiy/wolfiy.gitlab.io
+ */
+
+/**
  * Value from which to hide the navbar.
  */
 const SCROLLING_THRESHOLD = 55;
