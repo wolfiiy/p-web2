@@ -3,7 +3,7 @@
 /**
  * ETML
  * Auteur : Valentin Pignat, Sébastien Tille
- * Date: 18.11.2024
+ * Date: November 18th, 2024
  * Description: Controller used for pages dedicated to books.
  */
 
@@ -14,8 +14,10 @@ include_once('../models/BookModel.php');
 include_once('../models/PublisherModel.php');
 include_once('../models/UserModel.php');
 
-class BookController extends Controller
-{
+/**
+ * Controller used to handle books-related pages.
+ */
+class BookController extends Controller {
 
     /**
      * Default value of the category filter (i.e. shows everything).
@@ -43,24 +45,21 @@ class BookController extends Controller
     const RESULT_PER_PAGE = 10;
 
     /**
-     * Dispatch current action
-     *
-     * @return mixed
+     * Dispatches the current action
+     * @return mixed A callback to a function.
      */
-    public function display()
-    {
+    public function display() {
         include_once('../helpers/utils.php');
         $action = $_GET['action'] . "Action";
         return call_user_func(array($this, $action));
     }
 
     /**
-     * Display page with a list of most recent books with pagination
-     *
-     * @return string
+     * Displays all books from most recent to oldest. The list is split into 
+     * pages of 10 elements.
+     * @return string The book list view.
      */
-    private function listAction()
-    {
+    private function listAction() {
         include_once('../helpers/HtmlWriter.php');
         include_once("../models/CategoryModel.php");
         include_once('../models/BookModel.php');
@@ -71,7 +70,7 @@ class BookController extends Controller
 
         // By default page 1
         if (!isset($_GET["page"]))
-            $page = 1;
+            $page = self::DEFAULT_PAGE_NUMBER;
         else
             $page = $_GET["page"];
 
@@ -140,17 +139,15 @@ class BookController extends Controller
 
     /**
      * Opens a page containing details about a specific book.
-     * @param int $id Unique ID of the book.
+     * @param int $id The unique ID of the book.
      * @return string The page to be printed.
      */
-    private function detailAction()
-    {
+    private function detailAction() {
         // Check if a user is authentified
         if (!isUserConnected()){
             header("Location: index.php?controller=user&action=login");
         }
         // Check if ID has been set.
-        // TODO error page if ID is not set.
         if (isset($_GET['id'])) $id = $_GET['id'];
         else $id = 0;
 
@@ -197,10 +194,10 @@ class BookController extends Controller
     }
 
     /**
-     * Display a form to add a new book
+     * Displays the form used to add a new entry to the database.
+     * @return string The addition view.
      */
-    private function addAction()
-    {
+    private function addAction() {
         $h1 = "Ajout d'un livre";
         $submitButton = "Ajouter";
         $actionURL = "index.php?controller=book&action=insert";
@@ -240,11 +237,10 @@ class BookController extends Controller
     }
 
     /**
-     * Display a form to modify a book
+     * Displays the form used to modify an existing entry.
+     * @return string The modification view.
      */
-    private function modifyAction()
-    {
-
+    private function modifyAction() {
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
         
@@ -286,10 +282,9 @@ class BookController extends Controller
     }
 
     /**
-     * Insert a new book in the database
+     * Inserts a new book in the database.
      */
-    private function insertAction()
-    {
+    private function insertAction() {
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
         $submitButton = "Ajouter";
@@ -507,10 +502,9 @@ class BookController extends Controller
     }
 
     /**
-     * Update a book in the database
+     * Updates an existing book.
      */
-    private function updateAction()
-    {
+    private function updateAction() {
         include_once("../models/BookModel.php");
         include_once("../models/PublisherModel.php");
         include_once("../models/AuthorModel.php");
@@ -597,11 +591,11 @@ class BookController extends Controller
     }
 
     /**
-     * Delete a book with a specific ID
+     * Given an ID, deletes a specific book.
+     * Note: The ID is not specified in the method because the ID of the page
+     * from which the deletion is requested is used.
      */
-    public function deleteAction()
-    {
-
+    public function deleteAction() {
         include_once("../models/BookModel.php");
         $bookModel = new BookModel();
         $book = $bookModel->getBookById($_GET["id"]);
@@ -610,7 +604,7 @@ class BookController extends Controller
             unlink($book['cover_image']);
         }
 
-        // Check for privilege before deletion
+        // Check for privileges before deletion
         if (isAdminConnectedUser() || $_SESSION["user_id"] == $book["user_fk"]) {
             $bookModel->deleteBook($_GET["id"]);
         }
@@ -620,11 +614,9 @@ class BookController extends Controller
     }
 
     /**
-     * Rate a book with current authentified user 
+     * Add a new review from the logged user.
      */
-    public function rateAction()
-    {
-
+    public function rateAction() {
         // Rate the book
         include_once("../models/UserModel.php");
         $userModel = new UserModel();
