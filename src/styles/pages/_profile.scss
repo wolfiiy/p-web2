@@ -1,6 +1,13 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines styles specific to the user profile page.
+
+// Fit the image as best as possible
 .profile-picture {
-  height: 12rem;
-  max-width: 20rem;
+  object-fit: cover;
+  height: $profile-pic-height;
+  max-width: $profile-pic-max-width;
 }
 
 .profile-overview {

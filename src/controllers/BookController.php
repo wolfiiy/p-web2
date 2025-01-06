@@ -127,7 +127,7 @@ class BookController extends Controller
         if ($maxPage == 0)
             $maxPage = self::DEFAULT_PAGE_NUMBER;
 
-        $books = DataHelper::BookPreview($books);
+        $books = DataHelper::bookPreview($books);
 
         $view = file_get_contents('../views/listView.php');
 

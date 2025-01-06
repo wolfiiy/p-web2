@@ -30,42 +30,50 @@ Class AuthorModel extends DatabaseModel {
     }
 
     /**
-     * Insert a new author in the database
-     * @param string $firstName Author's first name
-     * @param string $lastName Author's last name
+     * Inserts a new author in the database.
+     * @param string $firstName The author's first name.
+     * @param string $lastName The author's last name.
+     * @return PDOStatement|false The result of the query or false if it did not
+     * go through.
      */
     public function insertAuthor(string $firstName, string $lastName){
-        $sql = "INSERT into t_author (`first_name`, `last_name`) VALUES (:first_name, :last_name)";
+        $sql = "
+            insert into t_author (`first_name`, `last_name`) 
+            values (:first_name, :last_name)
+        ";
+
         $binds = array(
             'first_name'=> $firstName,
             'last_name' => $lastName,
         );
-        $query = $this->queryPrepareExecute($sql, $binds);
 
-        return;
+        return $query = $this->queryPrepareExecute($sql, $binds);
     }
 
     /**
-     * Select an author based on first and last name
-     * @param string $firstname Author's first name
-     * @param string $lastname Autor's last name 
+     * Given first and last names, gets an author.
+     * @param string $firstname The first name.
+     * @param string $lastname The last name.
+     * @return int The ID of that author or 0 if it could not be found.
      */
     public function getAuthorByNameAndFirstname(string $firstname, string $lastname){
-        $sql = "SELECT author_id FROM t_author WHERE first_name = :fistname AND last_name = :lastname";
+        $sql = "
+            SELECT author_id 
+            FROM t_author 
+            WHERE first_name = :fistname AND last_name = :lastname
+        ";
+        
         $binds = array(
             "fistname" => $firstname,
             "lastname" => $lastname
         );
 
         $query = $this->queryPrepareExecute($sql,$binds);
-
         $author = $this->formatData($query);
 
-        if (empty($author)){
+        if (empty($author))
             return 0;
-        }
-        else{
+        else
             return (int)$author[0]["author_id"];
-        }
     }
 }

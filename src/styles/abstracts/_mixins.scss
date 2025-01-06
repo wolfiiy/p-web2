@@ -1,3 +1,9 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partials defines mixins used throughout the stylsheets.
+
+/// Resets an HTML box element.
 @mixin reset-box {
   margin: 0;
   padding: 0;

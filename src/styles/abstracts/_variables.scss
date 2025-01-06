@@ -1,7 +1,16 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial holds all application-wide variables used for
+/// styling purposes.
+
 // Colors
 $shadow-default: rgba(0, 0, 0, 0.1);
 $shadow-faint: rgba(0, 0, 0, 0.1);
 $shadow-strong: rgba(0, 0, 0, 0.2);
+
+// Fonts
+$font-stack: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 // Gaps
 $gap-smallest: 1ch;
@@ -12,11 +21,17 @@ $gap-medium: 4ch;
 $icon-button-size: 1rem;
 
 // Layout
+$content-max-width: 90ch;
 $navigation-height: 8ch;
+$input-large-max-width: 30ch;
+$input-small-max-width: 17ch;
 $preview-height-compact: 8rem;
 $preview-image-height: 30ch;
+$profile-pic-height: 12rem;
+$profile-pic-max-width: 20rem;
 
 // Misc.
+$main-ease: cubic-bezier(.65,.05,.36,1);
 $md-border-width: 1px;
 $preview-cover-aspect-ratio: 1/1.45;
 

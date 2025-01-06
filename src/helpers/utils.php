@@ -3,24 +3,27 @@
 /**
  * ETML
  * Author: Santiago Escobar, Abigaël Périsset
- * Date: December 17, 2024
+ * Date: December 17th, 2024
  */
 
+// TODO
+// - Turn into a proper static class
+// - Use constants for regex
+// Complete documentation
+
 /**
- * Check session variable for connected user
- * @return bool True if a user is connected
+ * Checks whether the user is logged in by peeking at the session variable.
+ * @return bool True if the user is logged in, false otherwise.
  */
-function isUserConnected()
-{
+function isUserConnected() {
     return isset($_SESSION["user_id"]) && $_SESSION["user_id"] !== "";
 }
 
 /**
- * Check session variable for connected admin user
- * @return bool True if an admin user is connected
+ * Checks whether the logged user is an administrator.
+ * @return bool True if the logged user is an administrator, false otherwise.
  */
-function isAdminConnectedUser()
-{
+function isAdminConnectedUser() {
     if (isUserConnected()) {
         return $_SESSION["is_admin"];
     }
@@ -30,17 +33,16 @@ function isAdminConnectedUser()
  * Check name entry
  * @return bool false if not fit into the criteria
  */
-function textController($name)
-{
+function textController($name) {
     //vérifier le champs 
     if (isset($name)) {
-        $name = trim($name); //suppression des espaces en début et fin
+        $name = trim($name);
 
-        if (empty($name)) {
-            return false; // si le champs est vide
-        } elseif (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $name)) {
+        if (empty($name))
             return false;
-        }
+        elseif (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $name))
+            return false;
+        
         $name = htmlspecialchars($name);
         return $name;
     } else {
@@ -52,8 +54,7 @@ function textController($name)
  * Check year entry
  * @return bool false if noot 4 number
  */
-function yearController($year)
-{
+function yearController($year) {
     if (isset($year)) {
         $year = trim($year);
 
@@ -69,12 +70,10 @@ function yearController($year)
 }
 
 /**
- * Check number entry
- * @return bool False if not a number
+ * Verify that a number is a positive integer.
+ * @return int|false The number if it is a positive integer, false otherwise.
  */
-function pageController($number)
-{
-
+function pageController($number) {
     if (isset($number)) {
         $number = trim($number);
 
@@ -90,11 +89,10 @@ function pageController($number)
 }
 
 /**
- * Check url entry
+ * Checks an URL's validity.
  * @return bool false if is not a url
  */
-function urlController($url)
-{
+function urlController($url) {
     if (isset($url)) {
         $url = trim($url);
 
@@ -113,18 +111,17 @@ function urlController($url)
  * Check text entry
  * @return bool false if is special characters
  */
-function resumeController($resume)
-{
-    if (isset($resume)) {
-        $url = trim($resume);
+function resumeController($summary) {
+    if (isset($summary)) {
+        $url = trim($summary);
 
-        if (empty($resume)) {
+        if (empty($summary)) {
             return false;
-        } elseif (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $resume)) {
+        } elseif (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $summary)) {
             return false;
         }
-        $resume = htmlspecialchars($resume);
-        return $resume;
+        $summary = htmlspecialchars($summary);
+        return $summary;
     } else {
         return false;
     }

@@ -1,10 +1,19 @@
-/* Heavily inspired by
-https://codepen.io/sdthornton/pen/wBZdXq */
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines shadows used throught the application.
+/// The effect has been inpired by the following snippet by user sdthornton on
+/// Codepen: https://codepen.io/sdthornton/pen/wBZdXq
+
+// Regular shadow
 .shadow {
-  box-shadow: 0 6px 6px var(--shadow-faint);
+  box-shadow: 0 6px 6px $shadow-faint;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+// Elements that can be hovered to iuncrease the shadow. A distinction from
+// .shadow:hover has been made because some elements should have no hover
+// effect.
 .shadow-hover:hover {
-  box-shadow: 0 0 2ch var(--shadow-faint), 0 10px 10px var(--shadow-strong);
+  box-shadow: 0 0 2ch $shadow-faint, 0 10px 10px $shadow-strong;
 }

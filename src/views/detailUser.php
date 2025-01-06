@@ -1,3 +1,12 @@
+<!-- 
+ETML
+Authors: Santiago Escobar Toro, Sebastien Tille
+Date: January 6th, 2025
+Description: Displays a user's profile. A user profile displays basic info and a
+    list of the books that have been added or reviews by the said user (only if 
+    it applies).
+-->
+
 <main>
     <h1>
         Profil utilisateur
@@ -25,7 +34,6 @@
             <p>
                 <?=$labelReviews;?>
             </p>
-
         </div>
     </div>
 

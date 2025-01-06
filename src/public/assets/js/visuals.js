@@ -1,4 +1,14 @@
 /**
+ * ETML
+ * Author: Sebastien Tille
+ * Date: August 20th, 2020
+ * Description: Lets the user toggle between two themes. The preference is
+ * stored in the browser's local storage.
+ * Note: Taken from a previous project.
+ * See https://gitlab.com/wolfiy/wlfys-minimal-startpage
+ */
+
+/**
  * Dark mode toggle
  */
 const darkToggle = document.getElementById('dark-mode-toggle')

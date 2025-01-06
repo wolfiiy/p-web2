@@ -116,10 +116,10 @@ class UserController extends Controller {
         }
 
         $books = $bookmodel->booksReviewedByUser($id);
-        $books = DataHelper::BookPreview($books);
+        $books = DataHelper::bookPreview($books);
 
         $publishedBooks = $bookmodel->userPublishedBookByID($id);
-        $publishedBooks = DataHelper::BookPreview($publishedBooks);
+        $publishedBooks = DataHelper::bookPreview($publishedBooks);
 
         $view = file_get_contents('../views/detailUser.php');
 

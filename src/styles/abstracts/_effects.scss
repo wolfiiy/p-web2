@@ -1,7 +1,12 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial is an utility for various effects.
+
 .slightly-rounded {
-    border-radius: var(--small-radius);
+    border-radius: $border-radius-small;
 }
 
 .very-rounded {
-    border-radius: var(--large-radius);
+    border-radius: $border-radius-large;
 }

@@ -1,7 +1,13 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines the styling for text area elements.
+
+// Using secondary colros
 .md-textarea.secondary {
   background-color: var(--md-sys-color-surface-container);
   border: none;
-  border-radius: var(--large-radius);
+  border-radius: $border-radius-large;
   color: var(--md-sys-color-on-surface);
   padding: 1.25ch 2ch;
   outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
@@ -9,6 +15,7 @@
   max-width: 95%;
 }
 
+// Material 3 inspired text areas
 .md-outlined-textarea {
   display: flex;
   flex-flow: column nowrap;

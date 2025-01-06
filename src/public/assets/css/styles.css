@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Open%20Sans:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 .slightly-rounded {
-  border-radius: var(--small-radius);
+  border-radius: 4px;
 }
 
 .very-rounded {
-  border-radius: var(--large-radius);
+  border-radius: 10px;
 }
 
 html, body {
@@ -23,9 +23,15 @@ html, body {
   background: var(--md-sys-color-on-primary);
 }
 
+html, body {
+  font-family: "Roboto", "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--md-sys-color-on-surface);
+}
+
 .md-button {
   border: none;
-  padding: 1.25ch 2ch;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   -webkit-transition: all ease-in-out 0.2s;
@@ -189,9 +195,13 @@ html, body {
   width: 17ch;
   border: none;
   border-radius: 10px;
-  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+}
+.md-select.tiny {
+  width: 6ch;
 }
 .md-select:hover {
   cursor: pointer;
@@ -267,8 +277,6 @@ form label {
   max-width: 30ch;
 }
 
-/* Input heavily inspired from
-https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-outlined-input,
 .md-outlined-textarea {
   position: relative;
@@ -282,8 +290,8 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   padding-left: 2ch;
   padding-right: 2ch;
   font-size: 1rem;
-  -webkit-transition: 0.1s var(--main-ease);
-  transition: 0.1s var(--main-ease);
+  -webkit-transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 .md-outlined-input.primary input {
@@ -302,11 +310,11 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 }
 
 .md-outlined-input.small input {
-  width: 10ch;
+  width: 17ch;
 }
 
 .md-outlined-input.large input {
-  width: 35ch;
+  width: 30ch;
 }
 
 .md-outlined-input label {
@@ -316,8 +324,8 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   text-align: center;
-  -webkit-transition: 0.2s var(--main-ease);
-  transition: 0.2s var(--main-ease);
+  -webkit-transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;
@@ -350,8 +358,8 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-outlined-input input:hover,
 .md-textarea:hover {
   outline: 1px solid var(--md-sys-color-outline);
-  -webkit-transition: 0.2s var(--main-ease);
-  transition: 0.2s var(--main-ease);
+  -webkit-transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 .md-outlined-input input:focus ~ label {
@@ -361,23 +369,22 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-input.secondary {
   background-color: var(--md-sys-color-surface-container);
   border: none;
-  border-radius: var(--large-radius);
+  border-radius: 10px;
   color: var(--md-sys-color-on-surface);
   outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
   padding: 1.25ch 2ch;
 }
 
-/* TODO */
 .md-outlined-input input {
   height: 3rem;
-  border-radius: var(--small-radius);
+  border-radius: 4px;
   border: none;
   background-color: transparent;
   padding-left: 2ch;
   padding-right: 2ch;
   font-size: 1rem;
-  -webkit-transition: 0.1s var(--main-ease);
-  transition: 0.1s var(--main-ease);
+  -webkit-transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 .md-outlined-input.primary input {
@@ -410,8 +417,8 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   text-align: center;
-  -webkit-transition: 0.2s var(--main-ease);
-  transition: 0.2s var(--main-ease);
+  -webkit-transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;
@@ -448,10 +455,22 @@ label[for] {
   pointer-events: none;
 }
 
+.shadow {
+  -webkit-box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.shadow-hover:hover {
+  -webkit-box-shadow: 0 0 2ch rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 2ch rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
 .md-textarea.secondary {
   background-color: var(--md-sys-color-surface-container);
   border: none;
-  border-radius: var(--large-radius);
+  border-radius: 10px;
   color: var(--md-sys-color-on-surface);
   padding: 1.25ch 2ch;
   outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
@@ -533,7 +552,6 @@ nav a {
   text-decoration: none;
   -webkit-transition: color 0.2s ease-out;
   transition: color 0.2s ease-out;
-  /* Ignore images such as the logo */
 }
 nav a:hover, nav a:focus {
   color: var(--md-sys-color-on-surface-variant);
@@ -580,6 +598,9 @@ footer h3 {
 footer p {
   margin: 0.5rem 0;
 }
+footer #dark-mode-toggle {
+  cursor: pointer;
+}
 footer #footer-content {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -599,7 +620,7 @@ footer #footer-content {
 .details-cover {
   height: auto;
   width: 30ch;
-  border-radius: var(--small-radius);
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -626,8 +647,8 @@ footer #footer-content {
 }
 
 .overview form {
-  padding: 0;
   margin: 0;
+  padding: 0;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -638,7 +659,7 @@ footer #footer-content {
   padding: 2ch 1.5ch;
   margin: 2ch 0;
   background: var(--md-sys-color-surface-container);
-  border-radius: var(--large-radius);
+  border-radius: 10px;
 }
 
 .data-set {
@@ -698,8 +719,6 @@ footer #footer-content {
 
 html, body {
   background-color: var(--md-sys-color-surface);
-  font-family: "Roboto", "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--md-sys-color-on-surface);
 }
 
 body {
@@ -710,7 +729,7 @@ body {
 
 main {
   margin: 2em auto;
-  padding-top: var(--nav-height);
+  padding-top: 8ch;
   width: 90ch;
 }
 
@@ -742,13 +761,14 @@ a:not(.clickable-image, .md-button):focus::after {
   width: 100%;
 }
 
-/* TODO improve */
 @media only screen and (max-width: 1000px) {
   main {
     max-width: 98vw;
   }
 }
 .profile-picture {
+  -o-object-fit: cover;
+     object-fit: cover;
   height: 12rem;
   max-width: 20rem;
 }
@@ -768,9 +788,6 @@ a:not(.clickable-image, .md-button):focus::after {
 }
 
 :root {
-  --main-ease: cubic-bezier(.65,.05,.36,1);
-  /* Color palette generated with the Material Theme Builder
-  https://github.com/material-components/material-web/blob/main/docs/theming/color.md */
   --md-sys-color-primary: rgb(129 85 22);
   --md-sys-color-surface-tint: rgb(129 85 22);
   --md-sys-color-on-primary: rgb(255 255 255);
@@ -820,13 +837,6 @@ a:not(.clickable-image, .md-button):focus::after {
   --md-sys-color-surface-container: rgb(247 236 227);
   --md-sys-color-surface-container-high: rgb(241 230 222);
   --md-sys-color-surface-container-highest: rgb(235 225 216);
-  --shadow: rgba(0, 0, 0, 0.1);
-  --shadow-faint: rgba(0, 0, 0, 0.1);
-  --shadow-strong: rgba(0, 0, 0, 0.2);
-  --nav-height: 8ch;
-  --small-radius: 4px;
-  --large-radius: 10px;
-  --preview-compact-height: 8rem;
 }
 
 .dark {

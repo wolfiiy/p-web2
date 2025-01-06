@@ -1,20 +1,32 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines Material 3 inspired input fields. The
+/// basis was inpired by the work of GitHub user LeonGeldsch
+/// See https://github.com/LeonGeldsch/css_material_input
+/// Note: The code has not been re-organized following the Sass convertion,
+/// hence the "messy"-looking code.
+
+// Base input
 .md-input {
+  // Release date picker
   &.small {
-    max-width: 17ch;
+    max-width: $input-small-max-width;
   }
 
+  // Excerpt text area
   &.large {
-    max-width: 30ch;
+    max-width: $input-large-max-width;
   }
 }
 
-/* Input heavily inspired from
-https://github.com/LeonGeldsch/css_material_input/tree/main */
+// Proper Material 3 inspired inputs (i.e. has a label animation)
 .md-outlined-input,
 .md-outlined-textarea {
   position: relative;
 }
 
+// Proper Material 3 inspired inputs (i.e. has a label animation)
 .md-outlined-input input {
   height: 3rem;
   border-radius: $border-radius-small;
@@ -23,7 +35,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   padding-left: 2ch;
   padding-right: 2ch;
   font-size: 1rem;
-  transition: $transision-shortest var(--main-ease);
+  transition: $transision-shortest $main-ease;
 }
 
 .md-outlined-input.primary input {
@@ -42,11 +54,11 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 }
 
 .md-outlined-input.small input {
-  width: 10ch;
+  width: $input-small-max-width;
 }
 
 .md-outlined-input.large input {
-  width: 35ch;
+  width: $input-large-max-width;
 }
 
 .md-outlined-input label {
@@ -55,7 +67,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   left: 1ch;
   transform: translateY(-50%);
   text-align: center;
-  transition: $transition-short var(--main-ease);
+  transition: $transition-short $main-ease;
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;
@@ -76,7 +88,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-outlined-input input:hover,
 .md-textarea:hover {
   outline: $md-border-width solid var(--md-sys-color-outline);
-  transition: $transition-short var(--main-ease);
+  transition: $transition-short $main-ease;
 }
 .md-outlined-input input:focus ~ label {
   color: var(--md-sys-color-secondary) !important;
@@ -85,22 +97,21 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-input.secondary {
   background-color: var(--md-sys-color-surface-container);
   border: none;
-  border-radius: var(--large-radius);
+  border-radius: $border-radius-large;
   color: var(--md-sys-color-on-surface);
   outline: $md-border-width solid var(--md-sys-color-on-secondary-fixed-variant);
   padding: 1.25ch 2ch;
 }
 
-/* TODO */
 .md-outlined-input input {
   height: 3rem;
-  border-radius: var(--small-radius);
+  border-radius: $border-radius-small;
   border: none;
   background-color: transparent;
   padding-left: 2ch;
   padding-right: 2ch;
   font-size: 1rem;
-  transition: .1s var(--main-ease);
+  transition: .1s $main-ease;
 }
 
 .md-outlined-input.primary input {
@@ -132,7 +143,7 @@ https://github.com/LeonGeldsch/css_material_input/tree/main */
   left: 1ch;
   transform: translateY(-50%);
   text-align: center;
-  transition: $transition-short var(--main-ease);
+  transition: $transition-short $main-ease;
   font-size: 1rem;
   pointer-events: none;
   padding: 0 5px;

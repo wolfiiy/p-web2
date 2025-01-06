@@ -1,8 +1,12 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines the variables for the dark and light
+/// themes. By default, the application is in light mode.
+/// The colors have been generated using the Material Theme Builder from Google:
+/// https://github.com/material-components/material-web/blob/main/docs/theming/color.md
+
 :root {
-  --main-ease: cubic-bezier(.65,.05,.36,1);
-  /* Color palette generated with the Material Theme Builder
-  https://github.com/material-components/material-web/blob/main/docs/theming/color.md */
-  
   --md-sys-color-primary: rgb(129 85 22);
   --md-sys-color-surface-tint: rgb(129 85 22);
   --md-sys-color-on-primary: rgb(255 255 255);
@@ -52,16 +56,6 @@
   --md-sys-color-surface-container: rgb(247 236 227);
   --md-sys-color-surface-container-high: rgb(241 230 222);
   --md-sys-color-surface-container-highest: rgb(235 225 216);
-  
-  --shadow: rgba(0, 0, 0, 0.1);
-  --shadow-faint: rgba(0, 0, 0, 0.1);
-  --shadow-strong: rgba(0, 0, 0, 0.2);
-  
-  --nav-height: 8ch;
-  
-  --small-radius: 4px;
-  --large-radius: 10px;
-  --preview-compact-height: 8rem;
 }
 
 .dark {

@@ -16,13 +16,25 @@ include_once('../models/UserModel.php');
  */
 class DataHelper {
 
+    /**
+     * Available grades when rating a book.
+     */
     private const RATINGS = array('-', 1, 2, 3, 4, 5);
+
+    /**
+     * Precision of the average grade.
+     */
     private const NB_DECIMALS = 2;
+
+    /**
+     * Separator used for decimals.
+     */
     private const DECIMAL_SEPARATOR = '.';
     
     /**
      * Gets all details regarding a specific book.
      * @param mixed $book The book to get details from.
+     * @return array A book with all of its details.
      */
     static function getOneBookDetails($book) {
         $reviewModel = new ReviewModel();
@@ -44,7 +56,7 @@ class DataHelper {
      * @param array $books An array of books.
      * @return array The same array of books with additionnal details.
      */
-    static function BookPreview($books){
+    static function bookPreview($books) {
         $reviewModel = new ReviewModel();
         $authorModel = new AuthorModel();
         $categoryModel = new CategoryModel();
@@ -68,16 +80,16 @@ class DataHelper {
      * @param mixed $rating The rating to be selected.
      */
     static function createRatingDropdown(mixed $rating) {
-        $dropdown = '<select class="md-select secondary" name="rating" id="rating"';
+        $dropdown = '
+            <select class="md-select secondary tiny" name="rating" id="rating"
+        ';
 
         foreach (self::RATINGS as $r) {
-
             if ($r == $rating) $selected = 'selected';
             else $selected = null;
             
             $dropdown .= '<option value="' . $r . '" ' . $selected . '>';
             $dropdown .= "$r</option>";
-
         }
 
         $dropdown .= "</select>";
@@ -87,7 +99,7 @@ class DataHelper {
 
     /**
      * Fills a book with its details.
-     * @param TODO $book Book to be filled.
+     * @param array $book Book to be filled.
      * @param AuthorModel $authorModel Author model used to get details about 
      * the author of the book.
      * @param CategoryModel $categoryModel Cateogry model used to get details
@@ -96,7 +108,7 @@ class DataHelper {
      * about reviews posted on the book.
      * @param UserModel $userModel User model to be used to get details about
      * the user who added the book to the database.
-     * @return TODO The book filled with its details.
+     * @return array The book filled with its details.
      */
     private static function fillDetails($book, AuthorModel $authorModel, 
         CategoryModel $categoryModel, PublisherModel $publisherModel, 
@@ -112,7 +124,8 @@ class DataHelper {
             $book["average_rating"] = number_format(
                                         $bookRating, 
                                         self::NB_DECIMALS, 
-                                        self::DECIMAL_SEPARATOR);
+                                        self::DECIMAL_SEPARATOR
+                                    );
         else 
             $book["average_rating"] = Constants::NO_RATING;
 
@@ -127,7 +140,6 @@ class DataHelper {
         // Convert date to printable format
         $book['release_date'] = FormatHelper::getFullDate($book['release_date']);
 
-        // TODO separate fields
         // Get the author's full name
         $author = $authorModel->getAuthorById($book["author_fk"]);
         $book["author_name"] = $author['first_name'] . " " . $author['last_name'];

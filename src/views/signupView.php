@@ -1,3 +1,11 @@
+<!-- 
+ETML
+Authors: Sebastien Tille
+Date: January 6th, 2025
+Description: Displays the form used to create an account. If an error occured 
+    during the registration process, a text appears just before the form.
+-->
+
 <main>
 <h1>Création d'un compte</h1>
 

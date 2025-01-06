@@ -11,9 +11,10 @@
 class FormatHelper {
 
     /**
-     * Date format to use throughout eh application.
+     * Date format to use throughout the application. To use for view only (the 
+     * databases uses a separate format - see the DatabaseModel class).
      */
-    const DATE_FORMAT = 'j F Y';
+    private const DATE_FORMAT = 'j F Y';
 
     /**
      * Gets a string that contains the date in the "26 novembre 2024" format.
@@ -24,5 +25,4 @@ class FormatHelper {
         $d = new DateTime($date);
         return $d->format(self::DATE_FORMAT);
     }
-
 }

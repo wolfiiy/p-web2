@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Author: Valentin Pignat, Sébastien Tille
- * Date: Date: November 25th, 2024
+ * Authors: Valentin Pignat, Sébastien Tille
+ * Date: November 25th, 2024
  */
 
 include_once('DatabaseModel.php');
@@ -14,30 +14,42 @@ class ReviewModel extends DatabaseModel {
     
     /**
      * Get the average rating for a book
-     * @param int $count Id of the rated book
-     * @return int Average rating for the book
+     * @param int $bookId The unique ID of a book.
+     * @return int|false The average grade for that book or false if it could
+     * not be found.
      */
-    public function getAverageRating(int $bookId)
-    {
-        $query = "SELECT AVG(grade) AS averageGrade from review where book_fk = :varBookId";
+    public function getAverageRating(int $bookId) {
+        $query = "
+            select avg(grade) 
+            as averageGrade 
+            from review 
+            where book_fk = :varBookId
+        ";
+
         $binds = array("varBookId" => $bookId);
         $req = $this->queryPrepareExecute($query, $binds);
-        // var_dump($this->formatData($req));
+
         if ($req) return $this -> formatData($req)[0]["averageGrade"];
         else return false;
     }
 
     /**
-     * Get the number of rating for a book
-     * @param int $count Id of the rated book
-     * @return int number of rating for the book
+     * Gets the number of ratings for a specific book.
+     * @param int $count Unique ID of a book.
+     * @return int|false The number of ratings given to that book or false if it
+     * could not be found.
      */
-    public function getNumberRating(int $bookId)
-    {
-        $query = "SELECT COUNT(*) AS nb_rating from review where book_fk = :varBookId";
+    public function getNumberRating(int $bookId) {
+        $query = "
+            select count(*) 
+            as nb_rating 
+            from review 
+            where book_fk = :varBookId
+        ";
+
         $binds = array("varBookId" => $bookId);
         $req = $this->queryPrepareExecute($query, $binds);
-        // var_dump($this->formatData($req));
+
         if ($req) return $this -> formatData($req)[0]["nb_rating"];
         else return false;
     }
@@ -47,16 +59,21 @@ class ReviewModel extends DatabaseModel {
      * @param int $bookFk Id of the book receiving the review
      * @param int $userFk Id of the user rating
      * @param int $grade Grade (1-5) given to the book by the user
+     * @return PDOStatement|false The querried data or false if it could not be
+     * fetched.
      */
-    public function insertReview(int $bookFk, int $userFk, int $grade){
-        $sql = "INSERT into reviews (book_fk, user_fk, grade) VALUES (:book_fk, :user_fk, :grade)";
+    public function insertReview(int $bookFk, int $userFk, int $grade) {
+        $sql = "
+            insert into reviews (book_fk, user_fk, grade) 
+            values (:book_fk, :user_fk, :grade)
+        ";
+
         $binds = array(
             'book_fk'=> $bookFk,
             'user_fk' => $userFk,
             'grade' => $grade
         );
-        $query = $this->queryPrepareExecute($sql, $binds);
-
-        return;
+        
+        return $query = $this->queryPrepareExecute($sql, $binds);
     }
 }
