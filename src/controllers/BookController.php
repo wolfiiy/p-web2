@@ -156,6 +156,10 @@ class BookController extends Controller
         $book = $bookModel->getBookById($id);
         $book = DataHelper::getOneBookDetails($book);
 
+        // Check that cover exists locally
+        if (!file_exists($book['cover_image']))
+            $book['cover_image'] = Constants::DEFAULT_COVER;
+
         // Handle ratings
         if (isset($_POST['rate'])) {
             // Add rating to database

@@ -1,8 +1,9 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.6.2-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: db_passion_lecture
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-0+deb12u1
+-- Server version	11.6.2-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -13,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
 -- Table structure for table `review`
@@ -28,7 +29,7 @@ CREATE TABLE `review` (
   `grade` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`book_fk`,`user_fk`),
   KEY `user_fk` (`user_fk`),
-  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`book_fk`) REFERENCES `t_book` (`book_id`),
+  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`book_fk`) REFERENCES `t_book` (`book_id`) ON DELETE CASCADE,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`user_fk`) REFERENCES `t_user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,7 +41,10 @@ CREATE TABLE `review` (
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
 INSERT INTO `review` VALUES
-(6,1,2);
+(6,1,2),
+(10,5,4),
+(12,5,2),
+(16,5,4);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +60,7 @@ CREATE TABLE `t_author` (
   `first_name` varchar(128) NOT NULL,
   `last_name` varchar(128) NOT NULL,
   PRIMARY KEY (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +85,8 @@ INSERT INTO `t_author` VALUES
 (13,'Rimbaud','Arthur'),
 (14,'Baudelaire','Charles'),
 (15,'','Collectif'),
-(16,'Camus','Albert');
+(16,'Camus','Albert'),
+(17,'Shigeno','Shuichi');
 /*!40000 ALTER TABLE `t_author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +118,7 @@ CREATE TABLE `t_book` (
   CONSTRAINT `t_book_ibfk_2` FOREIGN KEY (`category_fk`) REFERENCES `t_category` (`category_id`),
   CONSTRAINT `t_book_ibfk_3` FOREIGN KEY (`publisher_fk`) REFERENCES `t_publisher` (`publisher_id`),
   CONSTRAINT `t_book_ibfk_4` FOREIGN KEY (`author_fk`) REFERENCES `t_author` (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,10 +128,8 @@ CREATE TABLE `t_book` (
 LOCK TABLES `t_book` WRITE;
 /*!40000 ALTER TABLE `t_book` DISABLE KEYS */;
 INSERT INTO `t_book` VALUES
-(1,'Les Misrables','Un chef-d\'oeuvre de la littrature franaise','Un roman qui explore la nature humaine et la justice sociale.','1862-04-03','les_miserables.jpg',1463,1,1,5,1),
 (2,'Germinal','Un portrait saisissant des luttes ouvrires','Le rcit poignant de la vie dans les mines du nord de la France.','1885-03-25','germinal.jpg',592,2,1,6,2),
 (3,' la recherche du temps perdu','Un voyage dans les souvenirs','Une exploration complexe des souvenirs et des motions humaines.','1913-11-14','recherche_du_temps_perdu.jpg',4211,3,1,1,3),
-(4,'L\'tranger','Une rflexion sur l\'absurde','Une histoire captivante d\'indiffrence et de choix personnels.','1942-06-19','l_etranger.jpg',123,1,1,1,4),
 (5,'Madame Bovary','Un roman d\'amour et de tragdie','L\'histoire d\'une femme prise au pige par ses rves romantiques.','1857-12-15','madame_bovary.jpg',362,2,1,2,5),
 (6,'La Mare au Diable','Un roman pastoral','Un conte touchant sur l\'amour et la vie rurale.','1846-03-02','mare_au_diable.jpg',184,3,1,4,6),
 (7,'NieR:Automata: Long Story Short','https://www.goodreads.com/book/show/39796468-nier','Experience the world and characters of the hit video game franchise!\r\n\r\nWhen alien forces invade with an army of Machines, the remnants of humanity must depend on Androids of their own design—the placid 2B and the excitable 9S—to survive.\r\n\r\nFrom: Pod 042\r\n\r\nTo: Fans of NieR: Automata\r\n\r\nRecommendation: The action to finish reading this novel.\r\n\r\n[ref & NieR: Automata—Long Story Short]\r\n\r\nResponse: A novel is a story that used to be told by humans.\r\n\r\nQuestion: The definition of the word “interesting”?\r\n\r\nAnswer: A possible definition is that the ability to continue reading this novel makes it “interesting.”\r\n\r\nFrom Pod 042 to 153: We have concluded our promotional duties.','2018-10-09','assets/img/cover/img_6756a3ed2b8495.49649937.jpg',256,1,1,7,7),
@@ -138,7 +141,8 @@ INSERT INTO `t_book` VALUES
 (13,'Une Saison en Enfer','https://www.fr.fnac.ch/a13355564/Arthur-Rimbaud-Une-saison-en-enfer','\"Un soir, j\'ai assis la Beauté sur mes genoux.- Et je l\'ai trouvée amère.\"Lorsque Arthur Rimbaud écrit les poèmes en prose d\'Une saison en enfer, il vit dans la tourmente qui fait suite à sa violente rupture avec Paul Verlaine. Il y relate ses souffrances, qui l\'entraînent aux portes de la folie, ses désillusions, mais aussi ses espoirs.Une saison en enfer est suivi des Illuminations, derniers poèmes avant l\'exil de leur auteur et son entrée dans le silence, qui révèlent l\'apogée de sa voyance et sa joie d\'être poète. Il n\'a alors que vingt ans.- Objet d\'étude : La poésie du XIXe au XXIe siècle (lecture cursive)- Dossier pédagogique spécial nouveaux programmes- Prolongements : La vocation poétique - Le poème en prose (corpus de texte).Classe de première.','2019-06-19','assets/img/cover/img_6756a81fc6d394.04487384.jpg',128,1,5,13,13),
 (14,'Les Fleurs du mal','https://www.fr.fnac.ch/a12988561/Charles-Baudelaire-Les-Fleurs-du-mal','LES GRANDS TEXTES DU XIXe SIÈCLE\r\n\r\n\" Dans ce livre atroce, j\'ai mis tout mon cœur, toute ma tendresse, toute ma religion, toute ma haine. \" Étranger dans un monde qui le refuse, maudit et damné, Baudelaire n\'a pas d\'autre choix que d\'explorer l\'enfer et le mal. Puisque la vie n\'est qu\'extase et horreur, le poète la transfigure dans une contrée imaginaire où le désespoir et la beauté se confondent. Il s\'évade dans les paradis artificiels du haschisch, de l\'opium et du vin, de la luxure et du vice.\r\nLes Fleurs du mal sont le journal intime, le cri de terreur et de jouissance du poète. \" Fleurs maladives \" qui annoncent toute la littérature moderne et dont le parfum et les poisons ne cessent de troubler.\r\n','2018-09-01','assets/img/cover/img_6756a88394b5a5.12125041.jpg',192,1,5,14,14),
 (15,'Arsène Lupin, Sherlock Holmes et autres détectives : Nouvelles policières','https://www.fr.fnac.ch/a18321987/Arsene-Lupin-Arsene-Lupin-Sherlock-Holmes-et-autres-detectives-Nouvelles-policieres-Collectif','Le crime n\'est jamais parfait, puisque le détective finit toujours par démasquer le coupable. Arsène Lupin, Sherlock Holmes, l\'inspecteur Wens et le père Brown, quatre redresseurs de torts parmi les plus célèbres, rivalisent de flair et de vivacité d\'esprit. Et nous de leur emboîter le pas, à la recherche de la vérité, non sans suspens. TOUT POUR COMPRENDRE - Notes lexicales - Contexte littéraire : la figure du détective - Genre des oeuvres - Chronologie TOUT POUR RÉUSSIR - Questions sur les oeuvres - Portraits de détectives.','2023-10-18','assets/img/cover/img_6756a8e47d8819.34487264.jpg',160,1,4,2,15),
-(16,'L\'étranger','https://www.amazon.fr/L%C3%A9tranger-Albert-Camus/dp/2070360024','\"Quand la sonnerie a encore retenti, que la porte du box s\'est ouverte, c\'est le silence de la salle qui est monté vers moi, le silence, et cette singulière sensation que j\'ai eue lorsque j\'ai constaté que le jeune journaliste avait détourné les yeux. Je n\'ai pas regardé du côté de Marie. Je n\'en ai pas eu le temps parce que le président m\'a dit dans une forme bizarre que j\'aurais la tête tranchée sur une place publique au nom du peuple français...\"','1971-12-01','assets/img/cover/img_6756a94dd02589.80968860.jpg',191,1,1,1,16);
+(16,'L\'étranger','https://www.amazon.fr/L%C3%A9tranger-Albert-Camus/dp/2070360024','\"Quand la sonnerie a encore retenti, que la porte du box s\'est ouverte, c\'est le silence de la salle qui est monté vers moi, le silence, et cette singulière sensation que j\'ai eue lorsque j\'ai constaté que le jeune journaliste avait détourné les yeux. Je n\'ai pas regardé du côté de Marie. Je n\'en ai pas eu le temps parce que le président m\'a dit dans une forme bizarre que j\'aurais la tête tranchée sur une place publique au nom du peuple français...\"','1971-12-01','assets/img/cover/img_6756a94dd02589.80968860.jpg',191,1,1,1,16),
+(17,'Initial D, Vol. 1','https://myanimelist.net/manga/375/Initial_D','Tak Fujiwara spends a lot of time behind the wheel. His tofu delivery job sends him racing down the treacherous roads of Mount Akina, and without even realizing it, Tak has mastered racing techniques that take most drivers a lifetime to learn. Of course, none of his friends realize this. They’re all too busy watching the Akina Speed Stars, the local street racing team. When the legendary Red Suns show up to challenge the Speed Stars, it seems the local boys are doomed to lose the race. But hope arrives in the form of a mysterious Trueno Eight Six that has been seen racing through the mountain roads. The question remains: who is the driver behind this phantom car?','2002-05-21','assets/img/cover/img_67756f8d5f9a38.91319163.jpg',232,5,2,15,17);
 /*!40000 ALTER TABLE `t_book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +187,7 @@ CREATE TABLE `t_publisher` (
   `publisher_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`publisher_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +210,8 @@ INSERT INTO `t_publisher` VALUES
 (11,'Shueisha'),
 (12,'Casterman'),
 (13,'Librio'),
-(14,'Pocket');
+(14,'Pocket'),
+(15,'Tokyopop');
 /*!40000 ALTER TABLE `t_publisher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,9 +226,10 @@ CREATE TABLE `t_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `sign_up_date` date NOT NULL,
-  `is_admin` tinyint(1) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `password` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,9 +239,11 @@ CREATE TABLE `t_user` (
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
 INSERT INTO `t_user` VALUES
-(1,'booklover123','2022-01-15',0),
-(2,'admin_guy','2021-12-05',1),
-(3,'reading_queen','2023-03-22',0);
+(1,'booklover123','2022-01-15',0,'$2y$10$QdMUZKCYXFiO8vitCY8F8Oez59mM.xe7pPMB6v8r1TOZuIxwmEk.S'),
+(2,'admin_guy','2021-12-05',1,'$2y$10$QdMUZKCYXFiO8vitCY8F8Oez59mM.xe7pPMB6v8r1TOZuIxwmEk.S'),
+(3,'reading_queen','2023-03-22',0,'$2y$10$QdMUZKCYXFiO8vitCY8F8Oez59mM.xe7pPMB6v8r1TOZuIxwmEk.S'),
+(5,'Akari','2025-01-01',0,'$2y$10$QdMUZKCYXFiO8vitCY8F8Oez59mM.xe7pPMB6v8r1TOZuIxwmEk.S'),
+(6,'AkariAdmin','2025-01-01',1,'$2y$10$UwWJv.kZ2UCBd8YOH7huSu2nWZIQTIrbYDNao0AyxFqVw8i6noVi6');
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -246,6 +254,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2024-12-09 13:23:45
+-- Dump completed on 2025-01-01 17:45:35
