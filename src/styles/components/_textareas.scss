@@ -6,4 +6,10 @@
   padding: 1.25ch 2ch;
   outline: 1px solid var(--md-sys-color-on-secondary-fixed-variant);
   resize: vertical;
+  max-width: 95%;
+}
+
+.md-outlined-textarea {
+  display: flex;
+  flex-flow: column nowrap;
 }

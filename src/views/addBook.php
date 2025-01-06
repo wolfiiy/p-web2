@@ -29,7 +29,7 @@
         
         <div class="label-input">
             <label for="bookEditionYear">Année d'édition</label>
-            <input class="md-input secondary" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (isset($book["release_date"])){echo $book["release_date"];}?>">
+            <input class="md-input secondary small" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (isset($book["release_date"])){echo $book["release_date"];}?>">
         </div>
         
         <div class="md-outlined-input on-surface-container">
@@ -55,7 +55,7 @@
 
         <div class="label-input">
             <label for="coverImage">Image de couverture</label>
-            <input class="md-input secondary" type="file" name="coverImage" id="coverImage">    
+            <input class="md-input secondary large" type="file" name="coverImage" id="coverImage">    
         </div>
 <?php if ($_GET["action"] == "modify"){ echo "<p>Charger un nouveau fichier pour changer l'image</p>";}?> 
         
@@ -65,8 +65,8 @@
         </div>
         
         <div class="md-outlined-textarea on-surface-container">
-            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" placeholder=" "><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
             <label for="bookSummary">Résumé</label>
+            <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary" placeholder=" "><?php if (isset($book["summary"])){echo $book["summary"];}?></textarea>
         </div>
         <div>
             <input type = "submit" value="<?php echo $submitButton ?>" class="md-button primary">

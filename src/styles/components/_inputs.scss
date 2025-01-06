@@ -1,3 +1,13 @@
+.md-input {
+  &.small {
+    max-width: 17ch;
+  }
+
+  &.large {
+    max-width: 30ch;
+  }
+}
+
 /* Input heavily inspired from
 https://github.com/LeonGeldsch/css_material_input/tree/main */
 .md-outlined-input,
