@@ -1,6 +1,12 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: Main stylesheet. Follows the 7-1 pattern, minus the vendors
+/// part (does not apply in this project).
+
+@import "abstracts/variables";
 @import "abstracts/effects";
 @import "abstracts/mixins";
-@import "abstracts/variables";
 @import "base/reset";
 @import "base/browser";
 @import "base/typography";
@@ -10,6 +16,7 @@
 @import "components/filters";
 @import "components/forms";
 @import "components/inputs";
+@import "components/shadows";
 @import "components/textareas";
 @import "components/wrappers";
 @import "layout/navigation";

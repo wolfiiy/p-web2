@@ -1,3 +1,9 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines properties for wrappers used throught the
+/// application. This prevents code duplication.
+
 .wrap {
   display: flex;
   flex-flow: column nowrap;

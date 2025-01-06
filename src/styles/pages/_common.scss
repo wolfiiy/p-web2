@@ -1,7 +1,10 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: This partial defines the styling that is common to all pages.
+
 html, body {
   background-color: var(--md-sys-color-surface);
-  font-family: 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--md-sys-color-on-surface);
 }
 
 body {
@@ -10,10 +13,12 @@ body {
   min-height: 100vh;
 }
 
+// Content limited to 90ch to prevent the application from becoming hard to read
+// on wider aspect ratios.
 main {
   margin: 2em auto;
-  padding-top: var(--nav-height);
-  width: 90ch;
+  padding-top: $navigation-height;
+  width: $content-max-width;
 }
 
 h1 {
@@ -43,7 +48,6 @@ a:not(.clickable-image, .md-button):focus::after {
   width: 100%;
 }
 
-/* TODO improve */
 @media only screen and (max-width: 1000px) {
   main {
     max-width: 98vw;

@@ -1,3 +1,8 @@
+/// ETML
+/// Author: Sebastien Tille
+/// Date: December 6th, 2025
+/// Description: this partial resets various HTML elements.
+
 html, body {
   @include reset-box;
 }
