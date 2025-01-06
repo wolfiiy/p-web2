@@ -1,8 +1,16 @@
 <?php
-// TODO move this to controller & helper
+/**
+ * Authors: Santiago Escobar Toro, Sebastien Tile
+ * Date: January 1st, 2025
+ * Description: The navigation bar. It contains a button to allow for user login
+ * which changes to a disconnect button upon login.
+ */
+
+ // This is not tied to a specific controller and thus has been left here.
 $accountNav = "";
 $userId = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : "";
 
+// If the user is logged in, display their name and a logout button.
 if (isUserConnected()) {
     $accountNav .= <<< HTML
     
@@ -25,6 +33,7 @@ if (isUserConnected()) {
         </li>
     HTML;
 } else {
+    // Otherwise, display a login button
     $accountNav .= <<< HTML
         <li>
             <a href="index.php?controller=user&action=logout" class="md-button primary">

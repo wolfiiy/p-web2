@@ -1,3 +1,12 @@
+<!-- 
+ETML
+Authors: Sebastien Tille, Santiago Escobar Toro
+Date: January 1st, 2025
+Description: This partial defines the application's footer. The footer contains 
+    a theme toggle, a link to the source code and links to contact the 
+    developers.
+-->
+
 <footer>
     <div id="footer-content" class="wrap-row footer-wrapper">
         <div class="footer-col">
