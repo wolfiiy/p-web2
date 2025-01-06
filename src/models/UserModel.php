@@ -2,7 +2,7 @@
 
 /**
  * Authors: Valentin Pignat, Sébastien Tille, Abigaël Périsset
- * Date: December 17, 2024
+ * Date: December 17th, 2024
  */
 
 include_once('DatabaseModel.php');
@@ -34,8 +34,7 @@ Class UserModel extends DatabaseModel {
      * @return array|null returns the data of all existing users.
      * if it does not exist, returns null
      */
-    public function getAllUsers(){
-
+    public function getAllUsers() {
         $sql = "select * from t_user;";
         $query = $this->querySimpleExecute($sql);
 
@@ -52,14 +51,15 @@ Class UserModel extends DatabaseModel {
         $currentReview = $this->getBookRating($bookId, $userId);
         if ($currentReview){
             $sql = "
-            update review set grade=:rating where book_fk=:book_fk AND user_fk=:user_fk
-        ";
-        }
-        else{
+                update review 
+                set grade=:rating 
+                where book_fk = :book_fk and user_fk = :user_fk
+            ";
+        } else {
             $sql = "
-            insert into review (book_fk, user_fk, grade)
-            values (:book_fk, :user_fk, :rating)
-        ";
+                insert into review (book_fk, user_fk, grade)
+                values (:book_fk, :user_fk, :rating)
+            ";
         }
         
         $binds = array(
@@ -67,6 +67,7 @@ Class UserModel extends DatabaseModel {
             ':user_fk' => $userId,
             ':rating' => $rating
         );
+
         $this->queryPrepareExecute($sql, $binds);
     }
 
@@ -74,7 +75,8 @@ Class UserModel extends DatabaseModel {
      * Gets the rating submitted by the user on a specific book.
      * @param int $bookId Unique ID of the book.
      * @param int $userId Unique ID of the user.
-     * @return int The rating the user gave to the book.
+     * @return int The rating the user gave to the book or 0 if the user could 
+     * not be found.
      */
     public function getBookRating(int $bookId, int $userId) {
         $sql = "
@@ -93,11 +95,9 @@ Class UserModel extends DatabaseModel {
 
         if ($query) {
             $results = $this->formatData($query);
-            if (isset($results[0])){
+            if (isset($results[0]))
                 return $results[0]["grade"];
-            }
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -126,10 +126,9 @@ Class UserModel extends DatabaseModel {
      */
     public function checkUser($userAttemp) {
         $users = $this->getAllUsers();
-        foreach($users as $user)
-        {
-            if($user['username'] === $userAttemp)
-            {
+
+        foreach ($users as $user) {
+            if ($user['username'] === $userAttemp) {
                 $credentials['user_id'] = $user['user_id'];
                 $credentials['username'] = $user['username'];
                 $credentials['password'] = $user['password'];
@@ -138,6 +137,7 @@ Class UserModel extends DatabaseModel {
                 return $credentials;
             }
         }
+
         return null;
     }
 
@@ -166,7 +166,7 @@ Class UserModel extends DatabaseModel {
      * @param string $hash The hashed password.
      */
     public function createAccount(string $username, string $hash) {
-        $today = date('Y-m-d');
+        $today = date(Constants::DB_DATE_FORMAT);
     
         $sql = "
             insert into t_user (username, password, sign_up_date) 

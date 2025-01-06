@@ -8,8 +8,12 @@
 /**
  * Holds application-wide constants.
  */
-class Constants
-{
+class Constants {
+    /**
+     * Date format used in the database.
+     */
+    const DB_DATE_FORMAT = "Y-m-d";
+
     /**
      * Error message to display when the field is missing in a form.
      */
@@ -25,7 +29,6 @@ class Constants
      */
     const ERROR_TEXT = "Seuls les caractères alphanumériques, les espaces et les caractères spéciaux suivants sont autorisés : &minus; . , : ; ( ) ? ! &#39;";
 
-
     /**
      * Error message to display when the text exceed the authorized size.
      */
@@ -34,8 +37,8 @@ class Constants
     /**
      * Error message to display when the text exceed the authorized size.
      */
-
     const ERROR_RESUME  = "Le champ doit avoir un nombre de caractères entre 50 et 2000";
+
     /**
      * Error message to display when the field is not a url.
      */
