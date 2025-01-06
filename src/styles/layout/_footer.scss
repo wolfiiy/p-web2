@@ -11,6 +11,10 @@ footer {
     margin: 0.5rem 0;
   }
   
+  #dark-mode-toggle {
+    cursor: pointer;
+  }
+
   #footer-content {
     display: flex;
     justify-content: space-evenly;

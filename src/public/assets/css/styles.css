@@ -581,6 +581,9 @@ footer h3 {
 footer p {
   margin: 0.5rem 0;
 }
+footer #dark-mode-toggle {
+  cursor: pointer;
+}
 footer #footer-content {
   display: -webkit-box;
   display: -ms-flexbox;
