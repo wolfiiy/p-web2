@@ -37,7 +37,7 @@ class HomeController extends Controller {
         $bookModel = new BookModel();
         
         $latestBooks = $bookModel->getLatestBooks(5);
-        $latestBooks = DataHelper::BookPreview($latestBooks);
+        $latestBooks = DataHelper::bookPreview($latestBooks);
         
         $view = file_get_contents('../views/indexView.php');
 
