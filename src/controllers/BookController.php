@@ -147,9 +147,8 @@ class BookController extends Controller
     {
         // Check if a user is authentified
         if (!isUserConnected()){
-            header("Location: index.php");
+            header("Location: index.php?controller=user&action=login");
         }
-
         // Check if ID has been set.
         // TODO error page if ID is not set.
         if (isset($_GET['id'])) $id = $_GET['id'];
@@ -204,6 +203,7 @@ class BookController extends Controller
     {
         $h1 = "Ajout d'un livre";
         $submitButton = "Ajouter";
+        $actionURL = "index.php?controller=book&action=insert";
 
         // If no user is connected, redirect to index
         if (!isUserConnected()) {
@@ -215,16 +215,20 @@ class BookController extends Controller
         $genres = $categoryModel->getAllCategory();
 
         // Form
-        $actionURL = "index.php?controller=book&action=insert";
-        $authorFirstName    = $_POST["authorFirstName"] ?? '';
-        $authorLastName     = $_POST["authorLastName"] ?? '';
-        $bookTitle          = $_POST["bookTitle"] ?? '';
-        $bookEditor         = $_POST["bookEditor"] ?? '';
-        $bookPageNb         = $_POST["bookPageNb"] ?? '';
-        $snippetLink        = $_POST["snippetLink"] ?? '';
-        $bookSummary        = $_POST["bookSummary"] ?? '';
-        $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
-        $bookGenre           = $_POST["bookGenre"] ?? '';
+        $author["first_name"] = $_SESSION['form_data']['authorFirstName'] ?? '';
+        $author["last_name"] = $_SESSION['form_data']['authorLastName'] ?? '';
+        $book["title"] = $_SESSION['form_data']['bookTitle'] ?? '';
+        $publisher["name"] = $_SESSION['form_data']['bookEditor'] ?? '';
+        $book["number_of_pages"] = $_SESSION['form_data']['bookPageNb'] ?? '';
+        $book["excerpt"] = $_SESSION['form_data']['snippetLink'] ?? '';
+        $book["summary"] = $_SESSION['form_data']['bookSummary'] ?? '';
+        $book["release_date"] = $_SESSION['form_data']['bookEditionYear'] ?? '';
+        $book["category_fk"] = $_SESSION['form_data']['bookGenre'] ?? '';
+        $errors = $_SESSION['form_errors'] ?? [];
+
+        // Clear form data and errors from session
+        unset($_SESSION['form_data']);
+        unset($_SESSION['form_errors']);
 
         $view = file_get_contents('../views/addBook.php');
 
@@ -243,10 +247,22 @@ class BookController extends Controller
 
         $h1 = "Modification d'un livre";
         $submitButton = "Modifier";
+        
+        // If no user is connected, redirect to index
+        if (!isUserConnected()) {
+            header("Location: index.php");
+        }
 
         include_once("../models/BookModel.php");
         $bookModel = new BookModel();
         $book = $bookModel->getBookById($_GET["id"]);
+
+        // If not admin and and not the owner of the book, redirect to index
+        if (!isAdminConnectedUser() && $_SESSION["user_id"] != $book["user_fk"]) {
+            header("Location: index.php");
+        }
+
+        $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
 
         include_once("../models/AuthorModel.php");
         $authorModel = new AuthorModel();
@@ -260,17 +276,8 @@ class BookController extends Controller
         $categoryModel = new CategoryModel();
         $genres = $categoryModel->getAllCategory();
 
-        // If no user is connected, redirect to index
-        if (isset($_SESSION["user_id"])) {
-            if (!isAdminConnectedUser() && $_SESSION["user_id"] != $book["user_fk"]) {
-                header("Location: index.php");
-            }
-        } else {
-            header("Location: index.php");
-        }
-
         $view = file_get_contents('../views/addBook.php');
-        $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
+
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -283,6 +290,10 @@ class BookController extends Controller
      */
     private function insertAction()
     {
+        $h1 = "Modification d'un livre";
+        $submitButton = "Modifier";
+        $submitButton = "Ajouter";
+
         mb_internal_encoding("UTF-8");
 
         include_once("../models/BookModel.php");
@@ -294,8 +305,7 @@ class BookController extends Controller
         $idbook = new BookModel();
         $addPublisher = new PublisherModel();
         $addAuthor = new AuthorModel();
-
-        $submitButton = "Ajouter";
+        
         $errors    = [];
         $authorFirstName = "";
         $authorLastName = "";
@@ -334,7 +344,6 @@ class BookController extends Controller
                 * VALIDATIONS DES DONNEES
                 * les ?? qui permettent d'initialiser les variables avec la valeur '' dans le cas ou $_POST['key'] est null
              */
-
             $authorFirstName    = $_POST["authorFirstName"] ?? '';
             $authorLastName     = $_POST["authorLastName"] ?? '';
             $bookTitle          = $_POST["bookTitle"] ?? '';
@@ -343,8 +352,8 @@ class BookController extends Controller
             $snippetLink        = $_POST["snippetLink"] ?? '';
             $bookSummary        = $_POST["bookSummary"] ?? '';
             $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
-            $bookGenre           = $_POST["bookGenre"] ?? '';
-
+            $bookGenre          = $_POST["bookGenre"] ?? '';
+            /*
             //snippetLink
             if (!$snippetLink) {
                 $errors["snippetLink"] = Constants::ERROR_REQUIRED;
@@ -394,7 +403,7 @@ class BookController extends Controller
                 $errors["bookSummary"] = Constants::ERROR_TEXT;
             } elseif (mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000) {
                 $errors["bookSummary"] = Constants::ERROR_RESUME;
-            }
+            }*/
 
             // Controler si l'éditeur existe déja 
             $idPublisher = $addPublisher->getPublisherByName($bookEditor);
@@ -447,6 +456,9 @@ class BookController extends Controller
             if (!$result) {
                 $errors["coverImage"] .= "Impossible de déplacer le fichier téléchargé.";
             }
+            foreach ($errors as $error) {
+                error_log($error);
+            }
 
             //utilisateur
             $user_fk = $_SESSION["user_id"];
@@ -468,29 +480,18 @@ class BookController extends Controller
                     $idAuthor
                 );
                             //recupérer l'id
-            $id = $idbook->getIdBook($user_fk);
-            $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
-            header($destination);
+                $id = $idbook->getIdBook($user_fk);
+                $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
+                header($destination);
             } else {
-                // Form is invalid
-                $_POST['validated'] = 0;
-                // Form
-                include_once("../models/CategoryModel.php");
-                $categoryModel = new CategoryModel();
-                $genres = $categoryModel->getAllCategory();
-                $actionURL = "index.php?controller=book&action=insert";
+                
+                // Store form data and errors in session
+                $_SESSION['form_data'] = $_POST;
+                $_SESSION['form_errors'] = $errors;
 
-                // View
-                $view = file_get_contents('../views/addBook.php');
-                ob_start();
-                eval('?>' . $view);
-                $content = ob_get_clean();
-
-                foreach ($errors as $key => $e) {
-                    error_log("Key: $key, Error: $e");
-                }
-
-                return $content;
+                // Redirect to addAction
+                header('Location: index.php?controller=book&action=add');
+                exit;
             }
 
         } else {
@@ -507,32 +508,32 @@ class BookController extends Controller
         include_once("../models/PublisherModel.php");
         include_once("../models/AuthorModel.php");
 
-        $addBook = new BookModel();
-        $addPublisher = new PublisherModel();
-        $addAuthor = new AuthorModel();
+        $bookModel = new BookModel();
+        $publisherModel = new PublisherModel();
+        $authorModel = new AuthorModel();
 
-        $book = $addBook->getBookById($_GET["id"]);
-        $currentCover = $book["cover_image"];
+        //$book = $bookModel->getBookById($_GET["id"]);
+        //$currentCover = $book["cover_image"];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Controler si l'éditeur existe déja 
-            $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
-
+            $idPublisher = $publisherModel->getPublisherByName($_POST["bookEditor"]);
             //Créer un éditeur s'il n'existe pas
             if ($idPublisher === 0) {
-                $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
-                $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
+                $publisher = $publisherModel->insertPublisher($_POST["bookEditor"]);
+                $idPublisher = (int)$publisherModel->getPublisherByName($_POST["bookEditor"]);
             }
 
             //Controler si l'auteur exite déjà
-            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+            $idAuthor = $authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
 
             //Créer l'autheur s'il n'existe pas
             if ($idAuthor === 0) {
-                $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
-                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                $author = $authorModel->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
+                $idAuthor = (int)$authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
             }
-
+            error_log("meh");
+            echo $_FILES["coverImage"]["error"];
             $destination = "";
             if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK) {
                 // Vérifier la taille du fichier (limite : 40 Ko)
@@ -586,7 +587,7 @@ class BookController extends Controller
 
 
             //ajout d'un livre
-            $addBook->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
+            $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
 
             header('Location: index.php?controller=book&action=detail&id=' . $_GET["id"]);
         }
