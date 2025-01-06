@@ -1,3 +1,12 @@
+<!-- 
+ETML
+Authors: Sebastien Tille
+Date: January 6th, 2025
+Description: Displays a book's detail. The layout has been inspired by 
+    Anilist's, with a left column consisting of the cover and advanced info and  
+    a wider right column with basic info and a summary.
+-->
+
 <main>
     <h1>Détails de l'oeuvre</h1>
     <div id="details-content-wrap" class="content-wrap">
@@ -126,7 +135,6 @@
                 <?php } else {?>
                 <p>Veuillez vous <a href="index.php?controller=user&action=logout">connecter</a> pour évaluer ce livre</p>
                 <?php }?>
-
             </div>
             
             <div class="description wrap">
@@ -139,6 +147,5 @@
                 </p>
             </div>
         </div>
-
     </div>
 </main>

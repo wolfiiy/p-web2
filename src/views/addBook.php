@@ -1,3 +1,10 @@
+<!-- 
+ETML
+Authors: Abigael Perisset, Valentin Pignat
+Date: January 6th, 2025
+Description: Form used to add or modify an entry.
+-->
+
 <main>
 <h1>Ajout d'un livre</h1>
 <div class="submission-container">
