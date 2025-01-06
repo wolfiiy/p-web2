@@ -29,7 +29,7 @@ CREATE TABLE `review` (
   `grade` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`book_fk`,`user_fk`),
   KEY `user_fk` (`user_fk`),
-  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`book_fk`) REFERENCES `t_book` (`book_id`),
+  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`book_fk`) REFERENCES `t_book` (`book_id`) ON DELETE CASCADE,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`user_fk`) REFERENCES `t_user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
