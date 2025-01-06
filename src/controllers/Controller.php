@@ -1,21 +1,21 @@
 <?php
 session_start();
+
 /**
- * Auteur : Cindy Hardegger
- * Date: 18.11.2024
- * Contrôleur principal
+ * Author: Cindy Hardegger
+ * Date: November 18th, 2024
  */
 
-
+/**
+ * Controller base.
+ */
 abstract class Controller {
 
     /**
      * Méthode permettant d'appeler l'action 
-     *
-     * @return mixed
+     * @return mixed A callback to a function.
      */
     public function display() {
-
         $page = $_GET['action'] . "Display";
         $this->$page();
     }
