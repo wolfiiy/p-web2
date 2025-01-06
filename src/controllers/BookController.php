@@ -484,11 +484,18 @@ class BookController extends Controller
                 $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
                 header($destination);
             } else {
-                
+
+                // If image was stored but book isnt validated, delete the image
+                if ($result) {
+                    if (file_exists($destination)) {
+                        unlink($destination);
+                    }
+                }
+
                 // Store form data and errors in session
                 $_SESSION['form_data'] = $_POST;
                 $_SESSION['form_errors'] = $errors;
-
+                
                 // Redirect to addAction
                 header('Location: index.php?controller=book&action=add');
                 exit;
