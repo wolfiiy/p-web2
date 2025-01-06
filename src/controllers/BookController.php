@@ -120,7 +120,8 @@ class BookController extends Controller
         }
 
         // Get the total number of result and pages
-        $maxPage = round($nbResult / self::RESULT_PER_PAGE);
+        $maxPage = ceil($nbResult / self::RESULT_PER_PAGE);
+        error_log($maxPage);
 
         // Between 0 and RESULT_PER_PAGE, one page
         if ($maxPage == 0)
