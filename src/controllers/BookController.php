@@ -73,7 +73,7 @@ class BookController extends Controller
     /**
      * Minimum length allowed for summaries.
      */
-    private const MIN_SUMMARY_LENGTH = 5;
+    private const MIN_SUMMARY_LENGTH = 50;
 
     /**
      * Maximum length allowed for summaries.
@@ -273,7 +273,15 @@ class BookController extends Controller
         $genres = $categoryModel->getAllCategory();
 
         // Form
-        $bookDatas = $_SESSION['form_data'] ?? [];
+        $author["first_name"] = $_SESSION['form_data']['authorFirstName'] ?? '';
+        $author["last_name"] = $_SESSION['form_data']['authorLastName'] ?? '';
+        $book["title"] = $_SESSION['form_data']['bookTitle'] ?? '';
+        $publisher["name"] = $_SESSION['form_data']['bookEditor'] ?? '';
+        $book["number_of_pages"] = $_SESSION['form_data']['bookPageNb'] ?? '';
+        $book["excerpt"] = $_SESSION['form_data']['snippetLink'] ?? '';
+        $book["summary"] = $_SESSION['form_data']['bookSummary'] ?? '';
+        $book["release_date"] = $_SESSION['form_data']['bookEditionYear'] ?? '';
+        $book["category_fk"] = $_SESSION['form_data']['bookGenre'] ?? '';
         $errors = $_SESSION['form_errors'] ?? [];
 
         var_dump($bookDatas);
@@ -435,9 +443,9 @@ class BookController extends Controller
             //bookSummary
             if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
-            } elseif (mb_strlen($bookEditor) < self::MIN_SUMMARY_LENGTH 
-                      || mb_strlen($bookEditor) > self::MAX_SUMMARY_LENGTH) {
-                $errors["bookSummary"] = Constants::ERROR_LENGTH;
+            } elseif (mb_strlen($bookSummary) < self::MIN_SUMMARY_LENGTH 
+                      || mb_strlen($bookbookSummaryEditor) > self::MAX_SUMMARY_LENGTH) {
+                $errors["bookSummary"] = Constants::ERROR_RESUME;
             }
 
             //bookEditor

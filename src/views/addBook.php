@@ -16,8 +16,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="text" name="authorFirstName" id="authorFirstName" value="<?php if (array_key_exists("authorFirstName", $bookDatas)) {
-                    echo $bookDatas["authorFirstName"]; }?>" placeholder=" ">
+                    <input type="text" name="authorFirstName" id="authorFirstName" value="<?= $author["first_name"]; ?>" placeholder=" ">
                     <label for="authorFirstName">Prénom de l'auteur</label>
                 </div>
                 <?php if (array_key_exists("authorFirstName", $errors)) {
@@ -27,8 +26,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="text" name="authorLastName" id="authorLastName" value="<?php if (array_key_exists("authorLastName", $bookDatas)) {
-                    echo $bookDatas["authorLastName"]; }?>" placeholder=" ">
+                    <input type="text" name="authorLastName" id="authorLastName"  value="<?= $author["last_name"]; ?>"  placeholder=" ">
                     <label for="authorLastName">Nom de l'auteur</label>
                 </div>
                 <?php if (array_key_exists("authorLastName", $errors)) {
@@ -38,8 +36,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="text" name="bookTitle" id="bookTitle" value="<?php if (array_key_exists("bookTitle", $bookDatas)) {
-                    echo $bookDatas["bookTitle"]; }?>" placeholder=" ">
+                    <input type="text" name="bookTitle" id="bookTitle" value="<?= $book["title"]; ?>" placeholder=" ">
                     <label for="bookTitle">Titre du livre</label>
                 </div>
                 <?php if (array_key_exists("bookTitle", $errors)) {
@@ -49,8 +46,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="text" name="bookEditor" id="bookEditor" value="<?php if (array_key_exists("bookEditor", $bookDatas)) {
-                    echo $bookDatas["bookEditor"]; }?>" placeholder=" ">
+                    <input type="text" name="bookEditor" id="bookEditor" value="<?= $publisher["name"]; ?>" placeholder=" ">
                     <label for="bookEditor">Editeur</label>
                 </div>
                 <?php if (array_key_exists("bookEditor", $errors)) {
@@ -61,8 +57,7 @@ Description: Form used to add or modify an entry.
             <div>
                 <div class="label-input">
                     <label for="bookEditionYear">Année d'édition</label>
-                    <input class="md-input secondary small" type="date" name="bookEditionYear" id="bookEditionYear" value="<?php if (array_key_exists("bookEditionYear", $bookDatas)) {
-                    echo $bookDatas["bookEditionYear"]; }?>">
+                    <input class="md-input secondary small" type="date" name="bookEditionYear" id="bookEditionYear" value="<?= $book["release_date"]; ?>">
                 </div>
                 <?php if (array_key_exists("bookEditionYear", $errors)) {
                     echo '<p class="invalid">' . $errors["bookEditionYear"] . '</p>';
@@ -71,8 +66,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="number" name="bookPageNb" id="bookPageNb" value="<?php if (array_key_exists("bookPageNb", $bookDatas)) {
-                    echo $bookDatas["bookPageNb"]; }?>" placeholder=" ">
+                    <input type="number" name="bookPageNb" id="bookPageNb" value="<?= $book["number_of_pages"]; ?>" placeholder=" ">
                     <label for="bookPageNb">Nombre de page</label>
                 </div>
                 <?php if (array_key_exists("bookPageNb", $errors)) {
@@ -114,8 +108,7 @@ Description: Form used to add or modify an entry.
 
             <div>
                 <div class="md-outlined-input on-surface-container">
-                    <input type="text" name="snippetLink" id="snippetLink" value="<?php if (array_key_exists("snippetLink", $bookDatas)) {
-                    echo $bookDatas["snippetLink"]; }?>" placeholder=" ">
+                    <input type="text" name="snippetLink" id="snippetLink" value="<?= $book["excerpt"]; ?>" placeholder=" ">
                     <label for="snippetLink">Lien vers un extrait</label>
                 </div>
                 <?php if (array_key_exists("snippetLink", $errors)) {
@@ -125,8 +118,7 @@ Description: Form used to add or modify an entry.
 
             <div class="md-outlined-textarea on-surface-container">
                 <label for="bookSummary">Résumé</label>
-                <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary"><?php if (array_key_exists("bookSummary", $bookDatas)) {
-                    echo $bookDatas["bookSummary"]; }?></textarea>
+                <textarea class="md-textarea secondary" name="bookSummary" id="bookSummary"><?= $book["summary"]; ?></textarea>
                 <?php if (array_key_exists("bookSummary", $errors)) {
                     echo '<p class="invalid">' . $errors["bookSummary"] . '</p>';
                 } ?>
