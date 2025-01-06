@@ -288,12 +288,8 @@ class BookController extends Controller
 
             /*
             * NETTOYAGE DES DONNES
-            */
-
-            /* A noter l'utilisation de la méthode `filter_input_array`
-            * qui permet de récupérer plusieurs valeurs d'une super-globale et de la filter.
-            * Le 1er argument est le type de la super globale. 
-            * Dans notre cas : INPUT_POST pour la super globale $_POST
+            *  récupérer plusieurs valeurs d'une super-globale et filter ses données.
+            * INPUT_POST pour la super globale $_POST
             */
 
             $_POST = filter_input_array(
@@ -310,120 +306,127 @@ class BookController extends Controller
             );
             /*
                 * VALIDATIONS DES DONNEES
+                * les ?? qui permettent d'initialiser les variables avec la valeur '' dans le cas ou $_POST['key'] est null
                 */
 
-            $authorFirstName    = $_POST["authorFirstName"]?? '';
-            $authorLastName     = $_POST["authorLastName"]?? '';
-            $bookTitle          = $_POST["bookTitle"]?? '';
-            $bookEditor         = $_POST["bookEditor"]?? '';
-            $bookPageNb         = $_POST["bookPageNb"]?? '';
-            $snippetLink        = $_POST["snippetLink"]?? '';
-            $bookSummary        = $_POST["bookSummary"]?? '';
+            $authorFirstName    = $_POST["authorFirstName"] ?? '';
+            $authorLastName     = $_POST["authorLastName"] ?? '';
+            $bookTitle          = $_POST["bookTitle"] ?? '';
+            $bookEditor         = $_POST["bookEditor"] ?? '';
+            $bookPageNb         = $_POST["bookPageNb"] ?? '';
+            $snippetLink        = $_POST["snippetLink"] ?? '';
+            $bookSummary        = $_POST["bookSummary"] ?? '';
 
-            /*if (!){
-                $errors[""] = ;
+            //snippetLink
+            if (!$snippetLink) {
+                $errors["snippetLink"] = Constants::ERROR_REQUIRED;
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $snippetLink)) {
+                $errors["snippetLink"] = Constants::ERROR_TEXT;
             }
-            else if (!){
-                $errors[""] = ;
-            }
-            elseif(!)
-            {
-                $errors[""] = ;
-            }
-                */
 
             // authorFirstName
-            if (!$authorFirstName){
+            if (!$authorFirstName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-            }
-            else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorFirstName)){
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorFirstName)) {
                 $errors["authorFirstName"] = Constants::ERROR_NAME;
-            }
-            elseif(mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150)
-            {
+            } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
                 $errors["authorFirstName"] = Constants::ERROR_LENGTH;
             }
 
             // authorLastName
-            if (! $authorLastName){
+            if (! $authorLastName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-            }
-            else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $authorLastName)){
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $authorLastName)) {
                 $errors["authorFirstName"] = Constants::ERROR_NAME;
-            }
-            elseif(mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150)
-            {
+            } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
                 $errors["authorFirstName"] = Constants::ERROR_LENGTH;
             }
-            
+
             //bookTitle 
-            if (!$bookTitle ){
+            if (!$bookTitle) {
                 $errors["bookTitle "] = Constants::ERROR_REQUIRED;
-            }
-            else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)){
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookTitle)) {
                 $errors["bookTitle "] = Constants::ERROR_TEXT;
-            }
-            elseif(mb_strlen($bookTitle ) < 2 || mb_strlen($bookTitle ) > 150)
-            {
+            } elseif (mb_strlen($bookTitle) < 2 || mb_strlen($bookTitle) > 150) {
                 $errors["bookTitle"] = Constants::ERROR_LENGTH;
             }
 
             //bookEditor
-            if (!  $bookEditor){
+            if (! $bookEditor) {
                 $errors["bookEditor"] = Constants::ERROR_REQUIRED;
-            }
-            else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $bookEditor)){
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/",  $bookEditor)) {
                 $errors["bookEditor"] = Constants::ERROR_NAME;
-            }
-            elseif(mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150)
-            {
+            } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
                 $errors["bookEditor"] = Constants::ERROR_LENGTH;
             }
 
             //bookSummary
-            if (!$bookSummary){
+            if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
-            }
-            else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookSummary)) {
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ0-9\s\-\.,:;()?!']+$/", $bookSummary)) {
                 $errors["bookSummary"] = Constants::ERROR_TEXT;
-            }            
-            elseif(mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000)
-            {
+            } elseif (mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000) {
                 $errors["bookSummary"] = Constants::ERROR_RESUME;
             }
 
+            //bookEditor
+            if (!$bookEditor) {
+                $errors["bookEditor"] = Constants::ERROR_REQUIRED;
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $bookEditor)) {
+                $errors["bookEditor"] = Constants::ERROR_NAME;
+            } elseif (mb_strlen($bookEditor) < 2 || mb_strlen($bookEditor) > 150) {
+                $errors["bookEditor"] = Constants::ERROR_LENGTH;
+            }
+
             // Controler si l'éditeur existe déja 
-            $idPublisher = $addPublisher->getPublisherByName($_POST["bookEditor"]);
+            $idPublisher = $addPublisher->getPublisherByName($bookEditor);
 
             //Créer un éditeur s'il n'existe pas
             if ($idPublisher === 0) {
-                $publisher = $addPublisher->insertPublisher($_POST["bookEditor"]);
-                $idPublisher = (int)$addPublisher->getPublisherByName($_POST["bookEditor"]);
+                $publisher = $addPublisher->insertPublisher($bookEditor);
+                $idPublisher = (int)$addPublisher->getPublisherByName($bookEditor);
             }
 
+            //authorFirstName
+            if (!$authorFirstName) {
+                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorFirstName)) {
+                $errors["authorFirstName"] = Constants::ERROR_NAME;
+            } elseif (mb_strlen($authorFirstName) < 2 || mb_strlen($authorFirstName) > 150) {
+                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+            }
+
+            //authorLastName
+            if (!$authorLastName) {
+                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
+            } else if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-]+$/", $authorLastName)) {
+                $errors["authorLastName"] = Constants::ERROR_NAME;
+            } elseif (mb_strlen($authorLastName) < 2 || mb_strlen($authorLastName) > 150) {
+                $errors["authorLastName"] = Constants::ERROR_LENGTH;
+            }
             //Controler si l'auteur exite déjà
-            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+            $idAuthor = $addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
 
             //Créer l'autheur s'il n'existe pas
             if ($idAuthor === 0) {
-                $author = $addAuthor->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
-                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                $author = $addAuthor->insertAuthor($authorFirstName, $authorLastName);
+                $idAuthor = (int)$addAuthor->getAuthorByNameAndFirstname($authorFirstName, $authorLastName);
             }
 
             //téléchargement et traitement des images
             if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
-                die("Erreur lors du téléchargement de l'image : " . $_FILES["coverImage"]["error"]);
+                $errors["coverImage"] = "Erreur lors du téléchargement de l'image. ";
             }
 
             // Vérifier la taille du fichier (limite : 2 Mo)
             if ($_FILES["coverImage"]["size"] > 2 * 1024 * 1792) {
-                die("Erreur : Le fichier est trop volumineux.");
+                $errors["coverImage"] .= "Le fichier est trop volumineux. ";
             }
 
             // Vérifier le type MIME du fichier
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
             if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
-                die("Erreur : Type de fichier non autorisé.");
+                $errors["coverImage"] .= " Type de fichier non autorisé. ";
             }
 
             // Récupérer l'extension du fichier original
@@ -441,7 +444,7 @@ class BookController extends Controller
             // Déplacer le fichier
             $result = move_uploaded_file($source, $destination);
             if (!$result) {
-                die("Erreur : Impossible de déplacer le fichier téléchargé.");
+                $errors["coverImage"] .= "Impossible de déplacer le fichier téléchargé.";
             }
 
             // Débogage pour confirmer le chemin final
@@ -450,25 +453,34 @@ class BookController extends Controller
             //utilisateur
             $user_fk = $_SESSION["user_id"];
 
-            //ajout d'un livre
-            $addBook->insertBook(
-                $_POST["bookTitle"],
-                $_POST["snippetLink"],
-                $_POST["bookSummary"],
-                $_POST["bookEditionYear"],
-                $destination,
-                $_POST["bookPageNb"],
-                $user_fk,
-                $_POST["bookGenre"],
-                $idPublisher,
-                $idAuthor
-            );
-            //recupérer l'id
+            //controle si des erreurs existent
+            if (sizeof($errors) == 0) {
+                $_POST['validated'] = 1;
+                //ajout d'un livre
+                $addBook->insertBook(
+                    $bookTitle,
+                    $snippetLink,
+                    $bookSummary,
+                    $_POST["bookEditionYear"],
+                    $destination,
+                    $_POST["bookPageNb"],
+                    $user_fk,
+                    $_POST["bookGenre"],
+                    $idPublisher,
+                    $idAuthor
+                );
+                            //recupérer l'id
             $id = $idbook->getIdBook($user_fk);
             $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
             header($destination);
+            } else {
+                $_POST['validated'] = 0;
+                $destination = 'Location: index.php?controller=book&action=add';
+                header($destination);
+            }
+
         } else {
-            echo " Merci de balider le formulaire.";
+            echo " Merci de valider le formulaire.";
         }
     }
 
