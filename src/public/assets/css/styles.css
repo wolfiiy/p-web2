@@ -25,7 +25,8 @@ html, body {
 
 .md-button {
   border: none;
-  padding: 1.25ch 2ch;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   -webkit-transition: all ease-in-out 0.2s;
