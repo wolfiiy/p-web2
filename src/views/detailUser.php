@@ -30,8 +30,11 @@
     </div>
 
     <?php
+
+        echo "<h1>Reviews</h1>";
         HtmlWriter::writeCompactBooksPreviewGrade($books);
 
+        echo "<h1>Books</h1>";  
         HtmlWriter::writeCompactBooksPreview($publishedBooks);
     ?>
 </main>
