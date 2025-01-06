@@ -24,3 +24,10 @@
 form label {
   font-size: 0.75rem;
 }
+
+// Errors resulting from invalid user input
+.invalid {
+  @include reset-box;
+  margin: $gap-smallest 0;
+  color: var(--md-sys-color-error);
+}

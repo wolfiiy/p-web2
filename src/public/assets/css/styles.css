@@ -270,6 +270,13 @@ form label {
   font-size: 0.75rem;
 }
 
+.invalid {
+  margin: 0;
+  padding: 0;
+  margin: 1ch 0;
+  color: var(--md-sys-color-error);
+}
+
 .md-input.small {
   max-width: 17ch;
 }
