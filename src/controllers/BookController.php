@@ -606,6 +606,10 @@ class BookController extends Controller
         $bookModel = new BookModel();
         $book = $bookModel->getBookById($_GET["id"]);
 
+        if (isset($book['cover_image']) && file_exists($book['cover_image'])) {
+            unlink($book['cover_image']);
+        }
+
         // Check for privilege before deletion
         if (isAdminConnectedUser() || $_SESSION["user_id"] == $book["user_fk"]) {
             $bookModel->deleteBook($_GET["id"]);
