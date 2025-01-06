@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Author: Sébastien Tille
- * Date: November 25th, 2024
+ * Author: Sébastien Tille, Abigaël Périsset
+ * Date: december 17, 2024
  */
 
 include_once('DatabaseModel.php');
