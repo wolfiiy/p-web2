@@ -28,7 +28,7 @@
         </div>
         
         <div class="label-input">
-            <input class="md-input secondary" type="date" name="bookEditionYear" id="bookEditionYear" value="<?=$bookEditionYear;?>">
+            <input class="md-input secondary small" type="date" name="bookEditionYear" id="bookEditionYear" value="<?=$bookEditionYear;?>">
             <label for="bookEditionYear">Année d'édition</label>
         </div>
         
@@ -55,7 +55,7 @@
 
         <div class="label-input">
             <label for="coverImage">Image de couverture</label>
-            <input class="md-input secondary" type="file" name="coverImage" id="coverImage">    
+            <input class="md-input secondary large" type="file" name="coverImage" id="coverImage">    
         </div>
 <?php if ($_GET["action"] == "modify"){ echo "<p>Charger un nouveau fichier pour changer l'image</p>";}?> 
         
