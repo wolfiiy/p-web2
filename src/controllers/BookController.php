@@ -362,13 +362,15 @@ class BookController extends Controller
             //bookPageNb
             if (!$bookPageNb) {
                 $errors["bookPageNb"] = Constants::ERROR_REQUIRED;
+            }elseif ($bookPageNb<=0){
+                $errors["bookPageNb"] = "Seul les nombres au dessus de 0 sont autorisés.";
             }
 
             //snippetLink
             if (!$snippetLink) {
                 $errors["snippetLink"] = Constants::ERROR_REQUIRED;
             } else if (!filter_var($snippetLink, FILTER_VALIDATE_URL)) {
-                $errors["snippetLink"] = Constants::ERROR_TEXT;
+                $errors["snippetLink"] = "Seul les URLs sont acceptés.";
             }
             // authorFirstName
             if (!$authorFirstName) {
