@@ -22,5 +22,10 @@ class Constants {
      * Message to display when no ratings have been given to a book.
      */
     const NO_RATING = "Aucune note";
+
+    /**
+     * Fallback cover in case the proper image could not be found.
+     */
+    const DEFAULT_COVER = "assets/img/placeholders/cover-placeholder.png";
 }
 ?>
