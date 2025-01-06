@@ -114,7 +114,6 @@ Description: Displays a book's detail. The layout has been inspired by
                     Editeur:
                     <?=$book['publisher']?>
                 </p>
-                
 
                 <?php if(isset($_SESSION["user_id"])){ ?>
                 <div class="rating">
