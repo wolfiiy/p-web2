@@ -47,15 +47,15 @@ Description: Form used to add or modify an entry.
         
         <div class="label-input">
             <label for="bookGenre">Genre</label>
-            <!-- $genres sont récupéré dans le bookController et passé à cette vue -->
+            <!-- Categories ($genre) gathered from the BookController -->
             <select class="md-select secondary" name="bookGenre" id="bookGenre">
                 <?php
                 foreach($genres as $genre){
                     echo "<option value='". $genre["category_id"] . "'";
-            if (isset($book["category_fk"])){
-                if ($genre["category_id"] == $book["category_fk"]){echo "selected";}
-            }
-            echo  ">" . $genre["name"] . "</option>";
+                    if (isset($book["category_fk"])){
+                        if ($genre["category_id"] == $book["category_fk"]){echo "selected";}
+                    }
+                    echo  ">" . $genre["name"] . "</option>";
                 }
                 ?>
             </select>
