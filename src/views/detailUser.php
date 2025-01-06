@@ -29,9 +29,9 @@
         </div>
     </div>
 
-    <h3><?=$titleAdditions;?></h3>
+    <h3><?=$titleReviews;?></h3>
     <?=HtmlWriter::writeCompactBooksPreviewGrade($books);?>
 
-    <h3><?=$titleReviews;?></h3>
+    <h3><?=$titleAdditions;?></h3>
     <?=HtmlWriter::writeCompactBooksPreview($publishedBooks);?>
 </main>
