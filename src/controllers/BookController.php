@@ -284,8 +284,6 @@ class BookController extends Controller
         $book["category_fk"] = $_SESSION['form_data']['bookGenre'] ?? '';
         $errors = $_SESSION['form_errors'] ?? [];
 
-        var_dump($bookDatas);
-
         // Clear form data and errors from session
         unset($_SESSION['form_data']);
         unset($_SESSION['form_errors']);
@@ -376,10 +374,6 @@ class BookController extends Controller
         $bookEditionYear = "";
         $bookGenre = "";
 
-        $validatedImage = 1;
-        $validatedEditor = 1;
-        $validatedName = 1;
-
         $imageIsValid = true;
         $publisherIsValid =true;
         $nameIsValid = true;
@@ -444,7 +438,7 @@ class BookController extends Controller
             if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
             } elseif (mb_strlen($bookSummary) < self::MIN_SUMMARY_LENGTH 
-                      || mb_strlen($bookbookSummaryEditor) > self::MAX_SUMMARY_LENGTH) {
+                      || mb_strlen($bookSummary) > self::MAX_SUMMARY_LENGTH) {
                 $errors["bookSummary"] = Constants::ERROR_RESUME;
             }
 
@@ -548,7 +542,7 @@ class BookController extends Controller
             $user_fk = $_SESSION["user_id"];
 
             // Check if errors occured
-            if (count($errors) < 1) {
+            if (count($errors) == 0) {
                 $_POST['validated'] = true;
                 
                 // Add the book to the database
