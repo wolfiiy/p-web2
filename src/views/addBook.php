@@ -28,8 +28,9 @@
         </div>
         
         <div class="label-input">
+        <label for="bookEditionYear">Année d'édition</label>
             <input class="md-input secondary small" type="date" name="bookEditionYear" id="bookEditionYear" value="<?=$book["release_date"];?>">
-            <label for="bookEditionYear">Année d'édition</label>
+            
         </div>
         
         <div class="md-outlined-input on-surface-container">
