@@ -1,7 +1,8 @@
 <?php
+
 /**
  * ETML
- * Authors : Cindy Hardegger, Valentin Pignat, Sébastien Tille
+ * Authors: Cindy Hardegger, Valentin Pignat, Sébastien Tille
  * Date: January 22nd, 2019
  */
 
@@ -25,14 +26,12 @@ class HomeController extends Controller {
 
     /**
      * Prints the home page view.
-     * @return string A strong that contains all the content of the home page.
+     * @return string The home view.
      */
     private function indexAction() {
         include_once('../helpers/DataHelper.php');
         include_once('../helpers/HtmlWriter.php');
         include_once('../models/BookModel.php');
-
-        // var_dump(isUserConnected());
 
         $bookModel = new BookModel();
         
