@@ -52,7 +52,7 @@ Description: Form used to add or modify an entry.
                 <?php
                 foreach($genres as $genre){
                     echo "<option value='". $genre["category_id"] . "'";
-                    if ($bookGenre){
+                    if (isset($book["category_fk"])){
                         if ($genre["category_id"] == $bookGenre){echo "selected";}
                     }
                     echo  ">" . $genre["name"] . "</option>";
