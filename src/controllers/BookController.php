@@ -378,13 +378,12 @@ class BookController extends Controller
         $validatedEditor = 1;
         $validatedName = 1;
 
+        $imageIsValid = true;
+        $publisherIsValid =true;
+        $nameIsValid = true;
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Sanitize user input
-            /*
-            * NETTOYAGE DES DONNES
-            *  récupérer plusieurs valeurs d'une super-globale et filter ses données.
-            * INPUT_POST pour la super globale $_POST
-            */
             $_POST = filter_input_array(
                 INPUT_POST,
                 [
@@ -450,14 +449,14 @@ class BookController extends Controller
             //bookEditor
             if (!$bookEditor) {
                 $errors["bookEditor"] = Constants::ERROR_REQUIRED;
-                $validatedEditor = 0;
+                $publisherIsValid = false;
             } elseif (mb_strlen($bookEditor) < self::MIN_PUBLISHER_LENGTH 
                       || mb_strlen($bookEditor) > self::MAX_PUBLISHER_LENGTH) {
                 $errors["bookEditor"] = Constants::ERROR_LENGTH;
-                $validatedEditor = 0;
+                $publisherIsValid = false;
             }
 
-            if ($validatedEditor = 1) {
+            if ($publisherIsValid) {
                 // Check if publisher exists
                 $idPublisher = $addPublisher->getPublisherByName($bookEditor);
 
@@ -471,24 +470,24 @@ class BookController extends Controller
             // authorFirstName
             if (!$authorFirstName) {
                 $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
-                $validatedName = 0;
+                $nameIsValid = false;
             } elseif (mb_strlen($authorFirstName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorFirstName) > self::MAX_NAME_LENGTH) {
                 $errors["authorFirstName"] = Constants::ERROR_LENGTH;
-                $validatedName = 0;
+                $nameIsValid = false;
             }
 
             // authorLastName
             if (! $authorLastName) {
                 $errors["authorLastName"] = Constants::ERROR_REQUIRED;
-                $validatedName = 0;
+                $nameIsValid = false;
             } elseif (mb_strlen($authorLastName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorLastName) > self::MAX_NAME_LENGTH) {
                 $errors["authorLastName"] = Constants::ERROR_LENGTH;
-                $validatedName = 0;
+                $nameIsValid = false;
             }
 
-            if ($validatedName = 1) {
+            if ($nameIsValid) {
                 // Check if author exists
                 $idAuthor = 
                     $addAuthor->getAuthorByNameAndFirstname($authorFirstName, 
