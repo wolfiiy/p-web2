@@ -1,10 +1,12 @@
 <?php
+
 /**
  * ETML
  * Auteur : Valentin Pignat
  * Date: 18.11.2024
  * Controler pour les pages liées aux utilisateurs
  */
+
 include_once('../helpers/utils.php');
 
 class UserController extends Controller {
@@ -14,14 +16,7 @@ class UserController extends Controller {
      * process.
      */
     private const ERROR_EMPTY_FIELD =
-        "Veuillez remplir tout les champs.";
-
-    /**
-     * Error message to display if the user did not provide the correct 
-     * password when attempting to sign in.
-     */
-    private const ERROR_PASSWORD_IS_INCORRECT =
-        "Le mot de passe est érroné.";
+        "Veuillez remplire tous les champs.";
 
     /**
      * Error message to display when the passwords given by the user during the
@@ -31,7 +26,8 @@ class UserController extends Controller {
         "Les mots de passes ne sont pas identiques.";
 
     /**
-     * Error message to display when a user could not be found.
+     * Error message to display when a user could not be found. Purposefully
+     * vague for privacy reasons.
      */
     private const ERROR_INVALID_CREDENTIALS = "
         L'utilisateur spécifié n'a pas été trouvé ou le mot de passe est 
@@ -49,6 +45,11 @@ class UserController extends Controller {
     private const TITLE_REVIEWS = "Reviews";
 
     /**
+     * Represents one element (addition of review).
+     */
+    private const ONE_ELEMENT = 1;
+
+    /**
      * Error message to display if the user attempts to create an account
      * with a username that is not available.
      */
@@ -57,8 +58,7 @@ class UserController extends Controller {
 
     /**
      * Dispatch current action
-     *
-     * @return mixed
+     * @return mixed The function to be called.
      */
     public function display() {
         include_once('../helpers/utils.php');
@@ -67,9 +67,9 @@ class UserController extends Controller {
     }
 
     /**
-     * Display user info page
-     * @param int $id id of the user to display
-     * @return string
+     * Displays a user profile.
+     * @param int $id The unique ID of a user.
+     * @return string The profile view of that specific user.
      */
     private function detailAction() {
         include_once('../helpers/HtmlWriter.php');
@@ -79,6 +79,8 @@ class UserController extends Controller {
        
         $usermodel = new UserModel();
         $bookmodel = new BookModel();
+
+        // Used in the view
         $titleAdditions = self::TITLE_ADDITIONS;
         $titleReviews = self::TITLE_REVIEWS;
         $labelAdditions = "";
@@ -97,19 +99,19 @@ class UserController extends Controller {
         $nbAdditions = $bookmodel->countUserPublishedBookById($id)[0]["count(*)"];
         $nbReviews = $bookmodel->countUserReviewBookById($id)[0]["count(*)"];
 
-        if ($nbAdditions < 1) {
+        if ($nbAdditions < self::ONE_ELEMENT) {
             $titleAdditions = "";
             $labelAdditions = "Aucun livre n'a été ajouté par cet utilisateur.";
-        } else if ($nbAdditions == 1) {
+        } else if ($nbAdditions == self::ONE_ELEMENT) {
             $labelAdditions = $nbAdditions . " livre ajouté";
         } else {
             $labelAdditions = $nbAdditions . " livres ajoutés";
         }
 
-        if ($nbReviews < 1) {
+        if ($nbReviews < self::ONE_ELEMENT) {
             $titleReviews = "";
             $labelReviews = "Aucun livre n'a été noté par cet utilisateur.";
-        } else if ($nbReviews == 1) {
+        } else if ($nbReviews == self::ONE_ELEMENT) {
             $labelReviews = $nbReviews . " livre noté";
         } else {
             $labelReviews = $nbReviews . " livres notés";
@@ -131,8 +133,9 @@ class UserController extends Controller {
     }
 
     /**
-     * Logs in the user.
-     * @return string
+     * Logs the user in.
+     * @return true|string True if the user could be logged in, the sign in view
+     * otherwise.
      */
     private function loginAction() {
         include_once('../models/UserModel.php');
@@ -166,7 +169,10 @@ class UserController extends Controller {
                     $_SESSION['is_admin'] = $userData['is_admin'];
 
                     // Redirect to user page
-                    header('Location: index.php?controller=user&action=detail&id=' . $_SESSION["user_id"]);
+                    $redirect = 'index.php?controller=user&action=detail&id='
+                              . $_SESSION["user_id"];
+
+                    header("Location: $redirect");
                     return true;
                 }
             } else {
@@ -176,21 +182,23 @@ class UserController extends Controller {
             $errors[] = self::ERROR_INVALID_CREDENTIALS;
         }
 
-        // To display the login page if the form has not been completed correctly
+        // Displays the sign in form if incomplete
         return $content;
     }
 
     /*
-    * Logout Action
+    * Logs the user out.
+    * Note: Use of the header method because the commonly used display causes a 
+    * bug with the information of a session that does not exist but shows as if 
+    * it did.
     */
     private function logoutAction() {
         session_destroy();
-        // Use of the header method because the commonly used display causes a bug with the information of a session that does not exist but shows as if it did.
         header('Location: index.php?controller=user&action=login');  // To show login page
     }
 
     /**
-     * Displays the signup form.
+     * Displays the signup form and check if the input is valid.
      * @return string The sign up view.
      */
     private function signupAction() {
