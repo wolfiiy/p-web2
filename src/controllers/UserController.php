@@ -163,7 +163,7 @@ class UserController extends Controller {
                     // Store user information in session
                     $_SESSION['user_id'] = $userData['user_id'];
                     $_SESSION['username'] = $userData['username'];
-                    $_SESSION['is_admin'] = $userData['id_admin'];
+                    $_SESSION['is_admin'] = $userData['is_admin'];
 
                     // Redirect to user page
                     header('Location: index.php?controller=user&action=detail&id=' . $_SESSION["user_id"]);
