@@ -217,16 +217,10 @@ class BookController extends Controller
         $genres = $categoryModel->getAllCategory();
 
         // Form
-        $author["first_name"] = $_SESSION['form_data']['authorFirstName'] ?? '';
-        $author["last_name"] = $_SESSION['form_data']['authorLastName'] ?? '';
-        $book["title"] = $_SESSION['form_data']['bookTitle'] ?? '';
-        $publisher["name"] = $_SESSION['form_data']['bookEditor'] ?? '';
-        $book["number_of_pages"] = $_SESSION['form_data']['bookPageNb'] ?? '';
-        $book["excerpt"] = $_SESSION['form_data']['snippetLink'] ?? '';
-        $book["summary"] = $_SESSION['form_data']['bookSummary'] ?? '';
-        $book["release_date"] = $_SESSION['form_data']['bookEditionYear'] ?? '';
-        $book["category_fk"] = $_SESSION['form_data']['bookGenre'] ?? '';
+        $bookDatas = $_SESSION['form_data'] ?? [];
         $errors = $_SESSION['form_errors'] ?? [];
+
+        var_dump($bookDatas);
 
         // Clear form data and errors from session
         unset($_SESSION['form_data']);
