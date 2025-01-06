@@ -388,8 +388,8 @@ class BookController extends Controller
             //bookSummary
             if (!$bookSummary) {
                 $errors["bookSummary"] = Constants::ERROR_REQUIRED;
-            } elseif (mb_strlen($bookEditor) < 50 || mb_strlen($bookEditor) > 2000) {
-                $errors["bookSummary"] = Constants::ERROR_RESUME;
+            } elseif (mb_strlen($bookEditor) < 5 || mb_strlen($bookEditor) > 150) {
+                $errors["bookSummary"] = Constants::ERROR_LENGTH;
             }
 
             //bookEditor
@@ -400,7 +400,7 @@ class BookController extends Controller
                 $errors["bookEditor"] = Constants::ERROR_LENGTH;
                 $validatedEditor = 0;
             }
-            
+
             if ($validatedEditor = 1) {
                 // Controler si l'éditeur existe déja 
                 $idPublisher = $addPublisher->getPublisherByName($bookEditor);
