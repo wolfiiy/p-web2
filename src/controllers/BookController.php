@@ -397,8 +397,6 @@ class BookController extends Controller
                     "bookSummary"       => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     "bookEditionYear"   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
                     "bookGenre"         => FILTER_SANITIZE_FULL_SPECIAL_CHARS
-
-
                 ]
             );
 
