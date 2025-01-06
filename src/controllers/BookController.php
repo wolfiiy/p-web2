@@ -502,19 +502,19 @@ class BookController extends Controller
             $allowedTypes = ['image/jpeg', 'image/png'];
             if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
                 $errors["coverImage"] = "Veillez insérer une image.";
-                $validatedImage = 0;
+                $imageIsValid = false;
             }
             // Check image size (up to 2 mb allowed)
             elseif ($_FILES["coverImage"]["size"] > self::MAX_COVER_WEIGHT) {
                 $errors["coverImage"] = "Le fichier est trop volumineux. La limite est de 2 Mo. ";
-                $validatedImage = 0;
+                $imageIsValid = false;
             }
             // Check file MIME
             elseif (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
                 $errors["coverImage"] = "Seule les images jpeg, png sont autorisés. ";
-                $validatedImage = 0;
+                $imageIsValid = false;
             }
-            if ($validatedImage == 1) {
+            if ($imageIsValid) {
                 // Get original file extension
                 $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
 
@@ -541,7 +541,7 @@ class BookController extends Controller
 
             // Check if errors occured
             if (count($errors) < 1) {
-                $_POST['validated'] = 1;
+                $_POST['validated'] = true;
                 
                 // Add the book to the database
                 $addBook->insertBook(
