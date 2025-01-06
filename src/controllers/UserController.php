@@ -2,13 +2,15 @@
 
 /**
  * ETML
- * Auteur : Valentin Pignat
- * Date: 18.11.2024
- * Controler pour les pages liées aux utilisateurs
+ * Author: Valentin Pignat
+ * Date: November 18th, 2024
  */
 
 include_once('../helpers/utils.php');
 
+/**
+ * Controller used to handle user-related pages.
+ */
 class UserController extends Controller {
 
     /**
