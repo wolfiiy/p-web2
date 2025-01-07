@@ -26,7 +26,6 @@ class FormatHelperTest extends TestCase {
         $actual1 = FormatHelper::getFullDate($date1);
         $actual2 = FormatHelper::getFullDate($date2);
 
-
         $this->assertEquals($expected1, $actual1);
         $this->assertEquals($expected2, $actual2);
     }
