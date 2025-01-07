@@ -181,7 +181,6 @@ class BookController extends Controller
 
         // Get the total number of result and pages
         $maxPage = ceil($nbResult / self::RESULT_PER_PAGE);
-        error_log($maxPage);
 
         // Between 0 and RESULT_PER_PAGE, one page
         if ($maxPage == 0)
@@ -323,9 +322,6 @@ class BookController extends Controller
         // If errors are to be diplayed, the form has been submited and the values are updated
         if(!empty( $_SESSION['form_errors'])){
             // Form
-            error_log($_SESSION['form_data']['authorFirstName']);
-            error_log($_SESSION['form_data']['bookTitle']);
-
             $author["first_name"] = $_SESSION['form_data']['authorFirstName'] ?? '';
             $author["last_name"] = $_SESSION['form_data']['authorLastName'] ?? '';
             $book["title"] = $_SESSION['form_data']['bookTitle'] ?? '';
@@ -658,7 +654,6 @@ class BookController extends Controller
                 ]
             );
 
-            error_log($_POST["authorFirstName"] );
              // Validate input. Fallback to an empty string in case of missing 
             // data.
             $authorFirstName    = $_POST["authorFirstName"] ?? '';
@@ -786,53 +781,47 @@ class BookController extends Controller
                 }
             }
 
-            $destination = "";
-            if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK) {
-                // Vérifier la taille du fichier (limite : 40 Ko)
-                if ($_FILES["coverImage"]["size"] > 40 * 1024) {
-                    die("Erreur : Le fichier est trop volumineux.");
+            // Handle image download
+            $allowedTypes = ['image/jpeg', 'image/png'];
+            $destination =  $currentCover;
+            
+            if (isset($_FILES["coverImage"]) && $_FILES["coverImage"]["error"] == UPLOAD_ERR_OK){
+                error_log("got in!");
+                if ($_FILES["coverImage"]["size"] > self::MAX_COVER_WEIGHT) {
+                    $errors["coverImage"] = Constants::ERROR_SIZE;
+                    $imageIsValid = false;
                 }
-
-                // Vérifier le type MIME du fichier
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
-                    die("Erreur : Type de fichier non autorisé.");
+                // Check file MIME
+                elseif (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
+                    $errors["coverImage"] = Constants::ERROR_FILE_MIME;
+                    $imageIsValid = false;
                 }
-
-                // Vérifier l'extension du fichier
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                $fileExtension = strtolower(pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION));
-                if (!in_array($fileExtension, $allowedExtensions)) {
-                    die("Erreur : Extension de fichier non autorisée.");
-                }
-
-                // Générer un nom de fichier unique et court
-                $filename = uniqid('img_', true) . '.' . $fileExtension; // "img_" pour une identification facile
-
-                // Définir le chemin de destination
-                $destination = "assets/img/cover/" . $filename;
-
-                // Définir la source du fichier temporaire
-                $source = $_FILES["coverImage"]["tmp_name"];
-
-                // Vérifier si le dossier de destination est accessible en écriture
-                if (!is_writable("assets/img/cover/")) {
-                    die("Erreur : Le dossier de destination n'est pas accessible en écriture.");
-                }
-
-                // Déplacer le fichier
-                $result = move_uploaded_file($source, $destination);
-                if (!$result) {
-                    die("Erreur : Impossible de déplacer le fichier téléchargé.");
-                }
-
-                // Débogage pour confirmer le chemin final
-                error_log("Fichier téléchargé avec succès : " . $destination);
-
-                // Supprimer la couverture précédente (si applicable)
-                if (isset($currentCover) && file_exists($currentCover)) {
-                    unlink($currentCover);
-                }
+                if ($imageIsValid) {
+                    // Get original file extension
+                    $fileExtension = pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION);
+    
+                    // Generate random and unique filename
+                    // The img_ prefix makes it easier to identify
+                    $filename = uniqid('img_', true) . '.' . $fileExtension;
+    
+                    // Save path
+                    $destination = self::PATH_TO_COVERS . $filename;
+    
+                    // Temporary file
+                    $source = $_FILES["coverImage"]["tmp_name"];
+    
+                    // Move file to cover directory
+                    $result = move_uploaded_file($source, $destination);
+                    if (!$result) {
+                        $errors["coverImage"] 
+                            = Constants::ERROR_FILE_MOVE;
+                    }
+      
+                    // Supprimer la couverture précédente (si applicable)
+                    if (isset($currentCover) && file_exists($currentCover)) {
+                        unlink($currentCover);
+                    }
+                }    
             }
 
             // Check if errors occured
@@ -843,8 +832,7 @@ class BookController extends Controller
                 $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
 
                 // Get book ID
-                $id = $idbook->getIdBook($user_fk);
-                $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
+                $destination = 'Location: index.php?controller=book&action=detail&id=' . $_GET["id"];
 
                 // Redirect to the book
                 header($destination);

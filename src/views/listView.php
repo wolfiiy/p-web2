@@ -41,7 +41,6 @@ Description: A list of all the entries found in Passion Lecture's database. The
         input.addEventListener("keypress", function(event){
             if (event.key === "Enter"){
                 event.preventDefault();
-                error_log("Hell");
                 document.getElementById("submitSearch").click();
             }
         })
