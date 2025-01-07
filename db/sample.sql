@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `t_book`;
 CREATE TABLE `t_book` (
   `book_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
-  `excerpt` varchar(255) NOT NULL,
+  `excerpt` varchar(2048) NOT NULL,
   `summary` text NOT NULL,
   `release_date` date NOT NULL,
   `cover_image` varchar(128) NOT NULL,

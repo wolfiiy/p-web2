@@ -1,3 +1,4 @@
 *.lo1
 secrets.json
 src/public/assets/img/cover/*
+.phpunit.result.cache

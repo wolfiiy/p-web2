@@ -201,7 +201,7 @@ html, body {
   transition: all 0.2s;
 }
 .md-select.tiny {
-  width: 6ch;
+  width: 7ch;
 }
 .md-select:hover {
   cursor: pointer;

@@ -2,7 +2,7 @@
 
 /**
  * Authors: Sébastien Tille, Abigaël Périsset
- * Date: December 17, 2024
+ * Date: 07.01, 2024
  */
 
 include_once('DatabaseModel.php');
