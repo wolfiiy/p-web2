@@ -320,6 +320,31 @@ class BookController extends Controller
             header("Location: index.php");
         }
 
+        // If errors are to be diplayed, the form has been submited and the values are updated
+        if(!empty( $_SESSION['form_errors'])){
+            // Form
+            error_log($_SESSION['form_data']['authorFirstName']);
+            error_log($_SESSION['form_data']['bookTitle']);
+
+            $author["first_name"] = $_SESSION['form_data']['authorFirstName'] ?? '';
+            $author["last_name"] = $_SESSION['form_data']['authorLastName'] ?? '';
+            $book["title"] = $_SESSION['form_data']['bookTitle'] ?? '';
+            $publisher["name"] = $_SESSION['form_data']['bookEditor'] ?? '';
+            $book["number_of_pages"] = $_SESSION['form_data']['bookPageNb'] ?? '';
+            $book["excerpt"] = $_SESSION['form_data']['snippetLink'] ?? '';
+            $book["summary"] = $_SESSION['form_data']['bookSummary'] ?? '';
+            $book["release_date"] = $_SESSION['form_data']['bookEditionYear'] ?? '';
+            $book["category_fk"] = $_SESSION['form_data']['bookGenre'] ?? '';
+            $errors = $_SESSION['form_errors'] ?? [];
+
+             // Clear form data and errors from session
+            unset($_SESSION['form_data']);
+            unset($_SESSION['form_errors']);
+        }
+        
+ 
+       
+        
         $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
 
         include_once("../models/AuthorModel.php");
@@ -601,22 +626,164 @@ class BookController extends Controller
         $book = $bookModel->getBookById($_GET["id"]);
         $currentCover = $book["cover_image"];
 
+        $errors    = [];
+        $authorFirstName = "";
+        $authorLastName = "";
+        $bookTitle = "";
+        $bookEditor = "";
+        $bookPageNb = "";
+        $snippetLink = "";
+        $bookSummary = "";
+        $bookEditionYear = "";
+        $bookGenre = "";
+
+        $imageIsValid = true;
+        $publisherIsValid =true;
+        $nameIsValid = true;
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Controler si l'éditeur existe déja 
-            $idPublisher = $publisherModel->getPublisherByName($_POST["bookEditor"]);
-            //Créer un éditeur s'il n'existe pas
-            if ($idPublisher === 0) {
-                $publisher = $publisherModel->insertPublisher($_POST["bookEditor"]);
-                $idPublisher = (int)$publisherModel->getPublisherByName($_POST["bookEditor"]);
+            // Sanitize user input
+            $_POST = filter_input_array(
+                INPUT_POST,
+                [
+                    "authorFirstName"   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "authorLastName"    => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookTitle"         => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookEditor"        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookPageNb"        => FILTER_SANITIZE_NUMBER_INT,
+                    "snippetLink"       => FILTER_SANITIZE_URL,
+                    "bookSummary"       => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookEditionYear"   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                    "bookGenre"         => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+                ]
+            );
+
+            error_log($_POST["authorFirstName"] );
+             // Validate input. Fallback to an empty string in case of missing 
+            // data.
+            $authorFirstName    = $_POST["authorFirstName"] ?? '';
+            $authorLastName     = $_POST["authorLastName"] ?? '';
+            $bookTitle          = $_POST["bookTitle"] ?? '';
+            $bookEditor         = $_POST["bookEditor"] ?? '';
+            $bookPageNb         = $_POST["bookPageNb"] ?? '';
+            $snippetLink        = $_POST["snippetLink"] ?? '';
+            $bookSummary        = $_POST["bookSummary"] ?? '';
+            $bookEditionYear    = $_POST["bookEditionYear"] ?? '';
+            $bookGenre          = $_POST["bookGenre"] ?? '';
+
+            //bookEditionYear
+            if (!$bookEditionYear) {
+                $errors["bookEditionYear"] = Constants::ERROR_REQUIRED;
             }
 
-            //Controler si l'auteur exite déjà
-            $idAuthor = $authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+            //bookPageNb
+            if (!$bookPageNb) {
+                $errors["bookPageNb"] = Constants::ERROR_REQUIRED;
+            } elseif ($bookPageNb < self::MIN_NB_PAGE) {
+                $errors["bookPageNb"] = "Seul les nombres au dessus de 0 sont autorisés.";
+            }
 
-            //Créer l'autheur s'il n'existe pas
-            if ($idAuthor === 0) {
-                $author = $authorModel->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
-                $idAuthor = (int)$authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+            //snippetLink
+            if (!$snippetLink) {
+                $errors["snippetLink"] = Constants::ERROR_REQUIRED;
+            } else if (!filter_var($snippetLink, FILTER_VALIDATE_URL)) {
+                $errors["snippetLink"] = "Seul les URLs sont acceptés.";
+            }
+
+            //bookTitle 
+            if (!$bookTitle) {
+                $errors["bookTitle"] = Constants::ERROR_REQUIRED;
+            } elseif (mb_strlen($bookTitle) < self::MIN_TITLE_LENGTH 
+                  || mb_strlen($bookTitle) > self::MAX_TITLE_LENGTH) {
+                $errors["bookTitle"] = Constants::ERROR_LENGTH;
+            }
+
+            //bookSummary
+            if (!$bookSummary) {
+                $errors["bookSummary"] = Constants::ERROR_REQUIRED;
+            } elseif (mb_strlen($bookSummary) < self::MIN_SUMMARY_LENGTH 
+                      || mb_strlen($bookSummary) > self::MAX_SUMMARY_LENGTH) {
+                $errors["bookSummary"] = Constants::ERROR_RESUME;
+            }
+
+            //bookEditor
+            if (!$bookEditor) {
+                $errors["bookEditor"] = Constants::ERROR_REQUIRED;
+                $publisherIsValid = false;
+            } elseif (mb_strlen($bookEditor) < self::MIN_PUBLISHER_LENGTH 
+                      || mb_strlen($bookEditor) > self::MAX_PUBLISHER_LENGTH) {
+                $errors["bookEditor"] = Constants::ERROR_LENGTH;
+                $publisherIsValid = false;
+            }
+
+            if ($publisherIsValid) {
+                // Check if publisher exists
+                $idPublisher = $publisherModel->getPublisherByName($bookEditor);
+
+                // Add a new publisher if none was found
+                if ($idPublisher === self::DEFAULT_ID) {
+                    $publisher = $publisherModel->insertPublisher($bookEditor);
+                    $idPublisher = (int)$publisherModel->getPublisherByName($bookEditor);
+                }
+            }
+
+            // authorFirstName
+            if (!$authorFirstName) {
+                $errors["authorFirstName"] = Constants::ERROR_REQUIRED;
+                $nameIsValid = false;
+            } elseif (mb_strlen($authorFirstName) < self::MIN_NAME_LENGTH 
+                    || mb_strlen($authorFirstName) > self::MAX_NAME_LENGTH) {
+                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+                $nameIsValid = false;
+            }
+
+            // authorLastName
+            if (! $authorLastName) {
+                $errors["authorLastName"] = Constants::ERROR_REQUIRED;
+                $nameIsValid = false;
+            } elseif (mb_strlen($authorLastName) < self::MIN_NAME_LENGTH 
+                    || mb_strlen($authorLastName) > self::MAX_NAME_LENGTH) {
+                $errors["authorLastName"] = Constants::ERROR_LENGTH;
+                $nameIsValid = false;
+            }
+
+            if ($nameIsValid) {
+                // Check if author exists
+                $idAuthor = 
+                    $authorModel->getAuthorByNameAndFirstname($authorFirstName, 
+                                                            $authorLastName);
+
+                // Create author if needed
+                if ($idAuthor === self::DEFAULT_ID) {
+                    $author = $authorModel->insertAuthor($authorFirstName, 
+                                                       $authorLastName);
+
+                    $idAuthor 
+                        = (int)$authorModel->getAuthorByNameAndFirstname($authorFirstName, 
+                                                                       $authorLastName);
+                }
+            }
+
+            // User
+            $user_fk = $_SESSION["user_id"];
+
+
+            // Checks if publisher exists, create one if not 
+            if ($publisherIsValid){
+                $idPublisher = $publisherModel->getPublisherByName($_POST["bookEditor"]);
+                if ($idPublisher === 0) {
+                    $publisher = $publisherModel->insertPublisher($_POST["bookEditor"]);
+                    $idPublisher = (int)$publisherModel->getPublisherByName($_POST["bookEditor"]);
+                }
+            }
+
+            // Checks if author exists, create one if not 
+            if ($nameIsValid){
+                $idAuthor = $authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                if ($idAuthor === 0) {
+                    $author = $authorModel->insertAuthor($_POST["authorFirstName"], $_POST["authorLastName"]);
+                    $idAuthor = (int)$authorModel->getAuthorByNameAndFirstname($_POST["authorFirstName"], $_POST["authorLastName"]);
+                }
             }
 
             $destination = "";
@@ -668,10 +835,36 @@ class BookController extends Controller
                 }
             }
 
-            //ajout d'un livre
-            $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
+            // Check if errors occured
+            if (count($errors) == 0) {
+                $_POST['validated'] = true;
+                
+                // Update the book to the database
+                $bookModel->updateBook($_GET["id"], $_POST["bookTitle"], $_POST["snippetLink"], $_POST["bookSummary"], $_POST["bookEditionYear"], $destination, $_POST["bookPageNb"], $_POST["bookGenre"], $idPublisher, $idAuthor);
 
-            header('Location: index.php?controller=book&action=detail&id=' . $_GET["id"]);
+                // Get book ID
+                $id = $idbook->getIdBook($user_fk);
+                $destination = 'Location: index.php?controller=book&action=detail&id=' . $id;
+
+                // Redirect to the book
+                header($destination);
+            } else {
+                // If image was stored but book isnt validated, delete the image
+                if ($result) {
+                    if (file_exists($destination)) {
+                        unlink($destination);
+                    }
+                }
+
+                // Store form data and errors in session
+                $_SESSION['form_data'] = $_POST;
+                $_SESSION['form_errors'] = $errors;
+
+                // Redirect to modifyAction
+                $destination = 'Location: index.php?controller=book&action=modify&id=' . $_GET["id"];
+                header($destination);
+                exit;
+            }
         }
     }
 
