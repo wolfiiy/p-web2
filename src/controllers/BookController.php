@@ -695,7 +695,7 @@ class BookController extends Controller
                 $errors["bookTitle"] = Constants::ERROR_REQUIRED;
             } elseif (mb_strlen($bookTitle) < self::MIN_TITLE_LENGTH 
                   || mb_strlen($bookTitle) > self::MAX_TITLE_LENGTH) {
-                $errors["bookTitle"] = Constants::ERROR_LENGTH;
+                $errors["bookTitle"] = Constants::ERROR_TITLE;
             }
 
             //bookSummary
@@ -712,7 +712,7 @@ class BookController extends Controller
                 $publisherIsValid = false;
             } elseif (mb_strlen($bookEditor) < self::MIN_PUBLISHER_LENGTH 
                       || mb_strlen($bookEditor) > self::MAX_PUBLISHER_LENGTH) {
-                $errors["bookEditor"] = Constants::ERROR_LENGTH;
+                $errors["bookEditor"] = Constants::ERROR_PUBLISHER;
                 $publisherIsValid = false;
             }
 
@@ -733,7 +733,7 @@ class BookController extends Controller
                 $nameIsValid = false;
             } elseif (mb_strlen($authorFirstName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorFirstName) > self::MAX_NAME_LENGTH) {
-                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+                $errors["authorFirstName"] = Constants::ERROR_NAME;
                 $nameIsValid = false;
             }
 
@@ -743,7 +743,7 @@ class BookController extends Controller
                 $nameIsValid = false;
             } elseif (mb_strlen($authorLastName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorLastName) > self::MAX_NAME_LENGTH) {
-                $errors["authorLastName"] = Constants::ERROR_LENGTH;
+                $errors["authorLastName"] = Constants::ERROR_NAME;
                 $nameIsValid = false;
             }
 
