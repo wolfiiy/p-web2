@@ -2,8 +2,8 @@
 
 /**
  * ETML
- * Auteur : Valentin Pignat, Sébastien Tille
- * Date: November 18th, 2024
+ * Auteur : Valentin Pignat, Sébastien Tille, Abigaël Périsset
+ * Date: 07.01, 2024
  * Description: Controller used for pages dedicated to books.
  */
 
@@ -68,7 +68,7 @@ class BookController extends Controller
     /**
      * Maximum length allowed for titles.
      */
-    private const MAX_TITLE_LENGTH = 150;
+    private const MAX_TITLE_LENGTH = 100;
 
     /**
      * Minimum length allowed for summaries.
@@ -88,7 +88,7 @@ class BookController extends Controller
     /**
      * Maximum length allowed for publisher names.
      */
-    private const MAX_PUBLISHER_LENGTH = 150;
+    private const MAX_PUBLISHER_LENGTH = 50;
 
     /**
      * Minimum length allowed for names.
@@ -98,7 +98,7 @@ class BookController extends Controller
     /**
      * Maximum length allowed for names.
      */
-    private const MAX_NAME_LENGTH = 150;
+    private const MAX_NAME_LENGTH = 128;
 
     /**
      * Covers can weight up to 2 mb.
@@ -416,7 +416,7 @@ class BookController extends Controller
             if (!$bookPageNb) {
                 $errors["bookPageNb"] = Constants::ERROR_REQUIRED;
             } elseif ($bookPageNb < self::MIN_NB_PAGE) {
-                $errors["bookPageNb"] = "Seul les nombres au dessus de 0 sont autorisés.";
+                $errors["bookPageNb"] = Constants::ERROR_PAGE;
             }
 
             //snippetLink
@@ -431,7 +431,7 @@ class BookController extends Controller
                 $errors["bookTitle"] = Constants::ERROR_REQUIRED;
             } elseif (mb_strlen($bookTitle) < self::MIN_TITLE_LENGTH 
                   || mb_strlen($bookTitle) > self::MAX_TITLE_LENGTH) {
-                $errors["bookTitle"] = Constants::ERROR_LENGTH;
+                $errors["bookTitle"] = Constants::ERROR_TITLE;
             }
 
             //bookSummary
@@ -448,7 +448,7 @@ class BookController extends Controller
                 $publisherIsValid = false;
             } elseif (mb_strlen($bookEditor) < self::MIN_PUBLISHER_LENGTH 
                       || mb_strlen($bookEditor) > self::MAX_PUBLISHER_LENGTH) {
-                $errors["bookEditor"] = Constants::ERROR_LENGTH;
+                $errors["bookEditor"] = Constants::ERROR_PUBLISHER;
                 $publisherIsValid = false;
             }
 
@@ -469,7 +469,7 @@ class BookController extends Controller
                 $nameIsValid = false;
             } elseif (mb_strlen($authorFirstName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorFirstName) > self::MAX_NAME_LENGTH) {
-                $errors["authorFirstName"] = Constants::ERROR_LENGTH;
+                $errors["authorFirstName"] = Constants::ERROR_NAME;
                 $nameIsValid = false;
             }
 
@@ -479,7 +479,7 @@ class BookController extends Controller
                 $nameIsValid = false;
             } elseif (mb_strlen($authorLastName) < self::MIN_NAME_LENGTH 
                     || mb_strlen($authorLastName) > self::MAX_NAME_LENGTH) {
-                $errors["authorLastName"] = Constants::ERROR_LENGTH;
+                $errors["authorLastName"] = Constants::ERROR_NAME;
                 $nameIsValid = false;
             }
 
@@ -503,17 +503,17 @@ class BookController extends Controller
             // Handle image download
             $allowedTypes = ['image/jpeg', 'image/png'];
             if (!isset($_FILES["coverImage"]) || $_FILES["coverImage"]["error"] !== UPLOAD_ERR_OK) {
-                $errors["coverImage"] = "Veillez insérer une image.";
+                $errors["coverImage"] = Constants::ERROR_IMAGE;
                 $imageIsValid = false;
             }
             // Check image size (up to 2 mb allowed)
             elseif ($_FILES["coverImage"]["size"] > self::MAX_COVER_WEIGHT) {
-                $errors["coverImage"] = "Le fichier est trop volumineux. La limite est de 2 Mo. ";
+                $errors["coverImage"] = Constants::ERROR_SIZE;
                 $imageIsValid = false;
             }
             // Check file MIME
             elseif (!in_array($_FILES["coverImage"]["type"], $allowedTypes)) {
-                $errors["coverImage"] = "Seule les images jpeg, png sont autorisés. ";
+                $errors["coverImage"] = Constants::ERROR_FILE_MIME;
                 $imageIsValid = false;
             }
             if ($imageIsValid) {
@@ -534,7 +534,7 @@ class BookController extends Controller
                 $result = move_uploaded_file($source, $destination);
                 if (!$result) {
                     $errors["coverImage"] 
-                        = "Impossible de télécharger votre image veuillez réessayer.";
+                        = Constants::ERROR_FILE_MOVE;
                 }
             }
 

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Author: Sebastien Tille
- * Date: October 8th, 2024
+ * Author: Sebastien Tille, Abigaël Périsset
+ * Date: 07.01, 2024
  */
 
 /**
@@ -46,19 +46,19 @@ class Constants {
     const ERROR_REQUIRED = "Veuillez renseigner ce champ";
 
     /**
-     * Error message to display when is not alphabetic.
+     * Error message to display when the text exceed the authorized size.
      */
-    const ERROR_NAME = "Seuls les caractères alphabétique et les espaces sont autorisés";
-
-    /**
-     * Error message to display when is not alphabetic.
-     */
-    const ERROR_TEXT = "Seuls les caractères alphanumériques, les espaces et les caractères spéciaux suivants sont autorisés : &minus; . , : ; ( ) ? ! &#39;";
+    const ERROR_NAME  = "Le champ doit avoir un nombre de caractères entre 2 et 128";
 
     /**
      * Error message to display when the text exceed the authorized size.
      */
-    const ERROR_LENGTH  = "Le champ doit avoir un nombre de caractères entre 2 et 150";
+
+     const ERROR_PUBLISHER  = "Le champ doit avoir un nombre de caractères entre 2 et 50";
+    /**
+     * Error message to display when the text exceed the authorized size.
+     */
+    const ERROR_TITLE  = "Le champ doit avoir un nombre de caractères entre 2 et 100";
 
     /**
      * Error message to display when the text exceed the authorized size.
@@ -66,9 +66,34 @@ class Constants {
     const ERROR_RESUME  = "Le champ doit avoir un nombre de caractères entre 50 et 2000";
 
     /**
+     * Error message to display when is not a positive number.
+     */
+    const ERROR_PAGE  = "Le champ doit avoir un nombre au dessus de 0";
+
+    /**
      * Error message to display when the field is not a url.
      */
     const ERROR_URL = "L'url n'est pas valide";
+
+    /**
+     * Error message to display when there is no image upload.
+     */
+    const ERROR_IMAGE = "Veillez insérer une image.";
+
+    /**
+     * Error message to display when the size of the cover is to big.
+     */
+    const ERROR_SIZE = "Le fichier est trop volumineux. La limite est de 2 Mo.";
+
+    /**
+     * Error message to display when the file mime is not allowed.
+     */
+    const ERROR_FILE_MIME = "Seule les images jpeg, png sont autorisés.";
+
+    /**
+     * Error message to display when moving the file to cover directory is not working.
+     */
+    const ERROR_FILE_MOVE = "Impossible de télécharger votre image veuillez réessayer.";
 
     /**
      * Message to display when no ratings have been given to a book.
