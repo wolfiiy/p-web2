@@ -312,7 +312,20 @@ class BookController extends Controller
 
         include_once("../models/BookModel.php");
         $bookModel = new BookModel();
-        $book = $bookModel->getBookById($_GET["id"]);
+        $book = $bookModel->getBookById($_GET["id"]);        
+        $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
+
+        include_once("../models/AuthorModel.php");
+        $authorModel = new AuthorModel();
+        $author = $authorModel->getAuthorById($book["author_fk"]);
+
+        include_once("../models/PublisherModel.php");
+        $publisherModel = new PublisherModel();
+        $publisher = $publisherModel->getPublisherById($book["publisher_fk"]);
+        
+        include_once("../models/CategoryModel.php");
+        $categoryModel = new CategoryModel();
+        $genres = $categoryModel->getAllCategory();
 
         // If not admin and and not the owner of the book, redirect to index
         if (!isAdminConnectedUser() && $_SESSION["user_id"] != $book["user_fk"]) {
@@ -338,22 +351,6 @@ class BookController extends Controller
             unset($_SESSION['form_errors']);
         }
         
- 
-       
-        
-        $actionURL = "index.php?controller=book&action=update&id=" . $book["book_id"];
-
-        include_once("../models/AuthorModel.php");
-        $authorModel = new AuthorModel();
-        $author = $authorModel->getAuthorById($book["author_fk"]);
-
-        include_once("../models/PublisherModel.php");
-        $publisherModel = new PublisherModel();
-        $publisher = $publisherModel->getPublisherById($book["publisher_fk"]);
-
-        include_once("../models/CategoryModel.php");
-        $categoryModel = new CategoryModel();
-        $genres = $categoryModel->getAllCategory();
 
         $view = file_get_contents('../views/addBook.php');
 
